@@ -1,0 +1,236 @@
+{
+    "case": {
+        "ASUS ROG Strix Helios .json": {
+            "buy link": "https://www.ldlc.com/fiche/PB00271791.html",
+            "image link": "LD0005324110_2.jpg",
+            "name": "ASUS ROG Strix Helios ",
+            "price": 399,
+            "supported motherboard size": [
+                "0",
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "ASUS TUF GT301 .json": {
+            "buy link": "https://www.ldlc.com/fiche/PB00324452.html",
+            "image link": "LD0005638549_2.jpg",
+            "name": "ASUS TUF GT301 ",
+            "price": 129,
+            "supported motherboard size": [
+                "0",
+                "2",
+                "3"
+            ]
+        },
+        "ASUS TUF GT501 .json": {
+            "buy link": "https://www.ldlc.com/fiche/PB00275912.html",
+            "image link": "LD0005407186_2.jpg",
+            "name": "ASUS TUF GT501 ",
+            "price": 189,
+            "supported motherboard size": [
+                "0",
+                "1",
+                "2",
+                "3"
+            ]
+        }
+    },
+    "cooling": {
+        "ASUS ROG Strix LC240.json": {
+            "CPU socket": [
+                "0",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15"
+            ],
+            "air flow": 143.2,
+            "buy link": "https://www.ldlc.com/fiche/PB00276247.html",
+            "cooling max sound": 37.6,
+            "cooling max speed": 2500,
+            "cooling min sound": 19,
+            "cooling min speed": 800,
+            "cooling size": 2,
+            "image link": "LD0005413613_2.jpg",
+            "name": "ASUS ROG Strix LC240",
+            "price": 189.94
+        }
+    },
+    "cpu": {
+        "Intel Core i7-9700K.json": {
+            "CPU chipset": [
+                "7",
+                "8",
+                "11",
+                "12",
+                "15",
+                "16"
+            ],
+            "CPU socket": 9,
+            "TDP": 95,
+            "boosted clock speed": 4900,
+            "buy link": "https://www.ldlc.com/fiche/PB00256785.html",
+            "cache L3": 12,
+            "clock speed": 3600,
+            "core number": 8,
+            "image link": "LD0005049146_2.jpg",
+            "max RAM speed": 6,
+            "name": "Intel Core i7-9700K",
+            "price": 449.95,
+            "supported RAM type": 1,
+            "thread number": 8
+        },
+        "Intel Core i9-9900K.json": {
+            "CPU chipset": [
+                "7",
+                "8",
+                "11",
+                "12",
+                "15",
+                "16"
+            ],
+            "CPU socket": 9,
+            "TDP": 95,
+            "boosted clock speed": 5000,
+            "buy link": "https://www.ldlc.com/fiche/PB00256784.html",
+            "cache L3": 16,
+            "clock speed": 3600,
+            "core number": 8,
+            "image link": "LD0005049198_2.jpg",
+            "max RAM speed": 6,
+            "name": "Intel Core i9-9900K",
+            "price": 629.95,
+            "supported RAM type": 1,
+            "thread number": 16
+        }
+    },
+    "gpu": {
+        "Gigabyte AORUS GeForce RTX 2080 Ti Xtreme.json": {
+            "GPU RAM frequency": 14140,
+            "GPU RAM size": 11,
+            "GPU RAM type": 4,
+            "GPU bus": 0,
+            "GPU core number": 1,
+            "GPU flux": 4352,
+            "boosted clock speed": 1770,
+            "buy link": "https://www.ldlc.com/fiche/PB00260928.html",
+            "clock speed": 1545,
+            "image link": "LD0005116017_2.jpg",
+            "name": "Gigabyte AORUS GeForce RTX 2080 Ti Xtreme",
+            "power cable pin": 1,
+            "power consumption": 250,
+            "price": 1479.95
+        }
+    },
+    "motherboard": {
+        "Gigabyte B360 AORUS Gaming 3 Wi-Fi.json": {
+            "CPU chipset": 11,
+            "CPU socket": 9,
+            "GPU pcie 2.0 16x number": 2,
+            "GPU pcie 2.0 1x number": 2,
+            "GPU pcie 2.0 4x number": 1,
+            "GPU pcie 2.0 8x number": 0,
+            "GPU pcie 3.0 16x number": 2,
+            "GPU pcie 3.0 1x number": 2,
+            "GPU pcie 3.0 4x number": 1,
+            "GPU pcie 3.0 8x number": 0,
+            "M2 slot number": 1,
+            "POWER pin": 0,
+            "RAM max capacity": 64,
+            "RAM max slot": 16,
+            "RAM slot number": 4,
+            "RAM speed supported": [
+                "4",
+                "5",
+                "6"
+            ],
+            "RAM type": 1,
+            "SATA slot number": 6,
+            "buy link": "https://www.ldlc.com/fiche/PB00247175.html",
+            "image link": "LD0004843258_2.jpg",
+            "motherboard type": 0,
+            "name": "Gigabyte B360 AORUS Gaming 3 Wi-Fi",
+            "price": 139.94
+        }
+    },
+    "power supply": {
+    },
+    "ram": {
+        "Corsair Vengeance LPX 16Go (2x8Go) DDR4 2666MHz C16 .json": {
+            "CAS latency": 6,
+            "RAM type": 1,
+            "buy link": "https://www.amazon.fr/Corsair-Vengeance-2666MHz-M%C3%A9moire-Performance/dp/B0123ZC44Y/ref=sr_1_5?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1ASBFLY45VF1G&dchild=1&keywords=ddr4+16go+2666mhz&qid=1603324609&sprefix=ddr4+16go+2666%2Caps%2C167&sr=8-5",
+            "image link": "61NOXYaDrdL._AC_SL1500_.jpg",
+            "memory size": 16,
+            "memory speed": 6,
+            "module number": 2,
+            "name": "Corsair Vengeance LPX 16Go (2x8Go) DDR4 2666MHz C16 ",
+            "price": 77.98
+        },
+        "Corsair Vengeance LPX 16Go .json": {
+            "CAS latency": 6,
+            "RAM type": 1,
+            "buy link": "https://www.amazon.fr/Corsair-Vengeance-3200MHz-M%C3%A9moire-Performance/dp/B0143UM4TC/ref=sr_1_5?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=ddr4&qid=1603323891&sr=8-5",
+            "image link": "51kHiPeTSmL._AC_SL1000_.jpg",
+            "memory size": 16,
+            "memory speed": 10,
+            "module number": 2,
+            "name": "Corsair Vengeance LPX 16Go ",
+            "price": 74.78
+        },
+        "Corsair Vengeance LPX Series Low Profile 16 Go.json": {
+            "CAS latency": 7,
+            "RAM type": 1,
+            "buy link": "https://www.ldlc.com/fiche/PB00192191.html",
+            "image link": "LD0003192342_2.jpg",
+            "memory size": 16,
+            "memory speed": 9,
+            "module number": 2,
+            "name": "Corsair Vengeance LPX Series Low Profile 16 Go",
+            "price": 104.95
+        }
+    },
+    "storage": {
+        "Samsung SSD 860 EVO.json": {
+            "DD type": 1,
+            "RPM": 0,
+            "Read Speed": 550,
+            "Write Speed": 520,
+            "buy link": "https://www.ldlc.com/fiche/PB00243244.html",
+            "capacity": 500,
+            "image link": "LD0004756871_2_0004757175.jpg",
+            "name": "Samsung SSD 860 EVO",
+            "price": 107.94
+        },
+        "Samsung SSD 970 EVO Plus.json": {
+            "DD type": 2,
+            "RPM": 0,
+            "Read Speed": 3500,
+            "Write Speed": 3300,
+            "buy link": "https://www.ldlc.com/fiche/PB00265391.html",
+            "capacity": 1024,
+            "image link": "LD0005195433_2_0005196062.jpg",
+            "name": "Samsung SSD 970 EVO Plus",
+            "price": 279.94
+        },
+        "Seagate BarraCuda 1 To.json": {
+            "DD type": 0,
+            "RPM": 7200,
+            "Read Speed": 180,
+            "Write Speed": 180,
+            "buy link": "https://www.ldlc.com/fiche/PB00214983.html",
+            "capacity": 1024,
+            "image link": "LD0005494741_2.jpg",
+            "name": "Seagate BarraCuda 1 To",
+            "price": 51.95
+        }
+    }
+}

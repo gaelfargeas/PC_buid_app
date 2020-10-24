@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/computer_case.qml</file>
+        <file>qml/add_new_component_view.qml</file>
+        <file>qml/motherboard.qml</file>
+        <file>images/motherboard_selected_image.png</file>
+        <file>qml/cpu.qml</file>
+        <file>qml/cooling.qml</file>
+        <file>qml/ram.qml</file>
+        <file>qml/gpu.qml</file>
+        <file>qml/storage.qml</file>
+        <file>qml/powersupply.qml</file>
+        <file>qml/selected_item.qml</file>
+        <file>images/image_listDelegate.png</file>
+        <file>qml/pdf_viewer.qml</file>
+        <file>qml/build_finish.qml</file>
+    </qresource>
+</RCC>
