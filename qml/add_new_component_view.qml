@@ -1670,7 +1670,7 @@ Item {
                 id: background_image_listDelegate
                 width: 320
                 height: 50
-                source: "images/image_listDelegate.png"
+                source: "../images/image_listDelegate.png"
 
                 Text {
                     id: listDelegate_text
@@ -2237,7 +2237,7 @@ Item {
                 id: background_image_listDelegate
                 width: 320
                 height: 50
-                source: "images/image_listDelegate.png"
+                source: "../images/image_listDelegate.png"
 
                 Text {
                     id: listDelegate_text
@@ -2729,7 +2729,7 @@ Item {
                 id: background_image_listDelegate
                 width: 320
                 height: 50
-                source: "images/image_listDelegate.png"
+                source: "../images/image_listDelegate.png"
 
                 Text {
                     id: listDelegate_text
@@ -2752,8 +2752,6 @@ Item {
 
             }
         }
-
-
 
     }
 

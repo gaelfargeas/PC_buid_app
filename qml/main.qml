@@ -93,11 +93,12 @@ ApplicationWindow {
             MenuSeparator { }
             Action {
                 id: menu_clear_selected
-                text: qsTr("Clear Selected Component")
+                text: qsTr("Clear Selected Components")
 
                 onTriggered:
                 {
                     function_object.clear_current_build_grid()
+                    function_object.clear_current_build()
                     function_object.set_component_index(8)
                     function_object.load_component_grid(8)
 
@@ -1320,6 +1321,64 @@ bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les sele
             }
         }
 
+        function clear_current_build()
+        {
+            computer_case_selected_image_link = ""
+            computer_case_selected_image_border = null
+            computer_case_selected_name =""
+            computer_case_selected_supporter_motherboard_size = ""
+
+
+            motherboard_selected_image_link = ""
+            motherboard_selected_image_border = null
+            motherboard_selected_name = ""
+            motherboard_selected_socket = ""
+            motherboard_selected_chipset = ""
+            motherboard_selected_ram_type = ""
+            motherboard_selected_ram_supported_speed = ""
+            motherboard_selected_ram_size_per_slot = 0
+            motherboard_selected_pcie20_16x = 0
+            motherboard_selected_pcie20_8x = 0
+            motherboard_selected_pcie20_4x = 0
+            motherboard_selected_pcie20_1x = 0
+            motherboard_selected_pcie30_16x = 0
+            motherboard_selected_pcie30_8x = 0
+            motherboard_selected_pcie30_4x = 0
+            motherboard_selected_pcie30_1x = 0
+            motherboard_selected_M2_slot = 0
+
+
+
+            cpu_selected_image_link = ""
+            cpu_selected_image_border = null
+            cpu_selected_name = ""
+            cpu_selected_supported_ram  = ""
+
+
+            cooling_selected_image_link = ""
+            cooling_selected_image_border = null
+            cooling_selected_name = ""
+
+
+            ram_selected_image_border = null
+            rams_selected_name = []
+            rams_selected_image = []
+
+
+            gpu_selected_image_border = null
+            gpus_selected_name = []
+            gpus_selected_image = []
+
+
+            storage_selected_image_border = null
+            storages_selected_name = []
+            storages_selected_image = []
+
+            power_supply_selected_image_link = ""
+            power_supply_selected_image_border = null
+            power_supply_selected_name = ""
+        }
+
         function reload_current_build_grid()
         {
             // clean grid
@@ -2451,7 +2510,7 @@ bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les sele
             else
             {
 
-              day_mode = true
+                day_mode = true
             }
 
         }

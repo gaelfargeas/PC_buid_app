@@ -215,7 +215,7 @@ Item {
         border.top: 0
         border.right: 0
         border.left: 0
-        source: "images/motherboard_selected_image.png"
+        source: "../images/motherboard_selected_image.png"
         anchors.fill: parent
         visible: false
     }
