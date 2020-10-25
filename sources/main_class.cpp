@@ -776,9 +776,12 @@ QList<computer_case> main_class::computer_case_motherboard_type_filter(QList<com
 
 QList<motherboard> main_class::apply_motherboard_list_filters(QList<motherboard> list, QList<int> type, QString name_filter, int chipset, int socket, int ram)
 {
-    QList<motherboard> motherboard_list_filtred;
+    QList<motherboard> motherboard_list_filtred = list;
 
-    motherboard_list_filtred = motherboard_list_type_filter(list, type);
+    if (type.length() != 0)
+    {
+        motherboard_list_filtred = motherboard_list_type_filter(motherboard_list_filtred, type);
+    }
     if (name_filter != "" )
     {
         motherboard_list_filtred = motherboard_list_name_filter(motherboard_list_filtred, name_filter);
@@ -1452,27 +1455,28 @@ void main_class::get_motherboard_list(QObject *obj, QString name_filter, QString
     QVariantMap main_map;
     int i = 0 ;
 
-    //list de "type"
     QList<int> supported_type_qlist;
-    for(QString type : types.split("supported motherboard size : ", Qt::SkipEmptyParts)[0].split("," , Qt::SkipEmptyParts) )
-    {
-        if(type == "ATX")
+    if (types != ""){
+        for(QString type : types.split("supported motherboard size : ", Qt::SkipEmptyParts)[0].split("," , Qt::SkipEmptyParts) )
         {
-            supported_type_qlist.append(0);
-        }else
-            if(type == "E_ATX")
+            if(type == "ATX")
             {
-                supported_type_qlist.append(1);
+                supported_type_qlist.append(0);
             }else
-                if(type == "Micro_ATX")
+                if(type == "E_ATX")
                 {
-                    supported_type_qlist.append(2);
+                    supported_type_qlist.append(1);
                 }else
-                    if(type == "Mini_ATX")
+                    if(type == "Micro_ATX")
                     {
-                        supported_type_qlist.append(3);
-                    }
+                        supported_type_qlist.append(2);
+                    }else
+                        if(type == "Mini_ATX")
+                        {
+                            supported_type_qlist.append(3);
+                        }
 
+        }
     }
 
     QList<motherboard> motherboard_list = apply_motherboard_list_filters(global_motherboard_list, supported_type_qlist, name_filter, chipset, socket, ram);

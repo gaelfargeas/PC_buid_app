@@ -929,10 +929,10 @@ used slot (ram/pcie peut pas prendre 6 barrete de ram si on a que 4 slot)
 meme avec les sata (si 4 sata , peut pas avoir plus de 4 ssd/hdd)
 storage size metre un cbb ?
 pdf wiewer qml
-option menu : mode nuit/jour
+option menu : mode nuit/jour (var quand call le cread des composant dans le grid pour savoir quelle couleur il doivent etre)
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
-bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les selected item)")
+")
         wrapMode: Text.WordWrap
         font.pixelSize: 28
         color: "white"
@@ -1230,7 +1230,6 @@ bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les sele
             load_component_grid(int_value)
 
             //destroy the clicked component
-
             if(int_value === 0)
             {
                 computer_case_selected_image_link = ""
@@ -1308,9 +1307,7 @@ bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les sele
 
             }
 
-
             reload_current_build_grid()
-
         }
 
         function clear_current_build_grid()
@@ -1325,7 +1322,7 @@ bug quand on choisie 1 seul item , puis on le suppre (click dessus dans les sele
         {
             computer_case_selected_image_link = ""
             computer_case_selected_image_border = null
-            computer_case_selected_name =""
+            computer_case_selected_name = ""
             computer_case_selected_supporter_motherboard_size = ""
 
 
