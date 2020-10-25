@@ -22,15 +22,21 @@ ect.
 ### Options
 
 next component: move to next component type (exemple: pass from motherboard to CPU).
+
 previous component: move to previous component type (exemple: pass from CPU to motherboard).
+
 clear selected components: clear selected components.
+
 quit : quit the application.
 
 ### Tools
 
 Add component : create new component.
+
 import components : import components current components list.
+
 export components : export components current components list.
+
 day/night mode : switch between day and night mode.
 
 
@@ -43,7 +49,6 @@ add day/night mode.
 
 get image from a link (if he can't get image from the link (exemple: no internet connection) he will search in the image folder (local)). So it can be use without internet connection but you have to add image to images folder before.
 
-finish clear selected components.
 add a windows that allow you to compare 2 component.
 add a windows that allow you to check compatibility between two component.
 
