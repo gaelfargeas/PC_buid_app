@@ -3,7 +3,9 @@
 [![PyPI](https://img.shields.io/pypi/l/simplelogging.svg)](https://github.com/gaelfargeas/PC_build_app/blob/master/LICENSE)
 
 Application that help to make computer build.
+
 help to easily make an list of compatible components and create a pdf.
+
 it also can check compatibility between component.
 
 ## Prerequis :
@@ -14,7 +16,9 @@ MSVC2015_64bit (for compilation)
 
 ## Normal use :
 start by select an computer case, it will show all compatible motherboard.
+
 select an motherboard, it will show all compatible CPU.
+
 ect.
 
 ## Menubar :
@@ -42,17 +46,20 @@ day/night mode : switch between day and night mode.
 
 ## TODO list :
 generate an .exe with all qt package include and upload it.
+
 add used slot handler system (for ram and pcie).
+
 add used slot handler system (for sata).
+
 add an pdf wiewer.
+
 add day/night mode.
 
 get image from a link (if he can't get image from the link (exemple: no internet connection) he will search in the image folder (local)). So it can be use without internet connection but you have to add image to images folder before.
 
 add a windows that allow you to compare 2 component.
-add a windows that allow you to check compatibility between two component.
 
-fix a bug when we try to remove a selected motherboard when no computer case is selected.
+add a windows that allow you to check compatibility between two component.
 
 finish and upload Unit tests.
 
