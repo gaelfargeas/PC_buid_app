@@ -16,7 +16,6 @@ void main_class::init_list()
     QDir directory(".");
     if (directory.exists("./case"))
     {
-        qInfo()<<"open case directory";
         QDir directory_case("./case");
         QStringList json_case_files = directory_case.entryList(QStringList() << "*.json",QDir::Files);
 
@@ -59,14 +58,12 @@ void main_class::init_list()
     else
     {
         //create directory
-        qInfo()<<"create case directory";
         directory.mkdir("./case");
     }
 
 
     if (directory.exists("./motherboard"))
     {
-        qInfo()<<"open motherboard directory";
         QDir directory_motherboard("./motherboard");
 
         QStringList json_case_files = directory_motherboard.entryList(QStringList() << "*.json",QDir::Files);
@@ -131,14 +128,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create motherboard directory";
         directory.mkdir("./motherboard");
     }
 
 
     if (directory.exists("./cpu"))
     {
-        qInfo()<<"open cpu directory";
         QDir directory_cpu("./cpu");
 
         QStringList json_case_files = directory_cpu.entryList(QStringList() << "*.json",QDir::Files);
@@ -190,14 +185,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create cpu directory";
         directory.mkdir("./cpu");
     }
 
 
     if (directory.exists("./cooling"))
     {
-        qInfo()<<"open cooling directory";
         QDir directory_cooling("./cooling");
 
         QStringList json_case_files = directory_cooling.entryList(QStringList() << "*.json",QDir::Files);
@@ -246,14 +239,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create cooling directory";
         directory.mkdir("./cooling");
     }
 
 
     if (directory.exists("./gpu"))
     {
-        qInfo()<<"open gpu directory";
         QDir directory_gpu("./gpu");
 
         QStringList json_case_files = directory_gpu.entryList(QStringList() << "*.json",QDir::Files);
@@ -300,14 +291,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create gpu directory";
         directory.mkdir("./gpu");
     }
 
 
     if (directory.exists("./ram"))
     {
-        qInfo()<<"open ram directory";
         QDir directory_ram("./ram");
 
         QStringList json_case_files = directory_ram.entryList(QStringList() << "*.json",QDir::Files);
@@ -348,14 +337,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create ram directory";
         directory.mkdir("./ram");
     }
 
 
     if (directory.exists("./storage"))
     {
-        qInfo()<<"open storage directory";
         QDir directory_storage("./storage");
 
         QStringList json_case_files = directory_storage.entryList(QStringList() << "*.json",QDir::Files);
@@ -396,14 +383,12 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create Storage directory";
         directory.mkdir("./storage");
     }
 
 
     if (directory.exists("./powersupply"))
     {
-        qInfo()<<"open power supply directory";
         QDir directory_case("./powersupply");
 
         QStringList json_case_files = directory_case.entryList(QStringList() << "*.json",QDir::Files);
@@ -448,7 +433,6 @@ void main_class::init_list()
     }
     else
     {
-        qInfo()<<"create power supply directory";
         directory.mkdir("./powersupply");
     }
 
@@ -506,7 +490,7 @@ int main_class::socket_str_to_int(QString socket)
     }else if(socket == "LGA_1151")
     {
         return  9;
-    }else if(socket == "LGA_1151")
+    }else if(socket == "LGA_1155")
     {
         return  10;
     }else if(socket == "LGA_1156")
@@ -526,7 +510,7 @@ int main_class::socket_str_to_int(QString socket)
         return  15;
     }else
     {
-        return 0;
+        return 16;
     }
 
 }
@@ -592,7 +576,7 @@ int main_class::chipset_str_to_int(QString chipset)
         return  18;
     }else
     {
-        return 0;
+        return 19;
     }
 
 
@@ -618,7 +602,7 @@ int main_class::ram_type_str_to_int(QString ram_type)
         return  4;
     }else
     {
-        return 0;
+        return 5;
     }
 
 }
@@ -721,7 +705,7 @@ int main_class::ram_speed_str_to_int(QString ram_speed)
         return  30;
     }else
     {
-        return 0;
+        return 31;
     }
 
 }
@@ -1392,8 +1376,6 @@ QList<power_supply> main_class::power_supply_list_power_filter(QList<power_suppl
 
 void main_class::createPDF(QString case_name, QString motherboard, QString CPU, QString cooling, QVariant RAM, QVariant GPU, QVariant DD, QString power_supply)
 {
-
-    qInfo() << "create pdf";
 
     QVariantMap component_list;
     component_list.insert("case", case_name);
