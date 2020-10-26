@@ -162,6 +162,19 @@
         }
     },
     "power supply": {
+        "ASUS ROG Thor 850W 80PLUS Platinum.json": {
+            "ATX 24 power cable": 1,
+            "ATX 4 pin": 4,
+            "Molex 4 power cable": 5,
+            "PCIE 6_2 power cable": 4,
+            "Power (W)": 11,
+            "Power supply standard": 4,
+            "Sata power cable": 12,
+            "buy link": "https://www.ldlc.com/fiche/PB00274390.html",
+            "image link": "LD0005378395_2.jpg",
+            "name": "ASUS ROG Thor 850W 80PLUS Platinum",
+            "price": 319.94
+        }
     },
     "ram": {
         "Corsair Vengeance LPX 16Go (2x8Go) DDR4 2666MHz C16 .json": {

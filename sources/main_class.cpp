@@ -1742,8 +1742,6 @@ void main_class::import_component(QString file_path)
 
     QFile json_file(file_path.split("file:///",QString::SkipEmptyParts)[0]);
 
-    //QFile json_file(file_path.split("file:///",QString::SkipEmptyParts)[0]);
-
     if (json_file.open(QFile::ReadOnly | QFile::Text))
     {
         // read all data
@@ -1853,10 +1851,6 @@ void main_class::import_component(QString file_path)
 
 void main_class::export_component(QString file_path)
 {
-    //compress (siz) open source library = upload the code == sell bofbof
-    // get all json file, mane a big json
-    //case : list of case
-    //ect : list or ect
 
     QJsonObject json;
 
@@ -2063,7 +2057,7 @@ void main_class::export_component(QString file_path)
     //get all file int the forlder
     foreach(QString filename, json_power_supply_files)
     {
-        QFile json_file("./power supply/" + filename);
+        QFile json_file("./powersupply/" + filename);
         if (json_file.open(QFile::ReadOnly | QFile::Text))
         {
             // read all data
