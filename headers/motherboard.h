@@ -32,7 +32,9 @@ public:
     QString image_link;
     double price;
     QString buy_link;
-    //DONE
+
+    //OPERATORS
+    bool operator==(motherboard mb);
 };
 
 #endif // MOTHERBOARD_H

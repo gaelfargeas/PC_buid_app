@@ -22,7 +22,10 @@ public:
     QString image_link;
     double price;
     QString buy_link;
-    //DONE
+
+    //OPERATORS
+    bool operator==(GPU gpu);
+
 };
 
 #endif // GPU_H

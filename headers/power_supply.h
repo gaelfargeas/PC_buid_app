@@ -20,6 +20,9 @@ public:
     QString image_link;
     double price;
     QString buy_link;
+
+    //OPERATORS
+    bool operator==(power_supply ps);
 };
 
 #endif // POWER_SUPPLY_H

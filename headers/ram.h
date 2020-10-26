@@ -19,7 +19,10 @@ public:
     QString image_link;
     double price;
     QString buy_link;
-    //DONE
+
+    //OPERATORS
+    bool operator==(RAM ram);
+
 };
 
 #endif // RAM_H

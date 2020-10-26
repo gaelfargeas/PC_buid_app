@@ -23,7 +23,10 @@ public:
     QString image_link;
     double price;
     QString buy_link;
-    //DONE
+
+    //OPERATORS
+    bool operator==(CPU cpu);
+
 };
 
 #endif // CPU_H

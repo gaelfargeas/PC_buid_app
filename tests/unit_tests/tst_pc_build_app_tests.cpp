@@ -17,9 +17,20 @@ private slots:
     void test_ram_type_str_to_int();
     void test_ram_speed_str_to_int();
 
+
     void test_apply_computer_case_list_filters();
     void test_computer_case_list_name_filter();
     void test_computer_case_motherboard_type_filter();
+
+
+    void test_apply_motherboard_list_filters();
+    void test_motherboard_list_type_filter();
+    void test_motherboard_list_name_filter();
+    void test_motherboard_list_chipset_filter();
+    void test_motherboard_list_socket_filter();
+    void test_motherboard_list_ram_filter();
+
+
 
 };
 
@@ -215,7 +226,264 @@ void pc_build_app_tests::test_computer_case_motherboard_type_filter()
 
 
 // MOTHERBOARD
+void pc_build_app_tests::test_apply_motherboard_list_filters()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 0, 0, 0) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "test", 0, 0, 0) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "no", 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {0}, "", 0, 0, 0) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {1}, "", 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 6, 0, 0) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 2, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 0, 9, 0) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 0, 5, 0) == empty_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 0, 0, 2) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {}, "", 0, 0, 4) == empty_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {0}, "test", 6, 9, 2) == motherboard_list);
+    QVERIFY(class_to_test.apply_motherboard_list_filters(motherboard_list, {0}, "test", 6, 9, 4) == empty_list);
+}
+
+void pc_build_app_tests::test_motherboard_list_type_filter()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.motherboard_list_type_filter(motherboard_list, {0}) == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_type_filter(motherboard_list, {1}) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_type_filter(motherboard_list, {2}) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_type_filter(motherboard_list, {0, 4}) == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_type_filter(motherboard_list, {5,3}) == empty_list);
+}
+
+void pc_build_app_tests::test_motherboard_list_name_filter()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.motherboard_list_name_filter(motherboard_list, "") == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_name_filter(motherboard_list, "test") == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_name_filter(motherboard_list, "te") == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_name_filter(motherboard_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_motherboard_list_chipset_filter()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.motherboard_list_chipset_filter(motherboard_list, 0) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_chipset_filter(motherboard_list, 4) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_chipset_filter(motherboard_list, 5) == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_chipset_filter(motherboard_list, 6) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_chipset_filter(motherboard_list, 20) == empty_list);
+}
+
+void pc_build_app_tests::test_motherboard_list_socket_filter()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.motherboard_list_socket_filter(motherboard_list, 0) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_socket_filter(motherboard_list, 7) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_socket_filter(motherboard_list, 8) == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_socket_filter(motherboard_list, 9) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_socket_filter(motherboard_list, 20) == empty_list);
+}
+
+void pc_build_app_tests::test_motherboard_list_ram_filter()
+{
+    main_class class_to_test;
+    QList<motherboard> motherboard_list;
+    QList<motherboard> empty_list;
+
+    motherboard mb;
+    mb.CPU_chipset = (CPU_SHIPSET) 5; // Intel_H110
+    mb.CPU_socket = (CPU_SOCKET) 8; // LGA_1150
+    mb.GPU_PCIE20_16x_number = 1;
+    mb.GPU_PCIE30_16x_number = 1;
+    mb.GPU_PCIE20_8x_number = 1;
+    mb.GPU_PCIE30_8x_number = 1;
+    mb.GPU_PCIE20_4x_number = 1;
+    mb.GPU_PCIE30_4x_number = 1;
+    mb.GPU_PCIE20_1x_number = 1;
+    mb.GPU_PCIE30_1x_number = 1;
+    mb.MB_type = (MOTHERBOARD_TYPE) 0; // ATX
+    mb.M_2_slot_number = 1;
+    mb.RAM_max_capacity = 64;
+    mb.RAM_max_per_slot = 16;
+    mb.RAM_slot_number = 4 ;
+    mb.RAM_speed_supported.append((RAM_speed) 0); // _1066Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 1); // _1333Mhz
+    mb.RAM_speed_supported.append((RAM_speed) 2); // _1600Mhz
+    mb.RAM_type = (RAM_TYPE) 1; // DDR4
+    mb.SATA_slot_number = 6 ;
+    mb.buy_link = "buy";
+    mb.image_link = "image";
+    mb.name = "test";
+    mb.power_pin = (MOTHERBOARD_POWER_PIN) 0; // ATX_4_pin
+    mb.price  = 100.1;
+
+    motherboard_list.append(mb);
+
+    QVERIFY(class_to_test.motherboard_list_ram_filter(motherboard_list, 0) == empty_list);
+    QVERIFY(class_to_test.motherboard_list_ram_filter(motherboard_list, 1) == motherboard_list);
+    QVERIFY(class_to_test.motherboard_list_ram_filter(motherboard_list, 6) == empty_list);
+}
 
 QTEST_MAIN(pc_build_app_tests)
 
 #include "tst_pc_build_app_tests.moc"
+
