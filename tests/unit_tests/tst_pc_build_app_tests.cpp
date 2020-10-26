@@ -31,6 +31,13 @@ private slots:
     void test_motherboard_list_ram_filter();
 
 
+    void test_apply_cpu_list_filters();
+    void test_cpu_list_name_filter();
+    void test_cpu_list_chipset_filter();
+    void test_cpu_list_socket_filter();
+    void test_cpu_list_ram_filter();
+
+
 
 };
 
@@ -482,6 +489,168 @@ void pc_build_app_tests::test_motherboard_list_ram_filter()
     QVERIFY(class_to_test.motherboard_list_ram_filter(motherboard_list, 1) == motherboard_list);
     QVERIFY(class_to_test.motherboard_list_ram_filter(motherboard_list, 6) == empty_list);
 }
+
+// CPU
+void pc_build_app_tests::test_apply_cpu_list_filters()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = (RAM_speed) 7; // _2800Mhz
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = (CPU_SOCKET) 8; // LGA_1150
+    cpu.supported_RAM_type = (RAM_TYPE) 1; // DDR4
+    cpu.supported_chipset.append((CPU_SHIPSET) 5);// Intel_H110
+    cpu.supported_chipset.append((CPU_SHIPSET) 6);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "", "", "", "") == cpu_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "test", "LGA_1150", "", "") == cpu_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "test", "LGA_1150", "Intel_H110", "") == cpu_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "test", "LGA_1150", "Intel_H110", "DDR4") == cpu_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "test", "LGA_1150", "Intel_H110", "DDR3") == empty_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "no", "", "", "") == empty_list);
+    QVERIFY(class_to_test.apply_cpu_list_filters(cpu_list, "test", "Intel_H110", "", "") == empty_list);
+}
+
+void pc_build_app_tests::test_cpu_list_name_filter()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = (RAM_speed) 7; // _2800Mhz
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = (CPU_SOCKET) 8; // LGA_1150
+    cpu.supported_RAM_type = (RAM_TYPE) 1; // DDR4
+    cpu.supported_chipset.append((CPU_SHIPSET) 5);// Intel_H110
+    cpu.supported_chipset.append((CPU_SHIPSET) 6);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+    QVERIFY(class_to_test.cpu_list_name_filter(cpu_list, "") == cpu_list);
+    QVERIFY(class_to_test.cpu_list_name_filter(cpu_list, "test") == cpu_list);
+    QVERIFY(class_to_test.cpu_list_name_filter(cpu_list, "te") == cpu_list);
+    QVERIFY(class_to_test.cpu_list_name_filter(cpu_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_cpu_list_chipset_filter()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = (RAM_speed) 7; // _2800Mhz
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = (CPU_SOCKET) 8; // LGA_1150
+    cpu.supported_RAM_type = (RAM_TYPE) 1; // DDR4
+    cpu.supported_chipset.append((CPU_SHIPSET) 5);// Intel_H110
+    cpu.supported_chipset.append((CPU_SHIPSET) 6);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+    QVERIFY(class_to_test.cpu_list_chipset_filter(cpu_list, 1) == empty_list);
+    QVERIFY(class_to_test.cpu_list_chipset_filter(cpu_list, 4) == empty_list);
+    QVERIFY(class_to_test.cpu_list_chipset_filter(cpu_list, 5) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_chipset_filter(cpu_list, 6) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_chipset_filter(cpu_list, 7) == empty_list);
+}
+
+void pc_build_app_tests::test_cpu_list_socket_filter()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = (RAM_speed) 7; // _2800Mhz
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = (CPU_SOCKET) 8; // LGA_1150
+    cpu.supported_RAM_type = (RAM_TYPE) 1; // DDR4
+    cpu.supported_chipset.append((CPU_SHIPSET) 5); // Intel_H110
+    cpu.supported_chipset.append((CPU_SHIPSET) 6);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+    QVERIFY(class_to_test.cpu_list_socket_filter(cpu_list, 0) == empty_list);
+    QVERIFY(class_to_test.cpu_list_socket_filter(cpu_list, 7) == empty_list);
+    QVERIFY(class_to_test.cpu_list_socket_filter(cpu_list, 8) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_socket_filter(cpu_list, 9) == empty_list);
+}
+
+void pc_build_app_tests::test_cpu_list_ram_filter()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = (RAM_speed) 7; // _2800Mhz
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = (CPU_SOCKET) 8; // LGA_1150
+    cpu.supported_RAM_type = (RAM_TYPE) 1; // DDR4
+    cpu.supported_chipset.append((CPU_SHIPSET) 5);// Intel_H110
+    cpu.supported_chipset.append((CPU_SHIPSET) 6);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+    QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, 0) == empty_list);
+    QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, 1) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, 2) == empty_list);
+    QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, 7) == empty_list);
+}
+
 
 QTEST_MAIN(pc_build_app_tests)
 
