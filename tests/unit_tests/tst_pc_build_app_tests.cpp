@@ -38,6 +38,9 @@ private slots:
     void test_cpu_list_ram_filter();
 
 
+    void test_apply_cooling_list_filters();
+    void test_cooling_list_name_filter();
+    void test_cooling_list_fan_size_filter();
 
 };
 
@@ -652,7 +655,99 @@ void pc_build_app_tests::test_cpu_list_ram_filter()
 }
 
 
+// COOLING
+void pc_build_app_tests::test_apply_cooling_list_filters()
+{
+    main_class class_to_test;
+    QList<cooling> cooling_list;
+    QList<cooling> empty_list;
+
+    cooling cl;
+    cl.air_flow_CFM = 100.1;
+    cl.buy_link = "buy";
+    cl.cooling_max_sound_dB = 30;
+    cl.cooling_max_speed = 1200;
+    cl.cooling_min_sound_dB = 26;
+    cl.cooling_min_speed = 1000;
+    cl.cooling_size = _140mm;
+    cl.image_link = "image";
+    cl.name = "test";
+    cl.price = 100.1;
+    cl.supported_socket.append(LGA_1150);
+    cl.supported_socket.append(LGA_1151);
+
+    cooling_list.append(cl);
+
+
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "",_140mm) == empty_list);
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "",_120mm) == cooling_list);
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "test",_120mm) == cooling_list);
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "no",_140mm) == empty_list);
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "te",_140mm) == empty_list);
+    QVERIFY(class_to_test.apply_cooling_list_filters(cooling_list, "no",_240mm) == empty_list);
+}
+
+void pc_build_app_tests::test_cooling_list_name_filter()
+{
+    main_class class_to_test;
+    QList<cooling> cooling_list;
+    QList<cooling> empty_list;
+
+    cooling cl;
+    cl.air_flow_CFM = 100.1;
+    cl.buy_link = "buy";
+    cl.cooling_max_sound_dB = 30;
+    cl.cooling_max_speed = 1200;
+    cl.cooling_min_sound_dB = 26;
+    cl.cooling_min_speed = 1000;
+    cl.cooling_size = _140mm;
+    cl.image_link = "image";
+    cl.name = "test";
+    cl.price = 100.1;
+    cl.supported_socket.append(LGA_1150);
+    cl.supported_socket.append(LGA_1151);
+
+    cooling_list.append(cl);
+
+    QVERIFY(class_to_test.cooling_list_name_filter(cooling_list, "") == cooling_list);
+    QVERIFY(class_to_test.cooling_list_name_filter(cooling_list, "test") == cooling_list);
+    QVERIFY(class_to_test.cooling_list_name_filter(cooling_list, "te") == cooling_list);
+    QVERIFY(class_to_test.cooling_list_name_filter(cooling_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_cooling_list_fan_size_filter()
+{
+    main_class class_to_test;
+    QList<cooling> cooling_list;
+    QList<cooling> empty_list;
+
+    cooling cl;
+    cl.air_flow_CFM = 100.1;
+    cl.buy_link = "buy";
+    cl.cooling_max_sound_dB = 30;
+    cl.cooling_max_speed = 1200;
+    cl.cooling_min_sound_dB = 26;
+    cl.cooling_min_speed = 1000;
+    cl.cooling_size = _140mm;
+    cl.image_link = "image";
+    cl.name = "test";
+    cl.price = 100.1;
+    cl.supported_socket.append(LGA_1150);
+    cl.supported_socket.append(LGA_1151);
+
+    cooling_list.append(cl);
+
+    QVERIFY(class_to_test.cooling_list_fan_size_filter(cooling_list, _120mm) == empty_list);
+    QVERIFY(class_to_test.cooling_list_fan_size_filter(cooling_list, _140mm) == cooling_list);
+    QVERIFY(class_to_test.cooling_list_fan_size_filter(cooling_list, _240mm) == empty_list);
+    QVERIFY(class_to_test.cooling_list_fan_size_filter(cooling_list, _420mm) == empty_list);
+}
+
+// RAM
+
+
 QTEST_MAIN(pc_build_app_tests)
 
 #include "tst_pc_build_app_tests.moc"
+
 
