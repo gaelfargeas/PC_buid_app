@@ -1112,13 +1112,12 @@ QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboar
     {
         gpu_list_filtred = gpu_list_power_cable_filter(gpu_list_filtred, gpu_power_cable-1);
     }
-    if(no_motherboard == 1)
+    if(no_motherboard == 0)
     {
-        return gpu_list_filtred;
+        gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
+                                                                       pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
     }
 
-    gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
-                                           pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
     return gpu_list_filtred;
 }
 
@@ -1246,14 +1245,6 @@ QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int n
 {
     QList<storage> storage_list_filtred = list;
 
-    if(no_motherboard == 1)
-    {
-        return storage_list_filtred;
-    }
-    if(mb_m2_slot == 0)
-    {
-        storage_list_filtred = storage_list_m2_filter(storage_list_filtred);
-    }
     if (name_filter != "" )
     {
         storage_list_filtred = storage_list_name_filter(storage_list_filtred, name_filter);
@@ -1261,6 +1252,14 @@ QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int n
     if (storage_type != 0 )
     {
         storage_list_filtred = storage_list_type_filter(storage_list_filtred, storage_type-1);
+    }
+    if(no_motherboard == 0)
+    {
+        if(mb_m2_slot == 0)
+        {
+            storage_list_filtred = storage_list_m2_filter(storage_list_filtred);
+        }
+
     }
 
     return storage_list_filtred;
@@ -1320,11 +1319,11 @@ QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supp
     }
     if (standard_filter != 0 )
     {
-        power_supply_list_filtred = power_supply_list_standard_filter(power_supply_list_filtred, standard_filter);
+        power_supply_list_filtred = power_supply_list_standard_filter(power_supply_list_filtred, standard_filter - 1);
     }
     if (power_filter != 0 )
     {
-        power_supply_list_filtred = power_supply_list_power_filter(power_supply_list_filtred, power_filter);
+        power_supply_list_filtred = power_supply_list_power_filter(power_supply_list_filtred, power_filter - 1);
     }
 
     return power_supply_list_filtred;
@@ -1350,7 +1349,7 @@ QList<power_supply> main_class::power_supply_list_standard_filter(QList<power_su
 
     for(power_supply PS : list)
     {
-        if(PS.standard == (POWER_SUPPLY_STANDARD)(standard_filter - 1) )
+        if(PS.standard == (POWER_SUPPLY_STANDARD)(standard_filter) )
         {
             ret.append(PS);
         }
@@ -1364,7 +1363,7 @@ QList<power_supply> main_class::power_supply_list_power_filter(QList<power_suppl
 
     for(power_supply PS : list)
     {
-        if(PS.power_W == (POWER_SUPPLY_W) (power_filter -1) )
+        if(PS.power_W == (POWER_SUPPLY_W) (power_filter) )
         {
             ret.append(PS);
         }

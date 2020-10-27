@@ -57,6 +57,18 @@ private slots:
     void test_gpu_list_ram_type_filter();
     void test_gpu_list_power_cable_filter();
 
+
+    void test_apply_storage_list_filters();
+    void test_storage_list_name_filter();
+    void test_storage_list_m2_filter();
+    void test_storage_list_type_filter();
+
+
+    void test_apply_power_supply_list_filters();
+    void test_power_supply_list_name_filter();
+    void test_power_supply_list_standard_filter();
+    void test_power_supply_list_power_filter();
+
 };
 
 pc_build_app_tests::pc_build_app_tests()
@@ -1086,11 +1098,227 @@ void pc_build_app_tests::test_gpu_list_power_cable_filter()
 }
 
 // STORAGE
+void pc_build_app_tests::test_apply_storage_list_filters()
+{
+    main_class class_to_test;
+    QList<storage> storage_list;
+    QList<storage> empty_list;
 
+    storage st;
+    st.RPM = 120;
+    st.buy_link = "buy";
+    st.capacity_GO = 1024;
+    st.image_link = "image";
+    st.name = "test";
+    st.price = 100.1;
+    st.read_speed = 500;
+    st.type = M_2;
+    st.write_speed = 500;
+
+    storage_list.append(st);
+
+    // storage type come from an qml combobox : 0 = "" ; 1 = HDD ; ...
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, 0) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, HDD + 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, SSD + 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, M_2 + 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "no", 0, M_2 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, M_2 + 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", 1, M_2 + 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", 0, M_2 + 1) == empty_list);
+}
+
+void pc_build_app_tests::test_storage_list_name_filter()
+{
+    main_class class_to_test;
+    QList<storage> storage_list;
+    QList<storage> empty_list;
+
+    storage st;
+    st.RPM = 120;
+    st.buy_link = "buy";
+    st.capacity_GO = 1024;
+    st.image_link = "image";
+    st.name = "test";
+    st.price = 100.1;
+    st.read_speed = 500;
+    st.type = SSD;
+    st.write_speed = 500;
+
+    storage_list.append(st);
+
+    QVERIFY(class_to_test.storage_list_name_filter(storage_list, "") == storage_list);
+    QVERIFY(class_to_test.storage_list_name_filter(storage_list, "test") == storage_list);
+    QVERIFY(class_to_test.storage_list_name_filter(storage_list, "te") == storage_list);
+    QVERIFY(class_to_test.storage_list_name_filter(storage_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_storage_list_m2_filter()
+{
+    main_class class_to_test;
+    QList<storage> storage_list;
+    QList<storage> storage_list_m2;
+    QList<storage> empty_list;
+
+    storage st;
+    st.RPM = 120;
+    st.buy_link = "buy";
+    st.capacity_GO = 1024;
+    st.image_link = "image";
+    st.name = "test";
+    st.price = 100.1;
+    st.read_speed = 500;
+    st.type = SSD;
+    st.write_speed = 500;
+
+    storage_list.append(st);
+
+    st.type = M_2;
+
+    storage_list_m2.append(st);
+
+    QVERIFY(class_to_test.storage_list_m2_filter(storage_list) == storage_list);
+    QVERIFY(class_to_test.storage_list_m2_filter(storage_list_m2) == empty_list);
+}
+
+void pc_build_app_tests::test_storage_list_type_filter()
+{
+    main_class class_to_test;
+    QList<storage> storage_list;
+    QList<storage> empty_list;
+
+    storage st;
+    st.RPM = 120;
+    st.buy_link = "buy";
+    st.capacity_GO = 1024;
+    st.image_link = "image";
+    st.name = "test";
+    st.price = 100.1;
+    st.read_speed = 500;
+    st.type = SSD;
+    st.write_speed = 500;
+
+    storage_list.append(st);
+
+
+    QVERIFY(class_to_test.storage_list_type_filter(storage_list, HDD) == empty_list);
+    QVERIFY(class_to_test.storage_list_type_filter(storage_list, SSD) == storage_list);
+    QVERIFY(class_to_test.storage_list_type_filter(storage_list, M_2) == empty_list);
+}
 
 // POWER SUPPLY
+void pc_build_app_tests::test_apply_power_supply_list_filters()
+{
+    main_class class_to_test;
+    QList<power_supply> power_supply_list;
+    QList<power_supply> empty_list;
+
+    power_supply ps;
+    ps.ATX_24_power_cable = 1;
+    ps.ATX_4_power_cable = 2;
+    ps.buy_link = "buy";
+    ps.image_link = "image";
+    ps.molex4_power_cable = 2;
+    ps.name = "test";
+    ps.pcie6_2_power_cable = 3;
+    ps.power_W = W600;
+    ps.price = 100.1;
+    ps.sata_power_cable = 6;
+    ps.standard = plus_80_gold;
+
+    power_supply_list.append(ps);
+
+    // standard type come from an qml combobox : 0 = "" ; 1 = plus_80 ; ...
+    // power_W type come from an qml combobox : 0 = "" ; 1 = W300 ; ...
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "", plus_80 + 1, W300 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80 + 1, W300 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1) == power_supply_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "no", plus_80_gold + 1, W600 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W300 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_platinium + 1, W600 + 1) == empty_list);
+}
+
+void pc_build_app_tests::test_power_supply_list_name_filter()
+{
+    main_class class_to_test;
+    QList<power_supply> power_supply_list;
+    QList<power_supply> empty_list;
+
+    power_supply ps;
+    ps.ATX_24_power_cable = 1;
+    ps.ATX_4_power_cable = 2;
+    ps.buy_link = "buy";
+    ps.image_link = "image";
+    ps.molex4_power_cable = 2;
+    ps.name = "test";
+    ps.pcie6_2_power_cable = 3;
+    ps.power_W = W600;
+    ps.price = 100.1;
+    ps.sata_power_cable = 6;
+    ps.standard = plus_80_gold;
+
+    power_supply_list.append(ps);
+
+    QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "") == power_supply_list);
+    QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "test") == power_supply_list);
+    QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "te") == power_supply_list);
+    QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_power_supply_list_standard_filter()
+{
+    main_class class_to_test;
+    QList<power_supply> power_supply_list;
+    QList<power_supply> empty_list;
+
+    power_supply ps;
+    ps.ATX_24_power_cable = 1;
+    ps.ATX_4_power_cable = 2;
+    ps.buy_link = "buy";
+    ps.image_link = "image";
+    ps.molex4_power_cable = 2;
+    ps.name = "test";
+    ps.pcie6_2_power_cable = 3;
+    ps.power_W = W600;
+    ps.price = 100.1;
+    ps.sata_power_cable = 6;
+    ps.standard = plus_80_gold;
+
+    power_supply_list.append(ps);
+
+    QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80) == empty_list);
+    QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80_bronze) == empty_list);
+    QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80_gold) == power_supply_list);
+    QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80_platinium) == empty_list);
+}
+
+void pc_build_app_tests::test_power_supply_list_power_filter()
+{
+    main_class class_to_test;
+    QList<power_supply> power_supply_list;
+    QList<power_supply> empty_list;
+
+    power_supply ps;
+    ps.ATX_24_power_cable = 1;
+    ps.ATX_4_power_cable = 2;
+    ps.buy_link = "buy";
+    ps.image_link = "image";
+    ps.molex4_power_cable = 2;
+    ps.name = "test";
+    ps.pcie6_2_power_cable = 3;
+    ps.power_W = W600;
+    ps.price = 100.1;
+    ps.sata_power_cable = 6;
+    ps.standard = plus_80_gold;
+
+    power_supply_list.append(ps);
+
+    QVERIFY(class_to_test.power_supply_list_power_filter(power_supply_list, W300) == empty_list);
+    QVERIFY(class_to_test.power_supply_list_power_filter(power_supply_list, W550) == empty_list);
+    QVERIFY(class_to_test.power_supply_list_power_filter(power_supply_list, W600) == power_supply_list);
+    QVERIFY(class_to_test.power_supply_list_power_filter(power_supply_list, W650) == empty_list);
+}
+
 
 #include "tst_pc_build_app_tests.moc"
-
-
 

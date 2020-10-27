@@ -114,7 +114,7 @@ public:
     QList<GPU> gpu_list_power_cable_filter(QList<GPU> list, int gpu_power_cable);
 
 
-    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type);
+    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter, int mb_m2_slot, int storage_type);
     QList<storage> storage_list_name_filter(QList<storage> list, QString name_filter);
     QList<storage> storage_list_m2_filter(QList<storage> list);
     QList<storage> storage_list_type_filter(QList<storage> list, int storage_type);
@@ -128,11 +128,11 @@ public:
 
     Q_INVOKABLE void createPDF(QString case_name, QString motherboard, QString CPU, QString cooling, QVariant RAM, QVariant GPU, QVariant DD, QString power_supply);
 
-    Q_INVOKABLE void get_case_list(QObject* obj, QString name_filter = "",int mb_size_filter = 0);
+    Q_INVOKABLE void get_case_list(QObject* obj, QString name_filter = "", int mb_size_filter = 0);
 
     Q_INVOKABLE void get_motherboard_list(QObject* obj, QString types, QString name_filter = "", int chipset = 0, int socket = 0, int ram = 0);
 
-    Q_INVOKABLE void get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "",QString ram_type = "");
+    Q_INVOKABLE void get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "", QString ram_type = "");
 
     Q_INVOKABLE void get_cooling_list(QObject* obj, QString name_filter = "", int fan_size = 0);
 
@@ -143,7 +143,7 @@ public:
                                   int pcie30_8x_slot = 0, int pcie30_4x_slot = 0, int pcie30_1x_slot = 0,
                                   int gpu_ram_type = 0, int gpu_power_cable = 0);
 
-    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",int mb_m2_slot = 0, int storage_type = 0);
+    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "", int mb_m2_slot = 0, int storage_type = 0);
 
     Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0);
 
