@@ -42,6 +42,13 @@ private slots:
     void test_cooling_list_name_filter();
     void test_cooling_list_fan_size_filter();
 
+    void test_apply_ram_list_filters();
+    void test_ram_list_name_filter();
+    void test_ram_list_type_filter();
+    void test_ram_list_size_slot_filter();
+    void test_ram_list_speed_filter();
+    void test_ram_list_size_filter();
+
 };
 
 pc_build_app_tests::pc_build_app_tests()
@@ -744,10 +751,166 @@ void pc_build_app_tests::test_cooling_list_fan_size_filter()
 }
 
 // RAM
+void pc_build_app_tests::test_apply_ram_list_filters()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
 
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"", 0, "", 0) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"test", 0, "", 0) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"no", 0, "", 0) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz, _2666Mhz},"test", 0, "", 0) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2666Mhz, _2133Mhz},"test", 0, "", 0) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "", 0) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 6, "", 0) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 0) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR3", 0) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 16) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 4) == empty_list);
+
+}
+
+void pc_build_app_tests::test_ram_list_name_filter()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
+
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    QVERIFY(class_to_test.ram_list_name_filter(ram_list,"") == ram_list);
+    QVERIFY(class_to_test.ram_list_name_filter(ram_list,"test") == ram_list);
+    QVERIFY(class_to_test.ram_list_name_filter(ram_list,"te") == ram_list);
+    QVERIFY(class_to_test.ram_list_name_filter(ram_list,"no") == empty_list);
+}
+
+void pc_build_app_tests::test_ram_list_type_filter()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
+
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    QVERIFY(class_to_test.ram_list_type_filter(ram_list, 0) == empty_list);
+    QVERIFY(class_to_test.ram_list_type_filter(ram_list, 1) == ram_list);
+    QVERIFY(class_to_test.ram_list_type_filter(ram_list, 2) == empty_list);
+}
+
+void pc_build_app_tests::test_ram_list_size_slot_filter()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
+
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    QVERIFY(class_to_test.ram_list_size_slot_filter(ram_list, 16) == ram_list);
+    QVERIFY(class_to_test.ram_list_size_slot_filter(ram_list, 8) == ram_list);
+    QVERIFY(class_to_test.ram_list_size_slot_filter(ram_list, 4) == empty_list);
+    QVERIFY(class_to_test.ram_list_size_slot_filter(ram_list, 2) == empty_list);
+}
+
+void pc_build_app_tests::test_ram_list_speed_filter()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
+
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    QVERIFY(class_to_test.ram_list_speed_filter(ram_list, {}) == empty_list);
+    QVERIFY(class_to_test.ram_list_speed_filter(ram_list, {_2800Mhz}) == ram_list);
+    QVERIFY(class_to_test.ram_list_speed_filter(ram_list, {_2800Mhz, _2666Mhz}) == ram_list);
+    QVERIFY(class_to_test.ram_list_speed_filter(ram_list, {_2666Mhz}) == empty_list);
+    QVERIFY(class_to_test.ram_list_speed_filter(ram_list, {_1066Mhz}) == empty_list);
+}
+
+void pc_build_app_tests::test_ram_list_size_filter()
+{
+    main_class class_to_test;
+    QList<RAM> ram_list;
+    QList<RAM> empty_list;
+
+    RAM ram;
+    ram.CAS_latency = CL16;
+    ram.TYPE = DDR4;
+    ram.buy_link = "buy";
+    ram.image_link = "image";
+    ram.memory_size = 16;
+    ram.memory_speed = _2800Mhz;
+    ram.module_number = 2;
+    ram.name = "test";
+    ram.price = 100.1;
+
+    ram_list.append(ram);
+
+    // value int from qml combobox
+    QVERIFY(class_to_test.ram_list_size_filter(ram_list, 1) == empty_list);
+    QVERIFY(class_to_test.ram_list_size_filter(ram_list, 4) == empty_list);
+    QVERIFY(class_to_test.ram_list_size_filter(ram_list, 5) == ram_list);
+    QVERIFY(class_to_test.ram_list_size_filter(ram_list, 6) == empty_list);
+}
 
 QTEST_MAIN(pc_build_app_tests)
 
 #include "tst_pc_build_app_tests.moc"
-
 
