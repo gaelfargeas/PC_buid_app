@@ -126,11 +126,22 @@ ApplicationWindow {
                 onTriggered : export_fileDialog.open()
             }
             Action {
-                // todo : set text each time day_mode change
-                text: qsTr("Dark Mode")
+                text: qsTr("Day Mode")
+
                 onTriggered :
                 {
                     function_object.change_day_mode()
+                    if(day_mode === true)
+                    {
+                        text = "Dark Mode"
+                    }
+                    else
+                    {
+                        text = "Day Mode"
+                    }
+
+                    function_object.reload_current_build_grid()
+                    function_object.load_component_grid(component_index)
                 }
             }
 
@@ -284,7 +295,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: 50
 
-        border.color: "white"
+        border.color: "#757575"
         border.width: 5
         radius: 20
 
@@ -294,13 +305,21 @@ ApplicationWindow {
             width: current_composent_option_finish_textmetrics.advanceWidth + 40
             text: qsTr("make PDF")
             font.pointSize: 18
+
             anchors.top: parent.top
             anchors.topMargin: 10
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             anchors.left: parent.left
             anchors.leftMargin: 10
+
             radius: 20
+
+            background: Rectangle {
+                id : current_composent_option_finish_button_background
+                radius: current_composent_option_finish_button.radius
+                color: "#E0E0E0"
+            }
 
 
             onClicked:
@@ -397,7 +416,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: computer_case_motherboard_size_filter_cbb
-
+                width: 140
                 anchors.left: computer_case_motherboard_size_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -409,10 +428,13 @@ ApplicationWindow {
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
 
-
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : computer_case_motherboard_size_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
-
-
         }
 
         Rectangle{
@@ -452,7 +474,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: motherboard_ram_filter_cbb
-
+                width: 140
                 anchors.right: motherboard_socket_filter_text.left
                 anchors.rightMargin: (parent.width / 10)
                 anchors.top: parent.top
@@ -463,6 +485,13 @@ ApplicationWindow {
                 model: ["", "DDR3", "DDR4", "GDDR5", "GDDR5X", "GDDR6"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : motherboard_ram_filter_cbb_background
+                    color: "#E0E0E0"
+                }
 
             }
 
@@ -487,7 +516,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: motherboard_socket_filter_cbb
-
+                width: 140
                 anchors.left: parent.left
                 anchors.leftMargin: ( (parent.width / 2) - ( width / 2 ) )
                 anchors.top: parent.top
@@ -500,6 +529,13 @@ ApplicationWindow {
                     "LGA_2066"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : motherboard_socket_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
 
             Text {
@@ -523,7 +559,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: motherboard_chipset_filter_cbb
-
+                width: 140
                 anchors.left: motherboard_chipset_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -536,6 +572,13 @@ ApplicationWindow {
                     "Intel_Z370", "Intel_Z390", "Intel_X99", "Intel_X299"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : motherboard_chipset_filter_cbb_background
+                    color: "#E0E0E0"
+                }
 
             }
 
@@ -594,7 +637,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: cooling_fan_size_filter_cbb
-
+                width: 140
                 anchors.left: cooling_fan_size_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -605,6 +648,13 @@ ApplicationWindow {
                 model: ["","120mm","140mm","240mm","280mm","360mm","420mm"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : cooling_fan_size_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
         }
 
@@ -644,7 +694,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: ram_memory_size_filter_cbb
-
+                width: 140
                 anchors.left: ram_memory_size_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -655,6 +705,13 @@ ApplicationWindow {
                 model: ["","1","2","4","8","16","32","64","128"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : ram_memory_size_filter_cbb_background
+                    color: "#E0E0E0"
+                }
 
 
             }
@@ -698,7 +755,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: gpu_ram_filter_cbb
-
+                width: 140
                 anchors.right: gpu_power_cable_filter_text.left
                 anchors.rightMargin: (parent.width / 10)
                 anchors.top: parent.top
@@ -709,6 +766,13 @@ ApplicationWindow {
                 model: ["","DDR3","DDR4","GDDR5","GDDR5X","GDDR6"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : gpu_ram_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
 
             Text {
@@ -732,7 +796,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: gpu_power_cable_filter_cbb
-
+                width: 140
                 anchors.left: gpu_power_cable_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -743,6 +807,13 @@ ApplicationWindow {
                 model: ["","PCIE_8","PCIE_8_8","NONE"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : gpu_power_cable_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
         }
 
@@ -782,9 +853,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: storage_type_filter_cbb
-                x: 515
-                height: 50
-
+                width: 140
                 anchors.left: parent.left
                 anchors.leftMargin: ( (parent.width / 2) + 5 )
                 anchors.top: parent.top
@@ -795,6 +864,13 @@ ApplicationWindow {
                 model: ["","HDD","SSD","M_2"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : storage_type_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
 
 
@@ -836,7 +912,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: power_supply_standard_filter_cbb
-
+                width: 140
                 anchors.right: power_supply_power_filter_text.left
                 anchors.rightMargin: (parent.width / 10)
                 anchors.top: parent.top
@@ -847,6 +923,13 @@ ApplicationWindow {
                 model: ["", "plus_80", "plus_80_bronze", "plus_80_silver", "plus_80_gold", "plus_80_platinium", "plus_80_titanium"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : power_supply_standard_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
 
             Text {
@@ -870,7 +953,7 @@ ApplicationWindow {
             }
             ComboBox{
                 id: power_supply_power_filter_cbb
-
+                width: 140
                 anchors.left: power_supply_power_filter_text.right
                 anchors.leftMargin: 10
                 anchors.top: parent.top
@@ -882,6 +965,13 @@ ApplicationWindow {
                     "W900", "W950", "W1000", "W1100", "W1200", "W1300", "W1400", "W1500", "W1600"]
 
                 onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : power_supply_power_filter_cbb_background
+                    color: "#E0E0E0"
+                }
             }
 
         }
@@ -1389,7 +1479,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (computer_case_selected_name !== "")
                 {
                     current_items_component.createObject(current_build_grid,
-                                                         {item_name : computer_case_selected_name, image_link : computer_case_selected_image_link,
+                                                         {day_mode : day_mode, item_name : computer_case_selected_name, image_link : computer_case_selected_image_link,
                                                              item_index : 0,  main_script_object : function_object
                                                          });
                 }
@@ -1398,7 +1488,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (motherboard_selected_name !== "")
                 {
                     current_items_component.createObject(current_build_grid,
-                                                         {item_name : motherboard_selected_name, image_link : motherboard_selected_image_link,
+                                                         {day_mode : day_mode, item_name : motherboard_selected_name, image_link : motherboard_selected_image_link,
                                                              item_index : 1,  main_script_object : function_object
                                                          });
                 }
@@ -1407,7 +1497,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (cpu_selected_name !== "")
                 {
                     current_items_component.createObject(current_build_grid,
-                                                         {item_name : cpu_selected_name, image_link : cpu_selected_image_link,
+                                                         {day_mode : day_mode, item_name : cpu_selected_name, image_link : cpu_selected_image_link,
                                                              item_index : 2,  main_script_object : function_object
                                                          });
                 }
@@ -1416,7 +1506,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (cooling_selected_name !== "")
                 {
                     current_items_component.createObject(current_build_grid,
-                                                         {item_name : cooling_selected_name, image_link : cooling_selected_image_link,
+                                                         {day_mode : day_mode, item_name : cooling_selected_name, image_link : cooling_selected_image_link,
                                                              item_index : 3,  main_script_object : function_object
                                                          });
                 }
@@ -1428,7 +1518,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                     {
 
                         current_items_component.createObject(current_build_grid,
-                                                             {item_name : rams_selected_name[index_ram], image_link : rams_selected_image[index_ram],
+                                                             {day_mode : day_mode, item_name : rams_selected_name[index_ram], image_link : rams_selected_image[index_ram],
                                                                  item_index : 4,  main_script_object : function_object
                                                              });
                     }
@@ -1442,7 +1532,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                     for (var index_gpu = 0; index_gpu < gpus_selected_name.length ; index_gpu++)
                     {
                         current_items_component.createObject(current_build_grid,
-                                                             {item_name : gpus_selected_name[index_gpu], image_link : gpus_selected_image[index_gpu],
+                                                             {day_mode : day_mode, item_name : gpus_selected_name[index_gpu], image_link : gpus_selected_image[index_gpu],
                                                                  item_index : 5,  main_script_object : function_object
                                                              });
                     }
@@ -1454,7 +1544,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                     for (var index_storage = 0; index_storage < storages_selected_name.length ; index_storage++)
                     {
                         current_items_component.createObject(current_build_grid,
-                                                             {item_name : storages_selected_name[index_storage], image_link : storages_selected_image[index_storage],
+                                                             {day_mode : day_mode, item_name : storages_selected_name[index_storage], image_link : storages_selected_image[index_storage],
                                                                  item_index : 6,  main_script_object : function_object
                                                              });
                     }
@@ -1464,7 +1554,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (power_supply_selected_name !== "")
                 {
                     current_items_component.createObject(current_build_grid,
-                                                         {item_name : power_supply_selected_name, image_link : power_supply_selected_image_link,
+                                                         {day_mode : day_mode, item_name : power_supply_selected_name, image_link : power_supply_selected_image_link,
                                                              item_index : 7,  main_script_object : function_object
                                                          });
                 }
@@ -2057,7 +2147,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (case_component.status === Component.Ready)
                     case_component.createObject(component_grid ,
-                                                {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                                {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                     component_supported_motherboard_size : "supported motherboard size : " + tmp,
                                                     component_image_link : map[prop]["image link"], component_buy_link : qsTr(map[prop]["buy link"]),
                                                     main_script_object : function_object
@@ -2081,7 +2171,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (case_component.status === Component.Ready)
                     case_component.createObject(component_grid,
-                                                {component_name : map[prop]["name"],
+                                                {day_mode : day_mode, component_name : map[prop]["name"],
                                                     component_size : motherboard_size_str(map[prop]["motherboard type"]),
                                                     component_cpu_socket : socket_str(map[prop]["CPU socket"]),
                                                     component_cpu_chipset : chipset_str(map[prop]["CPU chipset"]),
@@ -2117,7 +2207,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (cpu_component.status === Component.Ready)
                     cpu_component.createObject(component_grid,
-                                               {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                               {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                    component_socket : socket_str(map[prop]["CPU socket"]) , component_supported_chipset : supported_chipset_str,
                                                    component_clock_speed : map[prop]["clock speed"], component_boosted_speed : map[prop]["boosted clock speed"],
                                                    component_cache_L3_Mo : map[prop]["cache L3"], component_core_number : map[prop]["core number"],
@@ -2147,7 +2237,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (cooling_component.status === Component.Ready)
                     cooling_component.createObject(component_grid,
-                                                   {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                                   {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                        component_supported_socket : supported_socket_str, component_cooling_size : cooling_size_str(map[prop]["cooling size"]),
                                                        component_cooling_min_sound_dB : map[prop]["cooling min sound"],component_cooling_max_sound_dB : map[prop]["cooling max sound"],
                                                        component_cooling_min_speed : map[prop]["cooling min speed"], component_cooling_max_speed : map[prop]["cooling max speed"],
@@ -2167,7 +2257,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (ram_component.status === Component.Ready)
                     ram_component.createObject(component_grid,
-                                               {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                               {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                    component_RAM_type : ram_type_str(map[prop]["RAM type"]), component_memory_size : map[prop]["memory size"],
                                                    component_memory_speed : ram_speed_str(map[prop]["memory speed"]),
                                                    component_module_number : map[prop]["module number"],  component_cas_latency : ram_cas_str(map[prop]["CAS latency"]) ,
@@ -2185,7 +2275,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (gpu_component.status === Component.Ready)
                     gpu_component.createObject(component_grid,
-                                               {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                               {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                    component_clock_speed : map[prop]["clock speed"], component_boost_clock : map[prop]["boosted clock speed"],
                                                    component_GPU_core_number : map[prop]["GPU core number"], component_GPU_bus : gpu_bus_str(map[prop]["GPU bus"]),
                                                    component_GPU_ram_type : ram_type_str(map[prop]["GPU RAM type"]), component_GPU_ram_size : map[prop]["GPU RAM size"],
@@ -2207,7 +2297,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if (storage_component.status === Component.Ready)
                     storage_component.createObject(component_grid,
-                                                   {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                                   {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                        component_type : storage_type_str(map[prop]["DD type"]) ,component_capacity_GO : map[prop]["capacity"],
                                                        component_RPM : map[prop]["RPM"], component_Read_speed : map[prop]["Read Speed"],
                                                        component_Write_speed : map[prop]["Write Speed"],
@@ -2224,7 +2314,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 var power_supply_component = Qt.createComponent("powersupply.qml")
                 if (power_supply_component.status === Component.Ready)
                     power_supply_component.createObject(component_grid,
-                                                        {component_name : map[prop]["name"], component_price : map[prop]["price"],
+                                                        {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
                                                             component_standard : power_supply_standard_str(map[prop]["Power supply standard"]),
                                                             component_power_W : power_supply_power_str(map[prop]["Power (W)"]),
                                                             component_sata_power_cable : map[prop]["Sata power cable"],
@@ -2244,35 +2334,35 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             if (build_finish_component.status === Component.Ready)
             {
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "COMPUTER CASE", type_index : 0,
+                                                    {day_mode : day_mode, component_name : "COMPUTER CASE", type_index : 0,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "MOTHERBOARD", type_index : 1,
+                                                    {day_mode : day_mode, component_name : "MOTHERBOARD", type_index : 1,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "CPU", type_index : 2,
+                                                    {day_mode : day_mode, component_name : "CPU", type_index : 2,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "COOLING", type_index : 3,
+                                                    {day_mode : day_mode, component_name : "COOLING", type_index : 3,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "RAM", type_index : 4,
+                                                    {day_mode : day_mode, component_name : "RAM", type_index : 4,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "GPU", type_index : 5,
+                                                    {day_mode : day_mode, component_name : "GPU", type_index : 5,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "STORAGE", type_index : 6,
+                                                    {day_mode : day_mode, component_name : "STORAGE", type_index : 6,
                                                         main_script_object : function_object});
 
                 build_finish_component.createObject(component_grid,
-                                                    {component_name : "POWER SUPPLY", type_index : 7,
+                                                    {day_mode : day_mode, component_name : "POWER SUPPLY", type_index : 7,
                                                         main_script_object : function_object});
 
 
@@ -2502,10 +2592,113 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 // todo : add var in all qml (computercase,motherboard,ect,...) day mode
                 // so when reload all item in grid have the good color
 
+                main_window.color = "#121212"
+
+                // TITLE
+                rectangle_main_title.color = "#424242"
+                main_title.color = "#E0E0E0"
+
+                // SELECTED COMPONENTS
+
+                // CURRENT COMPONENT TYPE
+                rectangle_current_component_type.color = "#424242"
+                current_composent_type.color = "#E0E0E0"
+
+                // CURRENT COMPONENT FILTRE
+                current_composent_option_rect.color = "#424242"
+                current_composent_option_rect.border.color = "#757575"
+
+                current_composent_option_finish_button_background.color = "#E0E0E0"
+
+                current_composent_option_filter_name_value.color = "#E0E0E0"
+                current_composent_option_filter_name_text.color = "#E0E0E0"
+
+                computer_case_motherboard_size_filter_text.color = "#E0E0E0"
+                computer_case_motherboard_size_filter_cbb_background.color = "#E0E0E0"
+
+                motherboard_ram_filter_text.color = "#E0E0E0"
+                motherboard_ram_filter_cbb_background.color = "#E0E0E0"
+                motherboard_socket_filter_text.color = "#E0E0E0"
+                motherboard_socket_filter_cbb_background.color = "#E0E0E0"
+                motherboard_chipset_filter_text.color = "#E0E0E0"
+                motherboard_chipset_filter_cbb_background.color = "#E0E0E0"
+
+                cooling_fan_size_filter_text.color = "#E0E0E0"
+                cooling_fan_size_filter_cbb_background.color = "#E0E0E0"
+
+                ram_memory_size_filter_text.color = "#E0E0E0"
+                ram_memory_size_filter_cbb_background.color = "#E0E0E0"
+
+                gpu_RAM_filter_text.color = "#E0E0E0"
+                gpu_ram_filter_cbb_background.color = "#E0E0E0"
+                gpu_power_cable_filter_text.color = "#E0E0E0"
+                gpu_power_cable_filter_cbb_background.color = "#E0E0E0"
+
+                storage_type_filter_text.color = "#E0E0E0"
+                storage_type_filter_cbb_background.color = "#E0E0E0"
+
+                power_supply_standard_filter_text.color = "#E0E0E0"
+                power_supply_standard_filter_cbb_background.color = "#E0E0E0"
+                power_supply_power_filter_text.color = "#E0E0E0"
+                power_supply_power_filter_cbb_background.color = "#E0E0E0"
+
+                // CHANGE DAY_MODE VALUE
                 day_mode = false
             }
             else
             {
+                main_window.color = "#FFFFFF"
+
+                // TITLE
+                rectangle_main_title.color = "#E0E0E0"
+                main_title.color = "#212121"
+
+                // SELECTED COMPONENTS
+
+                // CURRENT COMPONENT TYPE
+                rectangle_current_component_type.color = "#E0E0E0"
+                current_composent_type.color = "#212121"
+
+                // CURRENT COMPONENT FILTRE
+                current_composent_option_rect.color = "#E0E0E0"
+                current_composent_option_rect.border.color = "#EEEEEE"
+
+                current_composent_option_finish_button_background.color = "#BDBDBD"
+
+                current_composent_option_filter_name_value.color = "#212121"
+                current_composent_option_filter_name_text.color = "#212121"
+
+                computer_case_motherboard_size_filter_text.color = "#212121"
+                computer_case_motherboard_size_filter_cbb_background.color = "#BDBDBD"
+
+                motherboard_ram_filter_text.color = "#212121"
+                motherboard_ram_filter_cbb_background.color = "#BDBDBD"
+                motherboard_socket_filter_text.color = "#212121"
+                motherboard_socket_filter_cbb_background.color = "#BDBDBD"
+                motherboard_chipset_filter_text.color = "#212121"
+                motherboard_chipset_filter_cbb_background.color = "#BDBDBD"
+
+                cooling_fan_size_filter_text.color = "#212121"
+                cooling_fan_size_filter_cbb_background.color = "#BDBDBD"
+
+                ram_memory_size_filter_text.color = "#212121"
+                ram_memory_size_filter_cbb_background.color = "#BDBDBD"
+
+                gpu_RAM_filter_text.color = "#212121"
+                gpu_ram_filter_cbb_background.color = "#BDBDBD"
+                gpu_power_cable_filter_text.color = "#212121"
+                gpu_power_cable_filter_cbb_background.color = "#BDBDBD"
+
+                storage_type_filter_text.color = "#212121"
+                storage_type_filter_cbb_background.color = "#BDBDBD"
+
+                power_supply_standard_filter_text.color = "#212121"
+                power_supply_standard_filter_cbb_background.color = "#BDBDBD"
+                power_supply_power_filter_text.color = "#212121"
+                power_supply_power_filter_cbb_background.color = "#BDBDBD"
+
+                // CHANGE DAY_MODE VALUE
+
 
                 day_mode = true
             }

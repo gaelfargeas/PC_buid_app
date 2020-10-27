@@ -8,7 +8,7 @@ Item {
     width: 400
     height: 490
 
-
+    property bool day_mode: false
     property string component_name : ""
     property string component_size : ""
     property string component_cpu_socket : ""
@@ -47,7 +47,17 @@ Item {
         anchors.fill: parent
         anchors.margins: 5
         radius: 5
-        color: "#EEEEEE"
+        Component.onCompleted:
+        {
+            if (day_mode === true)
+            {
+                background.color = "#BDBDBD"
+            }
+            else
+            {
+                background.color = "#EEEEEE"
+            }
+        }
 
         MouseArea{
             anchors.fill: parent
@@ -401,6 +411,7 @@ Item {
             text: "buy link : " + component_buy_link
             wrapMode: Text.WrapAnywhere
             font.pixelSize: 18
+            clip: true
         }
 
     }

@@ -5,6 +5,7 @@ Item {
     width: 400
     height: 240
 
+    property bool day_mode: false
     property string component_name : ""
     property int type_index: 0
 
@@ -23,6 +24,20 @@ Item {
         border.color: "white"
         border.width: 5
         radius: 20
+
+        Component.onCompleted:
+        {
+            if (day_mode === true)
+            {
+                background.color = "#BDBDBD"
+                background.border.color = "#E0E0E0"
+            }
+            else
+            {
+                background.color = "lightgray"
+                background.border.color = "white"
+            }
+        }
 
 
         Text {

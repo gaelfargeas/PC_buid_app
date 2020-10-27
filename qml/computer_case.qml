@@ -8,6 +8,7 @@ Item {
     width: 400
     height: 240
 
+    property bool day_mode: false
     property string component_name : "nom"
     property string component_supported_motherboard_size : ""
     property string component_image_link : ""
@@ -27,7 +28,18 @@ Item {
         anchors.fill: parent
         anchors.margins: 5
         radius: 5
-        color: "#EEEEEE"
+        Component.onCompleted:
+        {
+            if (day_mode === true)
+            {
+                background.color = "#BDBDBD"
+            }
+            else
+            {
+                background.color = "#EEEEEE"
+            }
+        }
+
 
 
         MouseArea{
@@ -90,6 +102,7 @@ Item {
             text: "buy link : " + component_buy_link
             wrapMode: Text.WrapAnywhere
             font.pixelSize: 18
+            clip: true
         }
 
 

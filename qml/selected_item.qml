@@ -5,7 +5,7 @@ Item {
     width: 200
     height: 200
 
-
+    property bool day_mode: false
     property string item_name: ""
     property string image_link: ""
     property int item_index: 0
@@ -17,7 +17,18 @@ Item {
         anchors.fill: parent
         anchors.margins: 5
         radius: 5
-        color: "#EEEEEE"
+
+        Component.onCompleted:
+        {
+            if (day_mode === true)
+            {
+                background.color = "#BDBDBD"
+            }
+            else
+            {
+                background.color = "#EEEEEE"
+            }
+        }
 
         MouseArea{
             anchors.fill: parent
