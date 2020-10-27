@@ -42,12 +42,20 @@ private slots:
     void test_cooling_list_name_filter();
     void test_cooling_list_fan_size_filter();
 
+
     void test_apply_ram_list_filters();
     void test_ram_list_name_filter();
     void test_ram_list_type_filter();
     void test_ram_list_size_slot_filter();
     void test_ram_list_speed_filter();
     void test_ram_list_size_filter();
+
+
+    void test_apply_gpu_list_filters();
+    void test_gpu_list_name_filter();
+    void test_gpu_list_bus_filter();
+    void test_gpu_list_ram_type_filter();
+    void test_gpu_list_power_cable_filter();
 
 };
 
@@ -912,5 +920,177 @@ void pc_build_app_tests::test_ram_list_size_filter()
 
 QTEST_MAIN(pc_build_app_tests)
 
+// GPU
+void pc_build_app_tests::test_apply_gpu_list_filters()
+{
+    main_class class_to_test;
+    QList<GPU> gpu_list;
+    QList<GPU> empty_list;
+
+    GPU gpu;
+    gpu.GPU_bus = PCIE_2_0_16x;
+    gpu.GPU_core_number = 1;
+    gpu.GPU_flux = 2600;
+    gpu.GPU_ram_frequency_MHZ = 2000;
+    gpu.GPU_ram_size = 6;
+    gpu.GPU_ram_type = GDDR5X;
+    gpu.boost_clock = 2000;
+    gpu.buy_link = "buy";
+    gpu.clock = 1800;
+    gpu.image_link = "image";
+    gpu.name = "test";
+    gpu.power_clable_pin = PCIE_8;
+    gpu.power_consumption = 200;
+    gpu.price = 100.1;
+
+    gpu_list.append(gpu);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5 + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, DDR4 + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "test", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "te", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "no", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 1, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 1, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 1, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 1, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 1, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 1, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 1, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+}
+
+void pc_build_app_tests::test_gpu_list_name_filter()
+{
+    main_class class_to_test;
+    QList<GPU> gpu_list;
+    QList<GPU> empty_list;
+
+    GPU gpu;
+    gpu.GPU_bus = PCIE_2_0_16x;
+    gpu.GPU_core_number = 1;
+    gpu.GPU_flux = 2600;
+    gpu.GPU_ram_frequency_MHZ = 2000;
+    gpu.GPU_ram_size = 6;
+    gpu.GPU_ram_type = GDDR5X;
+    gpu.boost_clock = 2000;
+    gpu.buy_link = "buy";
+    gpu.clock = 1800;
+    gpu.image_link = "image";
+    gpu.name = "test";
+    gpu.power_clable_pin = PCIE_8;
+    gpu.power_consumption = 200;
+    gpu.price = 100.1;
+
+    gpu_list.append(gpu);
+
+    QVERIFY(class_to_test.gpu_list_name_filter(gpu_list, "") == gpu_list);
+    QVERIFY(class_to_test.gpu_list_name_filter(gpu_list, "test") == gpu_list);
+    QVERIFY(class_to_test.gpu_list_name_filter(gpu_list, "te") == gpu_list);
+    QVERIFY(class_to_test.gpu_list_name_filter(gpu_list, "no") == empty_list);
+}
+
+void pc_build_app_tests::test_gpu_list_bus_filter()
+{
+    main_class class_to_test;
+    QList<GPU> gpu_list;
+    QList<GPU> empty_list;
+
+    GPU gpu;
+    gpu.GPU_bus = PCIE_2_0_16x;
+    gpu.GPU_core_number = 1;
+    gpu.GPU_flux = 2600;
+    gpu.GPU_ram_frequency_MHZ = 2000;
+    gpu.GPU_ram_size = 6;
+    gpu.GPU_ram_type = GDDR5X;
+    gpu.boost_clock = 2000;
+    gpu.buy_link = "buy";
+    gpu.clock = 1800;
+    gpu.image_link = "image";
+    gpu.name = "test";
+    gpu.power_clable_pin = PCIE_8;
+    gpu.power_consumption = 200;
+    gpu.price = 100.1;
+
+    gpu_list.append(gpu);
+
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 1, 0, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 1, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 1, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 1, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 1, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 0, 1) == empty_list);
+}
+
+void pc_build_app_tests::test_gpu_list_ram_type_filter()
+{
+    main_class class_to_test;
+    QList<GPU> gpu_list;
+    QList<GPU> empty_list;
+
+    GPU gpu;
+    gpu.GPU_bus = PCIE_2_0_16x;
+    gpu.GPU_core_number = 1;
+    gpu.GPU_flux = 2600;
+    gpu.GPU_ram_frequency_MHZ = 2000;
+    gpu.GPU_ram_size = 6;
+    gpu.GPU_ram_type = GDDR5X;
+    gpu.boost_clock = 2000;
+    gpu.buy_link = "buy";
+    gpu.clock = 1800;
+    gpu.image_link = "image";
+    gpu.name = "test";
+    gpu.power_clable_pin = PCIE_8;
+    gpu.power_consumption = 200;
+    gpu.price = 100.1;
+
+    gpu_list.append(gpu);
+
+    QVERIFY(class_to_test.gpu_list_ram_type_filter(gpu_list, GDDR5X) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_ram_type_filter(gpu_list, DDR4) == empty_list);
+    QVERIFY(class_to_test.gpu_list_ram_type_filter(gpu_list, GDDR6) == empty_list);
+}
+
+void pc_build_app_tests::test_gpu_list_power_cable_filter()
+{
+    main_class class_to_test;
+    QList<GPU> gpu_list;
+    QList<GPU> empty_list;
+
+    GPU gpu;
+    gpu.GPU_bus = PCIE_2_0_16x;
+    gpu.GPU_core_number = 1;
+    gpu.GPU_flux = 2600;
+    gpu.GPU_ram_frequency_MHZ = 2000;
+    gpu.GPU_ram_size = 6;
+    gpu.GPU_ram_type = GDDR5X;
+    gpu.boost_clock = 2000;
+    gpu.buy_link = "buy";
+    gpu.clock = 1800;
+    gpu.image_link = "image";
+    gpu.name = "test";
+    gpu.power_clable_pin = PCIE_8;
+    gpu.power_consumption = 200;
+    gpu.price = 100.1;
+
+    gpu_list.append(gpu);
+
+    QVERIFY(class_to_test.gpu_list_power_cable_filter(gpu_list, NONE) == empty_list);
+    QVERIFY(class_to_test.gpu_list_power_cable_filter(gpu_list, PCIE_8) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_power_cable_filter(gpu_list, PCIE_8_8) == empty_list);
+}
+
+// STORAGE
+
+
+// POWER SUPPLY
+
 #include "tst_pc_build_app_tests.moc"
+
+
 

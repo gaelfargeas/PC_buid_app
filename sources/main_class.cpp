@@ -1098,13 +1098,7 @@ QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboar
 {
     QList<GPU> gpu_list_filtred = list;
 
-    if(no_motherboard == 1)
-    {
-        return gpu_list_filtred;
-    }
 
-    gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
-                                           pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
 
     if (name_filter != "" )
     {
@@ -1118,7 +1112,13 @@ QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboar
     {
         gpu_list_filtred = gpu_list_power_cable_filter(gpu_list_filtred, gpu_power_cable-1);
     }
+    if(no_motherboard == 1)
+    {
+        return gpu_list_filtred;
+    }
 
+    gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
+                                           pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
     return gpu_list_filtred;
 }
 
