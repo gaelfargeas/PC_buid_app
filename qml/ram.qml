@@ -5,7 +5,7 @@ import Image_qml 1.0
 Item {
 
     id :    ram_grid_element
-    width: 400
+    width: 420
     height: 240
 
     property bool day_mode: false
@@ -70,8 +70,14 @@ Item {
             y: 20
             width: 240
             text: component_name
+
             font.pixelSize: 18
             layer.enabled: true
+
+            anchors.left: borderImage.right
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
         }
 
         Text {
@@ -83,7 +89,6 @@ Item {
             font.pixelSize: 18
             layer.enabled: true
         }
-
 
         Text {
             id: component_ram_type_text
@@ -101,36 +106,57 @@ Item {
             y: 110
             width: 240
             text: "Total Memory : "+component_memory_size + "GB ("+ component_module_number + "x" + component_memory_size/component_module_number + "GB)"
+
             layer.enabled: true
             font.pixelSize: 18
+
+            anchors.left: borderImage.right
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.bottom: component_memory_speed_text.top
+            anchors.bottomMargin: 10
         }
 
         Text {
             id: component_memory_speed_text
             x: 20
             y: 140
-            width: 360
             text: "Memory Speed : " + component_memory_speed.substring(0, component_memory_speed.length - 2)
+
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
+
             layer.enabled: true
             font.pixelSize: 18
-        }
 
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.bottom: component_buy_link_text.top
+            anchors.bottomMargin: 10
+        }
 
         Text {
             id: component_buy_link_text
-            x: 20
             y: 170
-            width: 360
             height: 50
+
             text: "buy link : " + component_buy_link
             wrapMode: Text.WrapAnywhere
             font.pixelSize: 18
+
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+
             clip: true
         }
     }
-
 
     BorderImage {
         id: selected_border

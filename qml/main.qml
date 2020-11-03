@@ -3,6 +3,8 @@ import QtQuick.Window 2.10
 import QtQuick.Controls 2.13
 import Main_class 1.0
 import QtQuick.Dialogs 1.0
+import Image_qml 1.0
+
 
 ApplicationWindow {
     id: main_window
@@ -199,6 +201,12 @@ ApplicationWindow {
     Main_class{
         id: main_class
     }
+
+    Image_qml
+    {
+        id: image_qml
+    }
+
 
     Rectangle {
         id: rectangle_main_title
@@ -1027,11 +1035,15 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
         font.pixelSize: 28
         color: "white"
 
+
         Image {
             // test image with url as source
             id: test_image
             source: "https://www.corsair.com/medias/sys_master/images/images/he1/hf6/9110705307678/-CMK16GX4M2B3000C15-Gallery-VENG-LPX-BLK-00.png"
             anchors.fill: parent
+            asynchronous: true
+            fillMode : Image.Stretch
+            //Qt.openUrlExternally:image_qml.get_image_link(out.pdf)
         }
     }
 
@@ -1041,17 +1053,21 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
         height: 520
         visible: false
 
-
+        minimumHeight: 520
+        maximumHeight: 520
+        minimumWidth: 740
+        maximumWidth: 740
 
         Loader {
             id: loader_add_component;
-            x: 50;
+            anchors.fill: parent
             source:  "add_new_component_view.qml"
-            onLoaded: loader_add_component.item.main_class_object = main_class;
-
+            onLoaded:
+            {
+                loader_add_component.item.main_class_object = main_class;
+                loader_add_component.item.day_mode = day_mode;
+            }
         }
-
-
     }
 
     Item {
@@ -2587,18 +2603,11 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
         {
             if(day_mode === true)
             {
-                // change color of object in main.qml
-                // reload grid (componant + selected)
-                // todo : add var in all qml (computercase,motherboard,ect,...) day mode
-                // so when reload all item in grid have the good color
-
                 main_window.color = "#121212"
 
                 // TITLE
                 rectangle_main_title.color = "#424242"
                 main_title.color = "#E0E0E0"
-
-                // SELECTED COMPONENTS
 
                 // CURRENT COMPONENT TYPE
                 rectangle_current_component_type.color = "#424242"
@@ -2647,21 +2656,21 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else
             {
-                main_window.color = "#FFFFFF"
+                main_window.color = "#FAFAFA"
 
                 // TITLE
-                rectangle_main_title.color = "#E0E0E0"
+                rectangle_main_title.color = "#757575"
                 main_title.color = "#212121"
 
                 // SELECTED COMPONENTS
 
                 // CURRENT COMPONENT TYPE
-                rectangle_current_component_type.color = "#E0E0E0"
+                rectangle_current_component_type.color = "#757575"
                 current_composent_type.color = "#212121"
 
                 // CURRENT COMPONENT FILTRE
-                current_composent_option_rect.color = "#E0E0E0"
-                current_composent_option_rect.border.color = "#EEEEEE"
+                current_composent_option_rect.color = "#757575"
+                current_composent_option_rect.border.color = "#9E9E9E"
 
                 current_composent_option_finish_button_background.color = "#BDBDBD"
 
@@ -2698,8 +2707,6 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 power_supply_power_filter_cbb_background.color = "#BDBDBD"
 
                 // CHANGE DAY_MODE VALUE
-
-
                 day_mode = true
             }
 
