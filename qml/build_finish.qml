@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.10
 
 Item {
     id :    build_finish_grid_element

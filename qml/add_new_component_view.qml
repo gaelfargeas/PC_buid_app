@@ -501,7 +501,7 @@ Item {
                     power_supply_image_link_value.color = "black"
 
                     // BUTTON AND VARIABLES
-                    day_mode_button.text = "Night Mode"
+                    day_mode_button.text = "Day Mode"
                     day_mode = false
                 }else
                 {
@@ -789,7 +789,7 @@ Item {
                     power_supply_image_link_value.color = "#BDBDBD"
 
                     // BUTTON AND VARIABLES
-                    day_mode_button.text = "Day Mode"
+                    day_mode_button.text = "Night Mode"
                     day_mode = true
                 }
 
@@ -1232,7 +1232,6 @@ Item {
                     if (storage_name_value.text !== ""
                             && storage_read_speed_value.text !== ""
                             && storage_write_speed_value.text !== ""
-                            && storage_capacity_value.text !== ""
                             && storage_hdd_spindle_speed_value.text !== ""
                             && storage_price_value.text !== ""
                             && storage_buy_link_value.text !== ""
@@ -1243,7 +1242,7 @@ Item {
                                     storage_read_speed_value.text,
                                     storage_write_speed_value.text,
                                     storage_type_cbb.currentIndex,
-                                    storage_capacity_value.text,
+                                    storage_capacity_cbb.currentIndex,
                                     storage_hdd_spindle_speed_value.text,
                                     storage_image_link_value.text,
                                     storage_price_value.text,
@@ -1251,7 +1250,6 @@ Item {
 
                         //reset value
                         storage_name_value.text = ""
-                        storage_capacity_value.text = ""
                         storage_hdd_spindle_speed_value.text = ""
                         storage_price_value.text = ""
                         storage_buy_link_value.text = ""
@@ -1260,6 +1258,7 @@ Item {
                         storage_write_speed_value.text = ""
 
                         storage_type_cbb.currentIndex = 0
+                        storage_capacity_cbb.currentIndex = 0
 
                         status_message_text.visible = true
                         status_message_text.text = "New Storage successfully added"
@@ -1560,7 +1559,7 @@ Item {
             Text {
                 id: computer_case_price_text_euro
                 height: 20
-                text: qsTr("euro")
+                text: qsTr("€")
                 font.pixelSize: 18
 
                 horizontalAlignment: Text.AlignHCenter
@@ -2616,8 +2615,6 @@ Item {
 
                 anchors.left: motherboard_price_text.right
                 anchors.leftMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 40
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
                 radius: 5
@@ -2641,6 +2638,20 @@ Item {
 
                     anchors.fill: parent
                 }
+            }
+            Text {
+                id: motherboard_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: motherboard_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: motherboard_buy_link_value_rectangle.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -3355,7 +3366,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 60
+                anchors.leftMargin: 40
                 anchors.bottom: cpu_buy_link_text.top
                 anchors.bottomMargin: 10
             }
@@ -3567,6 +3578,20 @@ Item {
                     anchors.fill: parent
 
                 }
+            }
+            Text {
+                id: cpu_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: cpu_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: cpu_buy_link_value_rectangle.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -3992,7 +4017,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 40
+                anchors.leftMargin: 30
                 anchors.bottom: cooling_fan_min_speed_text.top
                 anchors.bottomMargin: 10
             }
@@ -4143,6 +4168,20 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     anchors.fill: parent
                 }
+            }
+            Text {
+                id: cooling_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: cooling_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: cooling_air_flow_text.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -4418,7 +4457,6 @@ Item {
                     anchors.leftMargin: 10
                 }
             }
-
 
             Rectangle
             {
@@ -4758,7 +4796,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 60
+                anchors.leftMargin: 40
                 anchors.bottom: ram_buy_link_text.top
                 anchors.bottomMargin: 10
             }
@@ -4852,7 +4890,6 @@ Item {
                 anchors.bottomMargin: 10
             }
 
-
             Text {
                 id: ram_price_text
                 height: 20
@@ -4896,6 +4933,20 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     anchors.fill: parent
                 }
+            }
+            Text {
+                id: ram_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: ram_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: ram_buy_link_value_rectangle.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -5436,7 +5487,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 90
+                anchors.leftMargin: 40
                 anchors.bottom: gpu_buy_link_text.top
                 anchors.bottomMargin: 10
             }
@@ -5573,6 +5624,20 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     anchors.fill: parent
                 }
+            }
+            Text {
+                id: gpu_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: gpu_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: gpu_buy_link_value_rectangle.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -5735,6 +5800,7 @@ Item {
                     anchors.leftMargin: 10
 
                     color: "black"
+                    clip: true
                 }
             }
 
@@ -5748,8 +5814,8 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: parent.left
-                anchors.leftMargin: ( (parent.width / 2) - (width / 2) )
+                anchors.right: parent.right
+                anchors.rightMargin: ( (parent.width / 2) + (width / 2) )
                 anchors.bottom: storage_type_cbb.top
                 anchors.bottomMargin: 10
             }
@@ -5758,8 +5824,8 @@ Item {
                 height: 30
                 width: 120
 
-                anchors.left: parent.left
-                anchors.leftMargin: ( (parent.width / 2) - (width / 2) )
+                anchors.right: parent.right
+                anchors.rightMargin: ( (parent.width / 2) + (width / 2) )
                 anchors.bottom: storage_write_speed_text.top
                 anchors.bottomMargin: 30
 
@@ -5784,6 +5850,34 @@ Item {
             }
 
             Text {
+                id: storage_capacity_text
+                width: storage_capacity_cbb.width
+                height: 20
+                text: qsTr("Capacity :")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: parent.left
+                anchors.leftMargin: ( (parent.width / 2) + (width / 2) )
+                anchors.bottom: storage_capacity_cbb.top
+                anchors.bottomMargin: 10
+            }
+            ComboBox {
+                id: storage_capacity_cbb
+                height: 30
+                width: 120
+
+                anchors.left: parent.left
+                anchors.leftMargin: ( (parent.width / 2) + (width / 2) )
+                anchors.bottom: storage_write_speed_text.top
+                anchors.bottomMargin: 30
+
+                model: ["120GB","250GB","500GB","1TB", "2TB","4TB","8TB"]
+            }
+
+            Text {
                 id: storage_read_speed_text
                 height: 20
                 text: qsTr("Read Speed :")
@@ -5792,8 +5886,8 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.right: storage_read_speed_value_rectangle.left
-                anchors.rightMargin: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 40
                 anchors.bottom: storage_hdd_spindle_speed_text.top
                 anchors.bottomMargin: 10
             }
@@ -5802,8 +5896,8 @@ Item {
                 height: 20
                 width: 60
 
-                anchors.right: storage_read_speed_GB_s_text.left
-                anchors.rightMargin: 10
+                anchors.left: storage_read_speed_text.right
+                anchors.leftMargin: 10
                 anchors.bottom: storage_hdd_spindle_speed_text.top
                 anchors.bottomMargin: 10
                 radius: 5
@@ -5830,14 +5924,14 @@ Item {
             Text {
                 id: storage_read_speed_GB_s_text
                 height: 20
-                text: qsTr("GB/s")
+                text: qsTr("MB/s")
                 font.pixelSize: 18
 
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.right: storage_write_speed_text.left
-                anchors.rightMargin: 60
+                anchors.left: storage_read_speed_value_rectangle.right
+                anchors.leftMargin: 10
                 anchors.bottom: storage_hdd_spindle_speed_text.top
                 anchors.bottomMargin: 10
             }
@@ -5889,7 +5983,7 @@ Item {
             Text {
                 id: storage_write_speed_GB_s_text
                 height: 20
-                text: qsTr("GB/s")
+                text: qsTr("MB/s")
                 font.pixelSize: 18
 
                 verticalAlignment: Text.AlignVCenter
@@ -5902,65 +5996,6 @@ Item {
             }
 
             Text {
-                id: storage_capacity_text
-                height: 20
-                text: qsTr("Capacity :")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: parent.left
-                anchors.leftMargin: 60
-                anchors.bottom: storage_buy_link_text.top
-                anchors.bottomMargin: 10
-            }
-            Rectangle {
-                id: storage_capacity_value_rectangle
-                height: 20
-                width: 60
-
-                anchors.left: storage_capacity_text.right
-                anchors.leftMargin: 10
-                anchors.bottom: storage_buy_link_value_rectangle.top
-                anchors.bottomMargin: 10
-                radius: 5
-
-                color: "#757575"
-
-                TextInput{
-                    id: storage_capacity_value
-                    color: "black"
-                    text: qsTr("")
-                    font.pixelSize: 18
-                    layer.enabled: true
-
-                    validator: RegExpValidator {
-                        regExp: /[1-9]+[0-9]+/
-                    }
-                    maximumLength: 5
-
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.fill: parent
-                }
-            }
-            Text {
-                id: storage_capacity_GB_text
-                height: 20
-                text: qsTr("GB")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: storage_capacity_value_rectangle.right
-                anchors.leftMargin: 10
-                anchors.bottom: storage_buy_link_value_rectangle.top
-                anchors.bottomMargin: 10
-            }
-
-            Text {
                 id: storage_hdd_spindle_speed_text
                 height: 20
                 text: qsTr("Spindle speed:")
@@ -5969,8 +6004,8 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: storage_capacity_GB_text.right
-                anchors.leftMargin: 20
+                anchors.left: parent.left
+                anchors.leftMargin: 40
                 anchors.bottom: storage_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
             }
@@ -6028,8 +6063,8 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: storage_hdd_spindle_speed_RPM_text.right
-                anchors.leftMargin: 20
+                anchors.left: parent.left
+                anchors.leftMargin: ( (parent.width / 2) + 30)
                 anchors.bottom: storage_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
             }
@@ -6062,6 +6097,20 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     anchors.fill: parent
                 }
+            }
+            Text {
+                id: storage_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: storage_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: storage_buy_link_value_rectangle.top
+                anchors.bottomMargin: 10
             }
 
             Text {
@@ -6294,7 +6343,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 90
+                anchors.leftMargin: 40
                 anchors.bottom: power_supply_sata_power_cable_text.top
                 anchors.bottomMargin: 10
             }
@@ -6418,6 +6467,20 @@ Item {
                     anchors.fill: parent
                 }
             }
+            Text {
+                id: power_supply_price_euro_text
+                height: 20
+                text: qsTr("€")
+                font.pixelSize: 18
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: power_supply_price_value_rectangle.right
+                anchors.leftMargin: 10
+                anchors.bottom: power_supply_sata_power_cable_text.top
+                anchors.bottomMargin: 10
+            }
 
             Text {
                 id: power_supply_ATX_4_text
@@ -6429,7 +6492,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
 
                 anchors.left: parent.left
-                anchors.leftMargin: 50
+                anchors.leftMargin: 40
                 anchors.bottom: power_supply_buy_link_text.top
                 anchors.bottomMargin: 10
             }

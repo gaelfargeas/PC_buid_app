@@ -4,6 +4,7 @@ import QtQuick.Controls 2.13
 import Main_class 1.0
 import QtQuick.Dialogs 1.0
 import Image_qml 1.0
+import QtWebView 1.14
 
 
 ApplicationWindow {
@@ -11,7 +12,7 @@ ApplicationWindow {
     visible: true
     width: 1920
     height: 1000
-    title: qsTr("PC BUILDER APP")
+    //title: qsTr("PC BUILDER APP")
 
     color: "#121212"
 
@@ -69,10 +70,10 @@ ApplicationWindow {
     property var storages_selected_name: []
     property var storages_selected_image: []
 
+
     property string power_supply_selected_image_link: ""
     property BorderImage power_supply_selected_image_border: null
     property string power_supply_selected_name: ""
-
 
     menuBar: MenuBar {
         id: menubar
@@ -122,6 +123,10 @@ ApplicationWindow {
             Action {
                 text: qsTr("Import Components")
                 onTriggered : import_fileDialog.open()
+            }
+            Action {
+                text: qsTr("test")
+                onTriggered : test_window.visible = true
             }
             Action {
                 text: qsTr("Export Components")
@@ -862,8 +867,8 @@ ApplicationWindow {
             ComboBox{
                 id: storage_type_filter_cbb
                 width: 140
-                anchors.left: parent.left
-                anchors.leftMargin: ( (parent.width / 2) + 5 )
+                anchors.right: storage_capacity_filter_text.left
+                anchors.rightMargin: (parent.width / 10)
                 anchors.top: parent.top
                 anchors.topMargin: 2
                 anchors.bottom: parent.bottom
@@ -881,6 +886,46 @@ ApplicationWindow {
                 }
             }
 
+            Text {
+                id: storage_capacity_filter_text
+                text: qsTr("Storage Type : ")
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: parent.left
+                anchors.leftMargin: ( (parent.width / 2) + (parent.width / 20) )
+                anchors.top: parent.top
+                anchors.topMargin: 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 2
+
+                font.pixelSize: 18
+                layer.enabled: true
+                color: "#E0E0E0"
+
+            }
+            ComboBox{
+                id: storage_capacity_filter_cbb
+                width: 140
+                anchors.left: storage_capacity_filter_text.right
+                anchors.leftMargin: 10
+                anchors.top: parent.top
+                anchors.topMargin: 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 2
+
+                model: ["","120GB","250GB","500GB","1TB", "2TB","4TB","8TB"]
+
+                onCurrentIndexChanged: function_object.load_component_grid(component_index)
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    id : storage_capacity_filter_cbb_background
+                    color: "#E0E0E0"
+                }
+            }
 
         }
 
@@ -1025,9 +1070,8 @@ ApplicationWindow {
         text: qsTr("cpu: chipset graphique ?.
 used slot (ram/pcie peut pas prendre 6 barrete de ram si on a que 4 slot)
 meme avec les sata (si 4 sata , peut pas avoir plus de 4 ssd/hdd)
-storage size metre un cbb ?
+storage size metre un cbb ? + filtre
 pdf wiewer qml
-option menu : mode nuit/jour (var quand call le cread des composant dans le grid pour savoir quelle couleur il doivent etre)
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
 ")
@@ -1035,15 +1079,18 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
         font.pixelSize: 28
         color: "white"
 
-
         Image {
             // test image with url as source
             id: test_image
-            source: "https://www.corsair.com/medias/sys_master/images/images/he1/hf6/9110705307678/-CMK16GX4M2B3000C15-Gallery-VENG-LPX-BLK-00.png"
             anchors.fill: parent
-            asynchronous: true
+
+            source: "https://www.corsair.com/medias/sys_master/images/images/he1/hf6/9110705307678/-CMK16GX4M2B3000C15-Gallery-VENG-LPX-BLK-00.png"
+            //source: "https://images.pexels.com/photos/1115090/pexels-photo-1115090.jpeg?cs=srgb&dl=beautiful-flowers-bloom-blossom-1115090.jpg&fm=jpg"
+            autoTransform: false
             fillMode : Image.Stretch
-            //Qt.openUrlExternally:image_qml.get_image_link(out.pdf)
+
+            //cache: true
+            //asynchronous: true
         }
     }
 
@@ -1067,6 +1114,25 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 loader_add_component.item.main_class_object = main_class;
                 loader_add_component.item.day_mode = day_mode;
             }
+        }
+    }
+
+    Window{
+        id: test_window
+        width: 740
+        height: 520
+        visible: false
+
+        minimumHeight: 520
+        maximumHeight: 520
+        minimumWidth: 740
+        maximumWidth: 740
+
+        Loader {
+            id: loader_test;
+            anchors.fill: parent
+            source:  "pdf_viewer.qml"
+
         }
     }
 
@@ -1269,10 +1335,10 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             {
                 if(motherboard_selected_name === "")
                 {
-                    main_class.get_storage_list(function_object, 1, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex)
+                    main_class.get_storage_list(function_object, 1, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex, storage_capacity_filter_cbb.currentIndex)
                 }else
                 {
-                    main_class.get_storage_list(function_object, 0, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex)
+                    main_class.get_storage_list(function_object, 0, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex, storage_capacity_filter_cbb.currentIndex)
 
                 }
 
@@ -2020,6 +2086,43 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
         }
 
+        function storage_capacity_str(int_value)
+        {
+            if (int_value === 0)
+            {
+                return "120GB, "
+
+            }else if (int_value === 1)
+            {
+                return "250GB, "
+
+            }else if (int_value === 2)
+            {
+                return "500GB, "
+
+            }else if (int_value === 3)
+            {
+                return "1TB, "
+
+            }else if (int_value === 4)
+            {
+                return "2TB, "
+
+            }else if (int_value === 5)
+            {
+                return "4TB, "
+
+            }else if (int_value === 6)
+            {
+                return "8TB, "
+
+            }else
+            {
+                return "120GB, "
+            }
+
+        }
+
         function power_supply_standard_str(int_value)
         {
             if (int_value === 0)
@@ -2314,7 +2417,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 if (storage_component.status === Component.Ready)
                     storage_component.createObject(component_grid,
                                                    {day_mode : day_mode, component_name : map[prop]["name"], component_price : map[prop]["price"],
-                                                       component_type : storage_type_str(map[prop]["DD type"]) ,component_capacity_GO : map[prop]["capacity"],
+                                                       component_type : storage_type_str(map[prop]["DD type"]) ,component_capacity : storage_capacity_str(map[prop]["capacity"]),
                                                        component_RPM : map[prop]["RPM"], component_Read_speed : map[prop]["Read Speed"],
                                                        component_Write_speed : map[prop]["Write Speed"],
                                                        component_image_link : map[prop]["image link"], component_buy_link : qsTr(map[prop]["buy link"]),
@@ -2717,6 +2820,6 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:21}D{i:28}
+    D{i:0;formeditorZoom:0.5}
 }
 ##^##*/

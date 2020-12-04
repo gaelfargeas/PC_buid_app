@@ -37,7 +37,7 @@ public:
                                 int GPU_ram_size, int GPU_ram_frequency_MHZ, int GPU_flux, int power_consumption, int power_clable_pin,
                                 QString image_link, double price, QString buy_link);
 
-    Q_INVOKABLE void create_storage(QString name, int read_speed, int write_speed, int type, int capacity_GO, int RPM, QString image_link, double price, QString buy_link);
+    Q_INVOKABLE void create_storage(QString name, int read_speed, int write_speed, int type, int capacity, int RPM, QString image_link, double price, QString buy_link);
 
     Q_INVOKABLE void create_power_supply(QString name, int standard, int power_W, int sata_power_cable, int pcie6_2_power_cable,
                                          int ATX_24_power_cable, int ATX_4_power_cable, int molex4_power_cable, QString image_link, double price,

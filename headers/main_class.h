@@ -114,10 +114,11 @@ public:
     QList<GPU> gpu_list_power_cable_filter(QList<GPU> list, int gpu_power_cable);
 
 
-    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter, int mb_m2_slot, int storage_type);
+    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter, int mb_m2_slot, int storage_type, int storage_capacity);
     QList<storage> storage_list_name_filter(QList<storage> list, QString name_filter);
     QList<storage> storage_list_m2_filter(QList<storage> list);
     QList<storage> storage_list_type_filter(QList<storage> list, int storage_type);
+    QList<storage> storage_list_capacity_filter(QList<storage> list, int storage_capacity);
 
 
     QList<power_supply> apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter);
@@ -143,7 +144,7 @@ public:
                                   int pcie30_8x_slot = 0, int pcie30_4x_slot = 0, int pcie30_1x_slot = 0,
                                   int gpu_ram_type = 0, int gpu_power_cable = 0);
 
-    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "", int mb_m2_slot = 0, int storage_type = 0);
+    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "", int mb_m2_slot = 0, int storage_type = 0, int storage_capacity = 0);
 
     Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0);
 

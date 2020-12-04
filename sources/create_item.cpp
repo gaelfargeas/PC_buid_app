@@ -353,7 +353,7 @@ void Create_item::create_GPU(QString name, int clock, int boost_clock, int GPU_c
     }
 }
 
-void Create_item::create_storage(QString name, int read_speed, int write_speed, int type, int capacity_GO, int RPM, QString image_link, double price, QString buy_link)
+void Create_item::create_storage(QString name, int read_speed, int write_speed, int type, int capacity, int RPM, QString image_link, double price, QString buy_link)
 {
     QJsonObject json;
     json.insert("name", name);
@@ -368,7 +368,7 @@ void Create_item::create_storage(QString name, int read_speed, int write_speed, 
     json.insert("Write Speed", write_speed);
     qInfo() << json["Write Speed"];
 
-    json.insert("capacity", capacity_GO);
+    json.insert("capacity", capacity);
     qInfo() << json["capacity"];
 
     json.insert("RPM", RPM);

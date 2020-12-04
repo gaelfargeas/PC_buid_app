@@ -11,7 +11,7 @@ bool storage::operator==(storage st)
     {
         if(this->buy_link == st.buy_link)
         {
-            if(this->capacity_GO == st.capacity_GO)
+            if(this->capacity == st.capacity)
             {
                 if(this->image_link == st.image_link)
                 {

@@ -57,6 +57,7 @@ enum GPU_POWER_CABLE_PIN{PCIE_8,PCIE_8_8,NONE};
 enum COOLING_SIZE{_120mm,_140mm,_240mm,_280mm,_360mm,_420mm};
 
 enum DD_type{HDD,SSD,M_2};
+enum DD_capacity{_120GB,_250GB,_500GB,_1TB, _2TB,_4TB,_8TB};
 
 enum POWER_SUPPLY_STANDARD{plus_80,plus_80_bronze,plus_80_silver,plus_80_gold,plus_80_platinium,plus_80_titanium};
 enum POWER_SUPPLY_W{W300, W350, W400, W450, W500, W550, W600, W650, W700, W750, W800, W850, W900, W950, W1000, W1100, W1200, W1300, W1400, W1500, W1600};

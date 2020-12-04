@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.10
 import Image_qml 1.0
 
 
@@ -15,7 +15,7 @@ Item {
     property int component_price : 0
 
     property string component_type : ""
-    property int component_capacity_GO : 0
+    property string component_capacity : ""
     property int component_RPM : 0
     property int component_Read_speed : 0
     property int component_Write_speed : 0
@@ -107,7 +107,7 @@ Item {
             x: 140
             y: 110
             width: 240
-            text: "Memory Size : " + component_capacity_GO + " GB"
+            text: "Memory Size : " + component_capacity.substring(0, component_capacity.length - 2)
             font.pixelSize: 18
             layer.enabled: true
         }

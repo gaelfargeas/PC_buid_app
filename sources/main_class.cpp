@@ -371,7 +371,7 @@ void main_class::init_list()
                 new_storage.read_speed = objetJSON["Read Speed"].toInt();
                 new_storage.write_speed = objetJSON["Write Speed"].toInt();
                 new_storage.type = (DD_type) objetJSON["DD type"].toInt();
-                new_storage.capacity_GO = objetJSON["capacity"].toInt();
+                new_storage.capacity = (DD_capacity) objetJSON["capacity"].toInt();
                 new_storage.RPM = objetJSON["RPM"].toInt();
 
                 global_storage_list.append(new_storage);
@@ -1241,7 +1241,7 @@ QList<GPU> main_class::gpu_list_power_cable_filter(QList<GPU> list, int gpu_powe
 
 
 
-QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type)
+QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type, int storage_capacity)
 {
     QList<storage> storage_list_filtred = list;
 
@@ -1252,6 +1252,10 @@ QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int n
     if (storage_type != 0 )
     {
         storage_list_filtred = storage_list_type_filter(storage_list_filtred, storage_type-1);
+    }
+    if (storage_capacity != 0)
+    {
+        storage_list_filtred = storage_list_capacity_filter(storage_list_filtred, storage_capacity-1);
     }
     if(no_motherboard == 0)
     {
@@ -1300,6 +1304,20 @@ QList<storage> main_class::storage_list_type_filter(QList<storage> list, int sto
     for(storage ST : list)
     {
         if(ST.type == (DD_type)storage_type)
+        {
+            ret.append(ST);
+        }
+    }
+    return ret;
+}
+
+QList<storage> main_class::storage_list_capacity_filter(QList<storage> list, int storage_capacity)
+{
+    QList<storage> ret;
+
+    for(storage ST : list)
+    {
+        if(ST.capacity == (DD_capacity)storage_capacity)
         {
             ret.append(ST);
         }
@@ -1658,12 +1676,12 @@ void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_fil
     QMetaObject::invokeMethod(obj, "create_gpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type)
+void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type, int storage_capacity)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<storage> storage_list = apply_storage_list_filters(global_storage_list, no_motherboard, name_filter, mb_m2_slot, storage_type );
+    QList<storage> storage_list = apply_storage_list_filters(global_storage_list, no_motherboard, name_filter, mb_m2_slot, storage_type, storage_capacity );
     for(storage sstorage : storage_list)
     {
 
@@ -1676,7 +1694,7 @@ void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name
         storage_map.insert("Read Speed", sstorage.read_speed);
         storage_map.insert("Write Speed", sstorage.write_speed);
         storage_map.insert("DD type", sstorage.type);
-        storage_map.insert("capacity", sstorage.capacity_GO);
+        storage_map.insert("capacity", sstorage.capacity);
         storage_map.insert("RPM", sstorage.RPM);
 
         main_map.insert(QString(i),storage_map);

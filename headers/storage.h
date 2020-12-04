@@ -11,7 +11,7 @@ public:
     //VARIABLES
     QString name;
     DD_type type;
-    int capacity_GO;
+    DD_capacity capacity;
     int RPM;
     int write_speed;
     int read_speed;
