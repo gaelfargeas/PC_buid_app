@@ -94,12 +94,14 @@ public:
     QList<cooling> cooling_list_name_filter(QList<cooling> list, QString name_filter);
     QList<cooling> cooling_list_fan_size_filter(QList<cooling> list, COOLING_SIZE fan_size);
 
-    QList<RAM> apply_ram_list_filters(QList<RAM> list, QList<int> ram_speed, QString name_filter, int ram_size_filter, QString ram_type, int size_slot);
+    QList<RAM> apply_ram_list_filters(QList<RAM> list, QList<int> ram_speed, QString name_filter, int ram_size_filter, QString ram_type,
+                                      int size_slot, int max_module);
     QList<RAM> ram_list_name_filter(QList<RAM> list, QString name_filter);
     QList<RAM> ram_list_type_filter(QList<RAM> list, int ram_type);
-    QList<RAM> ram_list_size_slot_filter(QList<RAM> list, int size_slot );
+    QList<RAM> ram_list_size_slot_filter(QList<RAM> list, int size_slot);
     QList<RAM> ram_list_speed_filter(QList<RAM> list, QList<int> ram_speed);
     QList<RAM> ram_list_size_filter(QList<RAM> list, int size_total);
+    QList<RAM> ram_list_module_filter(QList<RAM> list, int remaining_module);
 
 
     QList<GPU> apply_gpu_list_filters(QList<GPU> list, int no_motherboard, QString name_filter, int pcie20_16x_slot, int pcie20_8x_slot,
@@ -114,11 +116,13 @@ public:
     QList<GPU> gpu_list_power_cable_filter(QList<GPU> list, int gpu_power_cable);
 
 
-    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter, int mb_m2_slot, int storage_type, int storage_capacity);
+    QList<storage> apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,
+                                              int storage_type, int storage_capacity, int remaining_sata, int remaining_M2);
     QList<storage> storage_list_name_filter(QList<storage> list, QString name_filter);
-    QList<storage> storage_list_m2_filter(QList<storage> list);
     QList<storage> storage_list_type_filter(QList<storage> list, int storage_type);
     QList<storage> storage_list_capacity_filter(QList<storage> list, int storage_capacity);
+    QList<storage> storage_list_remaining_sata_filter(QList<storage> list, int remaining_sata);
+    QList<storage> storage_list_remaining_M2_filter(QList<storage> list, int remaining_M2);
 
 
     QList<power_supply> apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter);
@@ -137,14 +141,17 @@ public:
 
     Q_INVOKABLE void get_cooling_list(QObject* obj, QString name_filter = "", int fan_size = 0);
 
-    Q_INVOKABLE void get_ram_list(QObject* obj, QString ram_speed = "", QString name_filter = "", int ram_size_filter = 0, QString ram_type = "", int size = 0);
+    Q_INVOKABLE void get_ram_list(QObject* obj, QString ram_speed = "", QString name_filter = "",
+                                  int ram_size_filter = 0, QString ram_type = "", int size = 0,
+                                  int max_module = -1);
 
     Q_INVOKABLE void get_gpu_list(QObject* obj, int no_motherboard,QString name_filter = "", int pcie20_16x_slot = 0, int pcie20_8x_slot = 0,
                                   int pcie20_4x_slot = 0, int pcie20_1x_slot = 0, int pcie30_16x_slot = 0,
                                   int pcie30_8x_slot = 0, int pcie30_4x_slot = 0, int pcie30_1x_slot = 0,
                                   int gpu_ram_type = 0, int gpu_power_cable = 0);
 
-    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "", int mb_m2_slot = 0, int storage_type = 0, int storage_capacity = 0);
+    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",
+                                      int storage_type = 0, int storage_capacity = 0, int max_sata = -1, int max_M2 = -1);
 
     Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0);
 

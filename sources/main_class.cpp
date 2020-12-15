@@ -989,7 +989,8 @@ QList<cooling> main_class::cooling_list_fan_size_filter(QList<cooling> list, COO
 
 
 
-QList<RAM> main_class::apply_ram_list_filters(QList<RAM> list, QList<int> ram_speed, QString name_filter, int ram_size_filter, QString ram_type, int size_slot)
+QList<RAM> main_class::apply_ram_list_filters(QList<RAM> list, QList<int> ram_speed, QString name_filter, int ram_size_filter,
+                                              QString ram_type, int size_slot, int max_module)
 {
     QList<RAM> ram_list_filtred = list;
 
@@ -1009,6 +1010,10 @@ QList<RAM> main_class::apply_ram_list_filters(QList<RAM> list, QList<int> ram_sp
     if (ram_type != "" )
     {
         ram_list_filtred = ram_list_type_filter(ram_list_filtred, ram_type_str_to_int(ram_type));
+    }
+    if (max_module != -1)
+    {
+        ram_list_filtred = ram_list_module_filter(ram_list_filtred, max_module);
     }
     if (size_slot != 0 )
     {
@@ -1089,6 +1094,20 @@ QList<RAM> main_class::ram_list_size_filter(QList<RAM> list, int size_total)
     return ret;
 }
 
+QList<RAM> main_class::ram_list_module_filter(QList<RAM> list, int remaining_module)
+{
+    QList<RAM> ret;
+
+    for(RAM ram : list)
+    {
+        if(ram.module_number <= remaining_module )
+        {
+            ret.append(ram);
+        }
+    }
+    return ret;
+}
+
 
 
 QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboard, QString name_filter, int pcie20_16x_slot, int pcie20_8x_slot,
@@ -1115,7 +1134,7 @@ QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboar
     if(no_motherboard == 0)
     {
         gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
-                                                                       pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
+                                               pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot);
     }
 
     return gpu_list_filtred;
@@ -1241,7 +1260,8 @@ QList<GPU> main_class::gpu_list_power_cable_filter(QList<GPU> list, int gpu_powe
 
 
 
-QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type, int storage_capacity)
+QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int no_motherboard, QString name_filter,
+                                                      int storage_type, int storage_capacity, int remaining_sata, int remaining_M2)
 {
     QList<storage> storage_list_filtred = list;
 
@@ -1259,11 +1279,14 @@ QList<storage> main_class::apply_storage_list_filters(QList<storage> list, int n
     }
     if(no_motherboard == 0)
     {
-        if(mb_m2_slot == 0)
+        if (remaining_sata != -1)
         {
-            storage_list_filtred = storage_list_m2_filter(storage_list_filtred);
+            storage_list_filtred = storage_list_remaining_sata_filter(storage_list_filtred, remaining_sata);
         }
-
+        if (remaining_M2 != -1)
+        {
+            storage_list_filtred = storage_list_remaining_M2_filter(storage_list_filtred, remaining_M2);
+        }
     }
 
     return storage_list_filtred;
@@ -1276,20 +1299,6 @@ QList<storage> main_class::storage_list_name_filter(QList<storage> list, QString
     for(storage ST : list)
     {
         if(ST.name.toLower().contains(name_filter.toLower()))
-        {
-            ret.append(ST);
-        }
-    }
-    return ret;
-}
-
-QList<storage> main_class::storage_list_m2_filter(QList<storage> list)
-{
-    QList<storage> ret;
-
-    for(storage ST : list)
-    {
-        if(ST.type != (DD_type) 2) // m2 ssd = 2 in enum
         {
             ret.append(ST);
         }
@@ -1319,6 +1328,50 @@ QList<storage> main_class::storage_list_capacity_filter(QList<storage> list, int
     {
         if(ST.capacity == (DD_capacity)storage_capacity)
         {
+            ret.append(ST);
+        }
+    }
+    return ret;
+}
+
+QList<storage> main_class::storage_list_remaining_sata_filter(QList<storage> list, int remaining_sata)
+{
+    QList<storage> ret;
+
+    for(storage ST : list)
+    {
+        if(ST.type == HDD || ST.type == SSD)
+        {
+            if(remaining_sata > 0)
+            {
+                ret.append(ST);
+            }
+        }else
+        {
+            // ST is M_2
+            ret.append(ST);
+        }
+    }
+    return ret;
+}
+
+QList<storage> main_class::storage_list_remaining_M2_filter(QList<storage> list, int remaining_M2)
+{
+    QList<storage> ret;
+
+    for(storage ST : list)
+    {
+        if(ST.type == M_2)
+        {
+            if(remaining_M2 > 0)
+            {
+                ret.append(ST);
+            }
+
+        }
+        else
+        {
+            // ST is ssd or hdd
             ret.append(ST);
         }
     }
@@ -1602,7 +1655,7 @@ void main_class::get_cooling_list(QObject *obj, QString name_filter, int fan_siz
     QMetaObject::invokeMethod(obj, "create_cooling_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filter, int ram_size_filter, QString ram_type , int size)
+void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filter, int ram_size_filter, QString ram_type , int size, int max_module)
 {
     QVariantMap main_map;
     int i = 0 ;
@@ -1614,7 +1667,8 @@ void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filt
         supported_ram_speed_qlist.append(ram_speed_str_to_int(rram_speed));
     }
 
-    QList<RAM> ram_list = apply_ram_list_filters(global_RAM_list, supported_ram_speed_qlist , name_filter, ram_size_filter, ram_type.remove(", "), size);
+    QList<RAM> ram_list = apply_ram_list_filters(global_RAM_list, supported_ram_speed_qlist ,
+                                                 name_filter, ram_size_filter, ram_type.remove(", "), size, max_module);
     for(RAM rram : ram_list)
     {
         QVariantMap ram_map;
@@ -1676,12 +1730,15 @@ void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_fil
     QMetaObject::invokeMethod(obj, "create_gpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter,int mb_m2_slot, int storage_type, int storage_capacity)
+void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter, int storage_type,
+                                  int storage_capacity, int max_sata, int max_M2)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<storage> storage_list = apply_storage_list_filters(global_storage_list, no_motherboard, name_filter, mb_m2_slot, storage_type, storage_capacity );
+    QList<storage> storage_list = apply_storage_list_filters(global_storage_list, no_motherboard,
+                                                             name_filter, storage_type, storage_capacity,
+                                                             max_sata, max_M2);
     for(storage sstorage : storage_list)
     {
 

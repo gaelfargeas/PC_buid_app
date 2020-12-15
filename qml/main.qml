@@ -32,6 +32,7 @@ ApplicationWindow {
     property string motherboard_selected_chipset : ""
     property string motherboard_selected_ram_type : ""
     property string motherboard_selected_ram_supported_speed : ""
+    property int motherboard_selected_ram_slot : 0
     property int motherboard_selected_ram_size_per_slot: 0
     property int motherboard_selected_pcie20_16x : 0
     property int motherboard_selected_pcie20_8x : 0
@@ -42,6 +43,10 @@ ApplicationWindow {
     property int motherboard_selected_pcie30_4x : 0
     property int motherboard_selected_pcie30_1x : 0
     property int motherboard_selected_M2_slot : 0
+    property int motherboard_selected_sata_slot : 0
+    property int motherboard_used_ram_slot: 0
+    property int motherboard_used_sata_slot: 0
+    property int motherboard_used_M2_slot: 0
 
 
 
@@ -93,6 +98,15 @@ ApplicationWindow {
 
                 onTriggered: function_object.previous_component()
             }
+            Action {
+                id: menu_select
+                text: qsTr("select Component")
+
+                onTriggered: {
+                    component_index = 8
+                    function_object.load_component_grid(component_index)
+                }
+            }
             MenuSeparator { }
             Action {
                 id: menu_clear_selected
@@ -104,6 +118,10 @@ ApplicationWindow {
                     function_object.clear_current_build()
                     function_object.set_component_index(8)
                     function_object.load_component_grid(8)
+
+                    motherboard_used_M2_slot = 0
+                    motherboard_used_sata_slot = 0
+                    motherboard_used_ram_slot = 0
 
                 }
             }
@@ -125,13 +143,10 @@ ApplicationWindow {
                 onTriggered : import_fileDialog.open()
             }
             Action {
-                text: qsTr("test")
-                onTriggered : test_window.visible = true
-            }
-            Action {
                 text: qsTr("Export Components")
                 onTriggered : export_fileDialog.open()
             }
+            MenuSeparator { }
             Action {
                 text: qsTr("Day Mode")
 
@@ -151,7 +166,11 @@ ApplicationWindow {
                     function_object.load_component_grid(component_index)
                 }
             }
-
+            MenuSeparator { }
+            Action {
+                text: qsTr("test")
+                onTriggered : test_window.visible = true
+            }
         }
         Menu {
             title: qsTr("&Help")
@@ -211,7 +230,6 @@ ApplicationWindow {
     {
         id: image_qml
     }
-
 
     Rectangle {
         id: rectangle_main_title
@@ -297,12 +315,38 @@ ApplicationWindow {
 
     }
 
+    Rectangle
+    {
+        id: rectangle_error
+        height: 30
+
+        anchors.top: rectangle_current_component_type.bottom
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 50
+        anchors.left: parent.left
+        anchors.leftMargin: 50
+
+        radius: 20
+
+        color: "#424242"
+
+        Text {
+            id: rectangle_error_text
+            anchors.fill: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 28
+            color: "#FF0000"
+        }
+    }
 
     Rectangle {
         id: current_composent_option_rect
-        y: 365
         height: 50
         color: "#424242"
+        anchors.top: rectangle_error.bottom
+        anchors.topMargin: 10
         anchors.right: parent.right
         anchors.rightMargin: 50
         anchors.left: parent.left
@@ -346,6 +390,41 @@ ApplicationWindow {
                 id: current_composent_option_finish_textmetrics
                 font: current_composent_option_finish_button.font
                 text: current_composent_option_finish_button.text
+            }
+        }
+
+        RoundButton {
+            id: current_composent_option_next_button
+            width: current_composent_option_next_textmetrics.advanceWidth + 40
+            text: qsTr("NEXT")
+            font.pointSize: 18
+            visible: false
+
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.left: current_composent_option_finish_button.right
+            anchors.leftMargin: 20
+
+            radius: 20
+
+            background: Rectangle {
+                id : current_composent_option_next_button_background
+                radius: current_composent_option_next_button.radius
+                color: "#E0E0E0"
+            }
+
+
+            onClicked:
+            {
+                function_object.next_component()
+            }
+
+            TextMetrics{
+                id: current_composent_option_next_textmetrics
+                font: current_composent_option_next_button.font
+                text: current_composent_option_next_button.text
             }
         }
 
@@ -1050,12 +1129,15 @@ ApplicationWindow {
 
     Grid {
         id: component_grid
-        y: 430
-        height: 550
+
+        anchors.top: current_composent_option_rect.bottom
+        anchors.topMargin: 10
         anchors.right: parent.right
         anchors.rightMargin: 50
         anchors.left: parent.left
         anchors.leftMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 50
 
 
     }
@@ -1068,9 +1150,7 @@ ApplicationWindow {
         height: 100
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
-used slot (ram/pcie peut pas prendre 6 barrete de ram si on a que 4 slot)
-meme avec les sata (si 4 sata , peut pas avoir plus de 4 ssd/hdd)
-storage size metre un cbb ? + filtre
+power supply filter with sata power needed
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
@@ -1196,6 +1276,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             function_object.clear_component_grid()
             var name_filter = current_composent_option_filter_name_value.text
 
+            current_composent_option_next_button.visible = false
+
             if(int_value === 0)
             {
                 main_class.get_case_list(function_object, name_filter, computer_case_motherboard_size_filter_cbb.currentIndex)
@@ -1278,9 +1360,15 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 4)
             {
-                if(motherboard_selected_ram_supported_speed != "" && motherboard_selected_ram_type != "" && motherboard_selected_ram_size_per_slot != 0 )
+                current_composent_option_next_button.visible = true
+
+                if(motherboard_selected_ram_supported_speed != ""
+                        && motherboard_selected_ram_type != "" && motherboard_selected_ram_size_per_slot != 0
+                        && motherboard_selected_ram_slot != 0 )
                 {
-                    main_class.get_ram_list(function_object, motherboard_selected_ram_supported_speed, name_filter, ram_memory_size_filter_cbb.currentIndex, motherboard_selected_ram_type, motherboard_selected_ram_size_per_slot)
+                    main_class.get_ram_list(function_object, motherboard_selected_ram_supported_speed, name_filter,
+                                            ram_memory_size_filter_cbb.currentIndex, motherboard_selected_ram_type,
+                                            motherboard_selected_ram_size_per_slot, (motherboard_selected_ram_slot - motherboard_used_ram_slot))
 
                 }else
                 {
@@ -1333,12 +1421,19 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 6)
             {
-                if(motherboard_selected_name === "")
+                current_composent_option_next_button.visible = true
+
+                if(motherboard_selected_name !== "" && motherboard_selected_sata_slot !== 0)
                 {
-                    main_class.get_storage_list(function_object, 1, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex, storage_capacity_filter_cbb.currentIndex)
+
+                    main_class.get_storage_list(function_object, 0, name_filter, storage_type_filter_cbb.currentIndex,
+                                                storage_capacity_filter_cbb.currentIndex,
+                                                (motherboard_selected_sata_slot - motherboard_used_sata_slot),
+                                                (motherboard_selected_M2_slot - motherboard_used_M2_slot))
                 }else
                 {
-                    main_class.get_storage_list(function_object, 0, name_filter, motherboard_selected_M2_slot, storage_type_filter_cbb.currentIndex, storage_capacity_filter_cbb.currentIndex)
+                    main_class.get_storage_list(function_object, 1, name_filter,storage_type_filter_cbb.currentIndex,
+                                                storage_capacity_filter_cbb.currentIndex)
 
                 }
 
@@ -1488,6 +1583,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             {
                 current_build_grid.children[i-1].destroy()
             }
+
         }
 
         function clear_current_build()
@@ -2541,6 +2637,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_pcie30_4x = item["component_pcie30_4x"]
                 motherboard_selected_pcie30_1x = item["component_pcie30_1x"]
                 motherboard_selected_M2_slot = item["component_M2_slot"]
+                motherboard_selected_sata_slot = item["component_sata_slot"]
+                motherboard_selected_ram_slot = item["component_RAM_slot"]
 
                 next_component()
                 reload_current_build_grid()
@@ -2613,20 +2711,29 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 rams_selected_image.push(current_item_image)
                 rams_selected_name.push(item["component_name"])
+                motherboard_used_ram_slot += item["component_module_number"]
 
-                next_component()
                 reload_current_build_grid()
+                load_component_grid(component_index)
 
             }else
             {
-                if (ram_selected_image_border !== null)
+                if (motherboard_selected_ram_slot >= (motherboard_used_ram_slot + item["component_module_number"]))
                 {
-                    ram_selected_image_border.visible = false
+                    if (ram_selected_image_border !== null)
+                    {
+                        ram_selected_image_border.visible = false
+                    }
+
+                    ram_selected_image_border = image_selected
+                    image_selected.visible = true
+
+                    rectangle_error_text.text = ""
                 }
-
-                ram_selected_image_border = image_selected
-                image_selected.visible = true
-
+                else
+                {
+                    rectangle_error_text.text = "Can't select this RAM : Not enough slot on motherboard"
+                }
             }
         }
 
@@ -2661,8 +2768,17 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 storages_selected_image.push(current_item_image)
                 storages_selected_name.push(item["component_name"])
 
-                next_component()
+                if(item["component_type"] === "M_2, ")
+                {
+                    motherboard_used_M2_slot += 1
+                }
+                else
+                {
+                   motherboard_used_sata_slot += 1
+                }
+
                 reload_current_build_grid()
+                load_component_grid(component_index)
 
             }else
             {

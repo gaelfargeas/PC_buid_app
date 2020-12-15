@@ -118,6 +118,7 @@ Item {
         source: "../images/motherboard_selected_image.png"
         anchors.fill: parent
         visible: false
+
     }
 }
 
