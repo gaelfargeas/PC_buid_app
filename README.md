@@ -47,13 +47,9 @@ day/night mode : switch between day and night mode.
 ## TODO list :
 generate an .exe with all qt package include and upload it.
 
-add used slot handler system (for ram and pcie).
-
-add used slot handler system (for sata).
-
 add an pdf wiewer.
 
-get image from a link (if he can't get image from the link (exemple: no internet connection) he will search in the image folder (local)). So it can be use without internet connection but you have to add image to images folder before.
+get image from a link (if he can't get image from the link (exemple: no internet connection) he will search in the image folder (local). So it can be use without internet connection but you have to add image to images folder before.
 
 add a windows that allow you to compare 2 component.
 
