@@ -68,6 +68,7 @@ ApplicationWindow {
     property BorderImage ram_selected_image_border: null
     property var rams_selected_name: []
     property var rams_selected_image: []
+    property var rams_selected_module: []
 
 
     property BorderImage gpu_selected_image_border: null
@@ -79,6 +80,7 @@ ApplicationWindow {
     property BorderImage storage_selected_image_border: null
     property var storages_selected_name: []
     property var storages_selected_image: []
+    property var storages_selected_type: []
 
 
     property string power_supply_selected_image_link: ""
@@ -1155,7 +1157,6 @@ ApplicationWindow {
         height: 100
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
-problem: ne libere pas de place quand on deselectionne une un storage/ram/gpu (a faire dans reload_current_build_grid )
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
 pcie slot a refaire (dans add component)
 power supply filter with sata power needed
@@ -1521,7 +1522,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
         function selected_item_handler(item_name, int_value)
         {
             set_component_index(int_value)
-            load_component_grid(int_value)
+
 
             //destroy the clicked component
             if(int_value === 0)
@@ -1573,6 +1574,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 //remove item at index
                 rams_selected_image.splice(index_ram_item,1)
                 rams_selected_name.splice(index_ram_item,1)
+                rams_selected_module.splice(index_ram_item,1)
 
             }else if(int_value === 5)
             {
@@ -1583,15 +1585,17 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 //remove item at index
                 gpus_selected_image.splice(index_gpu_item,1)
                 gpus_selected_name.splice(index_gpu_item,1)
+                gpus_selected_bus.splice(index_gpu_item,1)
 
             }else if(int_value === 6)
             {
-                storage_selected_image_border= null
+                storage_selected_image_border = null
                 //get index
                 var index_storage_item = storages_selected_name.indexOf(item_name)
                 //remove item at index
                 storages_selected_image.splice(index_storage_item,1)
                 storages_selected_name.splice(index_storage_item,1)
+                storages_selected_type.splice(index_storage_item,1)
 
             }else if(int_value === 7)
             {
@@ -1602,6 +1606,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
 
             reload_current_build_grid()
+            load_component_grid(int_value)
         }
 
         function clear_current_build_grid()
@@ -1720,7 +1725,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 // set RAM
                 if (rams_selected_name.length !== 0)
                 {
-                    //motherboard_used_ram_slot = 0
+                    motherboard_used_ram_slot = 0
                     for (var index_ram = 0; index_ram < rams_selected_name.length ; index_ram++)
                     {
 
@@ -1728,9 +1733,10 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                                                              {day_mode : day_mode, item_name : rams_selected_name[index_ram], image_link : rams_selected_image[index_ram],
                                                                  item_index : 4,  main_script_object : function_object
                                                              });
+
+                        motherboard_used_ram_slot += rams_selected_module[index_ram]
+
                     }
-
-
                 }
 
                 // set GPU
@@ -1770,15 +1776,29 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 // set storage
                 if ( storages_selected_name.length!== 0)
                 {
-                    // motherboard_used_sata_slot = 0
-                    // motherboard_used_M2_slot = 0
+                    motherboard_used_sata_slot = 0
+                    motherboard_used_M2_slot = 0
 
                     for (var index_storage = 0; index_storage < storages_selected_name.length ; index_storage++)
                     {
                         current_items_component.createObject(current_build_grid,
-                                                             {day_mode : day_mode, item_name : storages_selected_name[index_storage], image_link : storages_selected_image[index_storage],
+                                                             {day_mode : day_mode, item_name : storages_selected_name[index_storage],
+                                                                 image_link : storages_selected_image[index_storage],
                                                                  item_index : 6,  main_script_object : function_object
                                                              });
+
+                        switch(storages_selected_type[index_storage])
+                        {
+                          case "M2":
+                              motherboard_used_M2_slot += 1
+                              break
+
+                          case "SATA":
+                              motherboard_used_sata_slot += 1
+                              break
+                        }
+
+
                     }
                 }
 
@@ -2765,7 +2785,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 rams_selected_image.push(current_item_image)
                 rams_selected_name.push(item["component_name"])
-                motherboard_used_ram_slot += item["component_module_number"]
+                rams_selected_module.push(item["component_module_number"])
 
                 reload_current_build_grid()
                 load_component_grid(component_index)
@@ -2825,11 +2845,11 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if(item["component_type"] === "M_2, ")
                 {
-                    motherboard_used_M2_slot += 1
+                    storages_selected_type.push("M2")
                 }
                 else
                 {
-                   motherboard_used_sata_slot += 1
+                   storages_selected_type.push("SATA")
                 }
 
                 reload_current_build_grid()
