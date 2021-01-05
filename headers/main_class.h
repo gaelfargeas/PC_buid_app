@@ -107,11 +107,13 @@ public:
     QList<GPU> apply_gpu_list_filters(QList<GPU> list, int no_motherboard, QString name_filter, int pcie20_16x_slot, int pcie20_8x_slot,
                                       int pcie20_4x_slot, int pcie20_1x_slot, int pcie30_16x_slot,
                                       int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot,
+                                      int used_pcie_16x, int used_pcie_8x, int used_pcie_4x, int used_pcie_1x,
                                       int gpu_ram_type, int gpu_power_cable);
     QList<GPU> gpu_list_name_filter(QList<GPU> list, QString name_filter);
     QList<GPU> gpu_list_bus_filter(QList<GPU> list, int pcie20_16x_slot, int pcie20_8x_slot,
                                    int pcie20_4x_slot, int pcie20_1x_slot, int pcie30_16x_slot,
-                                   int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot);
+                                   int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot,
+                                   int used_pcie_16x, int used_pcie_8x, int used_pcie_4x, int used_pcie_1x);
     QList<GPU> gpu_list_ram_type_filter(QList<GPU> list, int gpu_ram_type);
     QList<GPU> gpu_list_power_cable_filter(QList<GPU> list, int gpu_power_cable);
 
@@ -148,6 +150,7 @@ public:
     Q_INVOKABLE void get_gpu_list(QObject* obj, int no_motherboard,QString name_filter = "", int pcie20_16x_slot = 0, int pcie20_8x_slot = 0,
                                   int pcie20_4x_slot = 0, int pcie20_1x_slot = 0, int pcie30_16x_slot = 0,
                                   int pcie30_8x_slot = 0, int pcie30_4x_slot = 0, int pcie30_1x_slot = 0,
+                                  int used_pcie_16x = -1, int used_pcie_8x = -1, int used_pcie_4x = -1, int used_pcie_1x = -1,
                                   int gpu_ram_type = 0, int gpu_power_cable = 0);
 
     Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",

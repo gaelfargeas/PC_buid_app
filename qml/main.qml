@@ -47,6 +47,10 @@ ApplicationWindow {
     property int motherboard_used_ram_slot: 0
     property int motherboard_used_sata_slot: 0
     property int motherboard_used_M2_slot: 0
+    property int motherboard_used_pcie_16x: 0
+    property int motherboard_used_pcie_8x: 0
+    property int motherboard_used_pcie_4x: 0
+    property int motherboard_used_pcie_1x: 0
 
 
 
@@ -69,6 +73,7 @@ ApplicationWindow {
     property BorderImage gpu_selected_image_border: null
     property var gpus_selected_name: []
     property var gpus_selected_image: []
+    property var gpus_selected_bus: []
 
 
     property BorderImage storage_selected_image_border: null
@@ -1150,6 +1155,9 @@ ApplicationWindow {
         height: 100
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
+problem: ne libere pas de place quand on deselectionne une un storage/ram/gpu (a faire dans reload_current_build_grid )
+if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
+pcie slot a refaire (dans add component)
 power supply filter with sata power needed
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
@@ -1280,6 +1288,9 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
             if(int_value === 0)
             {
+                // COMPUTER CASE
+                current_composent_option_next_button.visible = false
+
                 main_class.get_case_list(function_object, name_filter, computer_case_motherboard_size_filter_cbb.currentIndex)
                 current_composent_type.text = "COMPUTER CASE"
 
@@ -1295,6 +1306,9 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 1)
             {
+                // MOTHERBOARD
+                current_composent_option_next_button.visible = false
+
                 if(computer_case_selected_supporter_motherboard_size !== "")
                 {
                     main_class.get_motherboard_list(function_object, name_filter, computer_case_selected_supporter_motherboard_size,
@@ -1321,6 +1335,9 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 2)
             {
+                // CPU
+                current_composent_option_next_button.visible = false
+
                 if(motherboard_selected_socket != "" && motherboard_selected_chipset != "" && motherboard_selected_ram_type != "")
                 {
                     main_class.get_cpu_list(function_object, name_filter, motherboard_selected_socket, motherboard_selected_chipset, motherboard_selected_ram_type )
@@ -1344,6 +1361,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 3)
             {
+                // COOLING
+                current_composent_option_next_button.visible = false
                 main_class.get_cooling_list(function_object, name_filter, cooling_fan_size_filter_cbb.currentIndex)
 
                 current_composent_type.text = "COOLING"
@@ -1360,6 +1379,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 4)
             {
+                // RAM
                 current_composent_option_next_button.visible = true
 
                 if(motherboard_selected_ram_supported_speed != ""
@@ -1390,11 +1410,14 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 5)
             {
+                // GPU
+                current_composent_option_next_button.visible = true
                 if(motherboard_selected_name === "")
                 {
                     main_class.get_gpu_list(function_object, 1,name_filter, motherboard_selected_pcie20_16x, motherboard_selected_pcie20_8x,
                                             motherboard_selected_pcie20_4x, motherboard_selected_pcie20_1x, motherboard_selected_pcie30_16x,
                                             motherboard_selected_pcie30_8x, motherboard_selected_pcie30_4x, motherboard_selected_pcie30_1x,
+                                            -1, -1, -1, -1,
                                             gpu_ram_filter_cbb.currentIndex, gpu_power_cable_filter_cbb.currentIndex)
                 }
 
@@ -1404,6 +1427,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                     main_class.get_gpu_list(function_object, 0, name_filter, motherboard_selected_pcie20_16x, motherboard_selected_pcie20_8x,
                                             motherboard_selected_pcie20_4x, motherboard_selected_pcie20_1x, motherboard_selected_pcie30_16x,
                                             motherboard_selected_pcie30_8x, motherboard_selected_pcie30_4x, motherboard_selected_pcie30_1x,
+                                            motherboard_used_pcie_16x, motherboard_used_pcie_8x, motherboard_used_pcie_4x, motherboard_used_pcie_1x,
                                             gpu_ram_filter_cbb.currentIndex, gpu_power_cable_filter_cbb.currentIndex)
                 }
 
@@ -1421,6 +1445,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 6)
             {
+                // STORAGE
                 current_composent_option_next_button.visible = true
 
                 if(motherboard_selected_name !== "" && motherboard_selected_sata_slot !== 0)
@@ -1451,6 +1476,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }
             else if(int_value === 7)
             {
+                // POWER SUPPLY
+                current_composent_option_next_button.visible = false
                 main_class.get_power_supply_list(function_object, name_filter, power_supply_standard_filter_cbb.currentIndex, power_supply_power_filter_cbb.currentIndex)
                 current_composent_type.text = "POWER SUPPLY"
 
@@ -1633,6 +1660,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             gpu_selected_image_border = null
             gpus_selected_name = []
             gpus_selected_image = []
+            gpus_selected_bus = []
 
 
             storage_selected_image_border = null
@@ -1692,6 +1720,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 // set RAM
                 if (rams_selected_name.length !== 0)
                 {
+                    //motherboard_used_ram_slot = 0
                     for (var index_ram = 0; index_ram < rams_selected_name.length ; index_ram++)
                     {
 
@@ -1705,20 +1734,45 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 }
 
                 // set GPU
-                if ( gpus_selected_name.length!== 0)
+                if ( gpus_selected_name.length !== 0)
                 {
+                    motherboard_used_pcie_16x = 0
+                    motherboard_used_pcie_8x = 0
+                    motherboard_used_pcie_4x = 0
+                    motherboard_used_pcie_1x = 0
+
                     for (var index_gpu = 0; index_gpu < gpus_selected_name.length ; index_gpu++)
                     {
                         current_items_component.createObject(current_build_grid,
                                                              {day_mode : day_mode, item_name : gpus_selected_name[index_gpu], image_link : gpus_selected_image[index_gpu],
                                                                  item_index : 5,  main_script_object : function_object
                                                              });
+
+                        //used slot
+                        switch(gpus_selected_bus[index_gpu])
+                        {
+                        case "16x":
+                            motherboard_used_pcie_16x += 1
+                            break
+                        case "8x":
+                            motherboard_used_pcie_8x += 1
+                            break
+                        case "4x":
+                            motherboard_used_pcie_4x += 1
+                            break
+                        case "1x":
+                            motherboard_used_pcie_1x += 1
+                            break
+                        }
                     }
                 }
 
                 // set storage
                 if ( storages_selected_name.length!== 0)
                 {
+                    // motherboard_used_sata_slot = 0
+                    // motherboard_used_M2_slot = 0
+
                     for (var index_storage = 0; index_storage < storages_selected_name.length ; index_storage++)
                     {
                         current_items_component.createObject(current_build_grid,
@@ -2743,22 +2797,23 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             {
                 gpus_selected_image.push(current_item_image)
                 gpus_selected_name.push(item["component_name"])
+                gpus_selected_bus.push(item["component_GPU_bus"].substring(9, item["component_GPU_bus"].length - 2))
 
-                next_component()
                 reload_current_build_grid()
+                load_component_grid(component_index)
 
             }else
             {
-                if (gpu_selected_image_border !== null)
-                {
-                    gpu_selected_image_border.visible = false
-                }
 
-                gpu_selected_image_border = image_selected
-                image_selected.visible = true
+                    if (gpu_selected_image_border !== null)
+                    {
+                        gpu_selected_image_border.visible = false
+                    }
+
+                    gpu_selected_image_border = image_selected
+                    image_selected.visible = true
 
             }
-
         }
 
         function selected_storage(image_selected, item, current_item_image)
