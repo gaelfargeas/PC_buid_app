@@ -43,6 +43,17 @@ export components : export components current components list.
 
 day/night mode : switch between day and night mode.
 
+## INFORMATIONS
+
+
+
+GPU :
+
+flux is "CUDA cores" for NVIDIA GPUs and "Stream Processors" for amd GPUs
+
+
+POWER SUPPLY:
+(CPU) 8pin / 12V 8 (4+4) pin == 2x ATX 4 pin power cable
 
 ## TODO list :
 generate an .exe with all qt package include and upload it.
