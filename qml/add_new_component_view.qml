@@ -1296,11 +1296,11 @@ Item {
                         power_supply_ATX_4_value.text = ""
                         power_supply_pcie6_2_value.text = ""
                         power_supply_sata_power_cable_value.text = ""
-                        power_supply_POWER_value.text = ""
                         power_supply_price_value.text = ""
                         power_supply_buy_link_value.text = ""
                         power_supply_image_link_value.text = ""
 
+                        power_supply_power_cbb.currentIndex = 0
                         power_supply_standard_cbb.currentIndex = 0
 
                         status_message_text.visible = true
@@ -6330,7 +6330,7 @@ Item {
                 anchors.bottom: power_supply_molex4_text.top
                 anchors.bottomMargin: 30
 
-                model: ["plus_80", "plus_80_bronze", "plus_80_silver", "plus_80_gold", "plus_80_platinium", "plus_80_titanium"]
+                model: ["80+", "80+ bronze", "80+ silver", "80+ gold", "80+ platinium", "80+ titanium"]
             }
 
             Text {

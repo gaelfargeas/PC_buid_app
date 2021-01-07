@@ -53,7 +53,6 @@ ApplicationWindow {
     property int motherboard_used_pcie_1x: 0
 
 
-
     property string cpu_selected_image_link: ""
     property BorderImage cpu_selected_image_border: null
     property string cpu_selected_name: ""
@@ -1160,6 +1159,10 @@ ApplicationWindow {
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
 pcie slot a refaire (dans add component)
 power supply filter with sata power needed
+power supply filter gpu power cable needed
+power supply filter motherboard power cable needed
+powersupply needed power system ( voir si c'est possible : du coup add dans add componant le needed power pour cpu/gpu)
+motherboard power cable : defois 4 pin defois 8
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
@@ -1479,7 +1482,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             {
                 // POWER SUPPLY
                 current_composent_option_next_button.visible = false
-                main_class.get_power_supply_list(function_object, name_filter, power_supply_standard_filter_cbb.currentIndex, power_supply_power_filter_cbb.currentIndex)
+                main_class.get_power_supply_list(function_object, name_filter, power_supply_standard_filter_cbb.currentIndex,
+                                                 power_supply_power_filter_cbb.currentIndex, motherboard_used_sata_slot)
                 current_composent_type.text = "POWER SUPPLY"
 
                 computer_case_filter_rectangle.visible = false

@@ -127,10 +127,11 @@ public:
     QList<storage> storage_list_remaining_M2_filter(QList<storage> list, int remaining_M2);
 
 
-    QList<power_supply> apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter);
+    QList<power_supply> apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter, int needed_sata);
     QList<power_supply> power_supply_list_name_filter(QList<power_supply> list, QString name_filter);
     QList<power_supply> power_supply_list_standard_filter(QList<power_supply> list, int standard_filter);
     QList<power_supply> power_supply_list_power_filter(QList<power_supply> list, int power_filter);
+    QList<power_supply> power_supply_list_sata_filter(QList<power_supply> list, int needed_sata);
 
 
     Q_INVOKABLE void createPDF(QString case_name, QString motherboard, QString CPU, QString cooling, QVariant RAM, QVariant GPU, QVariant DD, QString power_supply);
@@ -156,7 +157,7 @@ public:
     Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",
                                       int storage_type = 0, int storage_capacity = 0, int max_sata = -1, int max_M2 = -1);
 
-    Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0);
+    Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0, int needed_sata = 0);
 
     Q_INVOKABLE void import_component(QString file_path);
     Q_INVOKABLE void export_component(QString file_path);

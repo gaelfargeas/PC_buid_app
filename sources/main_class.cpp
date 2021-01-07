@@ -1378,7 +1378,7 @@ QList<storage> main_class::storage_list_remaining_M2_filter(QList<storage> list,
 
 
 
-QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter)
+QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter, int needed_sata)
 {
     QList<power_supply> power_supply_list_filtred = list;
 
@@ -1394,6 +1394,7 @@ QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supp
     {
         power_supply_list_filtred = power_supply_list_power_filter(power_supply_list_filtred, power_filter - 1);
     }
+    power_supply_list_filtred = power_supply_list_sata_filter(power_supply_list_filtred, needed_sata);
 
     return power_supply_list_filtred;
 }
@@ -1433,6 +1434,20 @@ QList<power_supply> main_class::power_supply_list_power_filter(QList<power_suppl
     for(power_supply PS : list)
     {
         if(PS.power_W == (POWER_SUPPLY_W) (power_filter) )
+        {
+            ret.append(PS);
+        }
+    }
+    return ret;
+}
+
+QList<power_supply> main_class::power_supply_list_sata_filter(QList<power_supply> list, int needed_sata)
+{
+    QList<power_supply> ret;
+
+    for(power_supply PS : list)
+    {
+        if(PS.sata_power_cable >= needed_sata)
         {
             ret.append(PS);
         }
@@ -1760,12 +1775,12 @@ void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name
     QMetaObject::invokeMethod(obj, "create_storage_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter)
+void main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter, int needed_sata)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<power_supply> power_supply_list = apply_power_supply_list_filters(global_power_supply_list, name_filter, standard_filter, power_filter);
+    QList<power_supply> power_supply_list = apply_power_supply_list_filters(global_power_supply_list, name_filter, standard_filter, power_filter, needed_sata);
 
     for(power_supply ccpowersupply : power_supply_list)
     {
