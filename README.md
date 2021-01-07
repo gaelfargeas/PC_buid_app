@@ -45,15 +45,18 @@ day/night mode : switch between day and night mode.
 
 ## INFORMATIONS
 
+MOTHERBOARD:
+
+PCIE slot are forward and backward compatible.
 
 
-GPU :
+GPU:
 
-flux is "CUDA cores" for NVIDIA GPUs and "Stream Processors" for amd GPUs
+flux is "CUDA cores" for NVIDIA GPUs and "Stream Processors" for amd GPUs.
 
 
 POWER SUPPLY:
-(CPU) 8pin / 12V 8 (4+4) pin == 2x ATX 4 pin power cable
+(CPU) 8pin cable / 12V 8 (4+4) pin cable == 2x ATX 4 pin power cable.
 
 ## TODO list :
 generate an .exe with all qt package include and upload it.

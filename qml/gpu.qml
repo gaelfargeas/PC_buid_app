@@ -23,7 +23,7 @@ Item {
     property int component_GPU_ram_frequency_MHZ : 0
     property int component_GPU_flux : 0
     property int component_power_consumption : 0
-    property string component_power_clable_pin : ""
+    property string component_power_cable_pin : ""
 
     property Item main_script_object
 
@@ -172,36 +172,54 @@ Item {
 
         Text {
             id: component_flux_text
-            x: 220
             y: 200
-            width: 160
+
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.left: component_RAM_speed_text.right
+            anchors.leftMargin: 40
+
             text: "Flux : " + component_GPU_flux
+
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
+
             font.pixelSize: 18
             layer.enabled: true
         }
 
         Text {
             id: component_power_consumption_text
-            x: 20
             y: 230
-            width: 360
-            text: "Power Consumption : " + component_power_consumption
+
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+
+            text: "Power Consumption : " + component_power_consumption + " W"
+
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
+
             font.pixelSize: 18
             layer.enabled: true
         }
 
         Text {
-            id: component_power_clable_pin_text
-            x: 20
+            id: component_power_cable_pin_text
             y: 260
-            width: 360
-            text: "Power Cable : " + component_power_clable_pin.substring(0, component_GPU_ram_type.length - 2)
+
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+
+            text: "Power Cable : " + component_power_cable_pin.substring(0, component_power_cable_pin.length - 2)
+
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
+
             font.pixelSize: 18
             layer.enabled: true
         }

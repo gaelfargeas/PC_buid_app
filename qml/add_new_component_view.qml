@@ -1872,7 +1872,7 @@ Item {
                 anchors.bottom: motherboard_RAM_slot_number_text.top
                 anchors.bottomMargin: 10
 
-                model: ["ATX 4 Pin", "ATX 4+4 Pin"]
+                model: ["ATX 4 Pin", "ATX 8(4+4) Pin","ATX 2x8(4+4) Pin"]
             }
 
             Rectangle {
@@ -1903,6 +1903,8 @@ Item {
 
                     anchors.fill: parent
                     anchors.margins: 10
+
+                    clip: true
 
                     color: "black"
                 }

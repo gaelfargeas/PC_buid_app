@@ -33,6 +33,7 @@ ApplicationWindow {
     property string motherboard_selected_ram_type : ""
     property string motherboard_selected_ram_supported_speed : ""
     property int motherboard_selected_ram_slot : 0
+    property int motherboard_selected_cpu_power_cable_needed : 0
     property int motherboard_selected_ram_size_per_slot: 0
     property int motherboard_selected_pcie20_16x : 0
     property int motherboard_selected_pcie20_8x : 0
@@ -57,6 +58,7 @@ ApplicationWindow {
     property BorderImage cpu_selected_image_border: null
     property string cpu_selected_name: ""
     property string cpu_selected_supported_ram : ""
+    property int cpu_selected_power_used: 0
 
 
     property string cooling_selected_image_link: ""
@@ -74,7 +76,9 @@ ApplicationWindow {
     property var gpus_selected_name: []
     property var gpus_selected_image: []
     property var gpus_selected_bus: []
-
+    property var gpus_selected_power_cable: []
+    property var gpus_selected_power_used: []
+    property int gpus_needed_power_cable: 0
 
     property BorderImage storage_selected_image_border: null
     property var storages_selected_name: []
@@ -85,6 +89,7 @@ ApplicationWindow {
     property string power_supply_selected_image_link: ""
     property BorderImage power_supply_selected_image_border: null
     property string power_supply_selected_name: ""
+    property int power_supply_power_needed: 0
 
     menuBar: MenuBar {
         id: menubar
@@ -1158,11 +1163,13 @@ ApplicationWindow {
         text: qsTr("cpu: chipset graphique ?.
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
 pcie slot a refaire (dans add component)
-power supply filter with sata power needed
-power supply filter gpu power cable needed
 power supply filter motherboard power cable needed
-powersupply needed power system ( voir si c'est possible : du coup add dans add componant le needed power pour cpu/gpu)
+powersupply needed power system ( tdp (cpu) + gpu  + marge < power supply)
 motherboard power cable : defois 4 pin defois 8
+test fonction pour la fonction enum_power_to_int
+fait fction test pour le reste : add return val + add if obj !=null call la fonction le l'obj :
+peut test si la fction marche
+add trx chipset
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
@@ -1483,7 +1490,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 // POWER SUPPLY
                 current_composent_option_next_button.visible = false
                 main_class.get_power_supply_list(function_object, name_filter, power_supply_standard_filter_cbb.currentIndex,
-                                                 power_supply_power_filter_cbb.currentIndex, motherboard_used_sata_slot)
+                                                 power_supply_power_filter_cbb.currentIndex, motherboard_used_sata_slot,
+                                                 gpus_needed_power_cable, power_supply_power_needed, motherboard_selected_cpu_power_cable_needed)
                 current_composent_type.text = "POWER SUPPLY"
 
                 computer_case_filter_rectangle.visible = false
@@ -1555,6 +1563,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_pcie30_4x = 0
                 motherboard_selected_pcie30_1x = 0
                 motherboard_selected_M2_slot = 0
+                motherboard_selected_cpu_power_needed = 0
 
             }else if(int_value === 2)
             {
@@ -1562,6 +1571,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 cpu_selected_image_border = null
                 cpu_selected_name = ""
                 cpu_selected_supported_ram = ""
+                cpu_selected_power_used = 0
 
             }else if(int_value === 3)
             {
@@ -1590,6 +1600,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 gpus_selected_image.splice(index_gpu_item,1)
                 gpus_selected_name.splice(index_gpu_item,1)
                 gpus_selected_bus.splice(index_gpu_item,1)
+                gpus_selected_power_cable.splice(index_gpu_item,1)
+                gpus_selected_power_used.splice(index_gpu_item,1)
 
             }else if(int_value === 6)
             {
@@ -1647,6 +1659,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             motherboard_selected_pcie30_4x = 0
             motherboard_selected_pcie30_1x = 0
             motherboard_selected_M2_slot = 0
+            motherboard_selected_cpu_power_needed = 0
 
 
 
@@ -1654,6 +1667,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             cpu_selected_image_border = null
             cpu_selected_name = ""
             cpu_selected_supported_ram  = ""
+            cpu_selected_power_used = 0
 
 
             cooling_selected_image_link = ""
@@ -1661,24 +1675,29 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             cooling_selected_name = ""
 
 
+
             ram_selected_image_border = null
             rams_selected_name = []
             rams_selected_image = []
+            rams_selected_module = []
 
 
             gpu_selected_image_border = null
             gpus_selected_name = []
             gpus_selected_image = []
             gpus_selected_bus = []
-
+            gpus_selected_power_cable = []
+            gpus_selected_power_used = []
 
             storage_selected_image_border = null
             storages_selected_name = []
             storages_selected_image = []
+            storages_selected_type = []
 
             power_supply_selected_image_link = ""
             power_supply_selected_image_border = null
             power_supply_selected_name = ""
+            power_supply_power_needed = 0
         }
 
         function reload_current_build_grid()
@@ -1689,6 +1708,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             var current_items_component = Qt.createComponent("selected_item.qml")
             if (current_items_component.status === Component.Ready)
             {
+                power_supply_power_needed = 0
+
                 current_build_grid.visible = false
                 // set case
                 if (computer_case_selected_name !== "")
@@ -1715,6 +1736,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                                                          {day_mode : day_mode, item_name : cpu_selected_name, image_link : cpu_selected_image_link,
                                                              item_index : 2,  main_script_object : function_object
                                                          });
+                    power_supply_power_needed += cpu_selected_power_used
+
                 }
 
                 // set cooling
@@ -1750,6 +1773,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                     motherboard_used_pcie_8x = 0
                     motherboard_used_pcie_4x = 0
                     motherboard_used_pcie_1x = 0
+                    gpus_needed_power_cable = 0
 
                     for (var index_gpu = 0; index_gpu < gpus_selected_name.length ; index_gpu++)
                     {
@@ -1774,6 +1798,22 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                             motherboard_used_pcie_1x += 1
                             break
                         }
+
+                        //used power cable
+                        switch(gpus_selected_power_cable[index_gpu])
+                        {
+                        case "2x8":
+                            gpus_needed_power_cable += 2
+                            break
+                        case "8":
+                            gpus_needed_power_cable += 1
+                            break
+                        }
+
+                        //used power W
+                        power_supply_power_needed += gpus_selected_power_used[index_gpu]
+
+
                     }
                 }
 
@@ -1849,7 +1889,11 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
             }else if (int_value === 1)
             {
-                return "ATX 4+4 Pin, "
+                return "ATX 8 Pin, "
+
+            }else if (int_value === 2)
+            {
+                return "ATX 2x8 Pin, "
 
             }
         }
@@ -2574,7 +2618,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                                                    component_GPU_ram_type : ram_type_str(map[prop]["GPU RAM type"]), component_GPU_ram_size : map[prop]["GPU RAM size"],
                                                    component_GPU_ram_frequency_MHZ : map[prop]["GPU RAM frequency"], component_GPU_flux : map[prop]["GPU flux"],
                                                    component_power_consumption : map[prop]["power consumption"],
-                                                   component_power_clable_pin : gpu_power_cable_pin_str(map[prop]["power cable pin"]),
+                                                   component_power_cable_pin : gpu_power_cable_pin_str(map[prop]["power cable pin"]),
                                                    component_image_link : map[prop]["image link"], component_buy_link : qsTr(map[prop]["buy link"]),
                                                    main_script_object : function_object
                                                });
@@ -2718,6 +2762,21 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_sata_slot = item["component_sata_slot"]
                 motherboard_selected_ram_slot = item["component_RAM_slot"]
 
+                if (item["component_power_pin"] === "ATX 2x8 Pin, ")
+                {
+                    motherboard_selected_cpu_power_cable_needed = 4
+                }
+                else if(item["component_power_pin"] === "ATX 8 Pin, ")
+                {
+                    motherboard_selected_cpu_power_cable_needed = 2
+                }
+                else
+                {
+                    motherboard_selected_cpu_power_cable_needed = 1
+                }
+
+
+
                 next_component()
                 reload_current_build_grid()
 
@@ -2739,6 +2798,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 cpu_selected_image_link = current_item_image
                 cpu_selected_name = item["component_name"]
                 cpu_selected_supported_ram = item["component_supported_RAM_type"]
+                cpu_selected_power_used = item["component_TDP"]
 
                 next_component()
                 reload_current_build_grid()
@@ -2822,6 +2882,8 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 gpus_selected_image.push(current_item_image)
                 gpus_selected_name.push(item["component_name"])
                 gpus_selected_bus.push(item["component_GPU_bus"].substring(9, item["component_GPU_bus"].length - 2))
+                gpus_selected_power_cable.push(item["component_power_cable_pin"].substring(0, item["component_power_cable_pin"].length - 11))
+                gpus_selected_power_used.push(item["component_power_consumption"])
 
                 reload_current_build_grid()
                 load_component_grid(component_index)

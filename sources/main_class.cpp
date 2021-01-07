@@ -710,6 +710,24 @@ int main_class::ram_speed_str_to_int(QString ram_speed)
 
 }
 
+int main_class::enum_power_supply_w_to_int(POWER_SUPPLY_W W)
+{
+    if(W > W300 && W < W1000)
+    {
+        return 300 +(50 * W);
+    }
+    else if(W >= W1000 && W <= W1600)
+    {
+        return 1000 + (100 *(W - 14));
+    }
+    else
+    {
+        return 300;
+    }
+
+
+}
+
 
 
 QList<computer_case> main_class::apply_computer_case_list_filters(QList<computer_case> list, QString name_filter, int mb_size_filter)
@@ -1378,7 +1396,8 @@ QList<storage> main_class::storage_list_remaining_M2_filter(QList<storage> list,
 
 
 
-QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter, int power_filter, int needed_sata)
+QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supply> list, QString name_filter, int standard_filter,
+                                                                int power_filter, int needed_sata, int needed_gpu_power_cable, int power_needed, int needed_cpu_power_cable)
 {
     QList<power_supply> power_supply_list_filtred = list;
 
@@ -1395,6 +1414,9 @@ QList<power_supply> main_class::apply_power_supply_list_filters(QList<power_supp
         power_supply_list_filtred = power_supply_list_power_filter(power_supply_list_filtred, power_filter - 1);
     }
     power_supply_list_filtred = power_supply_list_sata_filter(power_supply_list_filtred, needed_sata);
+    power_supply_list_filtred = power_supply_list_needed_gpu_power_cable_filter(power_supply_list_filtred, needed_gpu_power_cable);
+    power_supply_list_filtred = power_supply_list_needed_power_filter(power_supply_list_filtred, power_needed);
+    power_supply_list_filtred = power_supply_list_needed_cpu_power_cable_filter(power_supply_list_filtred, needed_cpu_power_cable);
 
     return power_supply_list_filtred;
 }
@@ -1448,6 +1470,46 @@ QList<power_supply> main_class::power_supply_list_sata_filter(QList<power_supply
     for(power_supply PS : list)
     {
         if(PS.sata_power_cable >= needed_sata)
+        {
+            ret.append(PS);
+        }
+    }
+    return ret;
+}
+
+QList<power_supply> main_class::power_supply_list_needed_power_filter(QList<power_supply> list, int power_needed)
+{
+    QList<power_supply> ret;
+
+    for(power_supply PS : list)
+    {
+        if(enum_power_supply_w_to_int(PS.power_W) >= power_needed)
+        {
+            ret.append(PS);
+        }
+    }
+    return ret;
+}
+
+QList<power_supply> main_class::power_supply_list_needed_gpu_power_cable_filter(QList<power_supply> list, int needed_gpu_power_cable)
+{
+    QList<power_supply> ret;
+    for(power_supply PS : list)
+    {
+        if(PS.pcie6_2_power_cable >= needed_gpu_power_cable)
+        {
+            ret.append(PS);
+        }
+    }
+    return ret;
+}
+
+QList<power_supply> main_class::power_supply_list_needed_cpu_power_cable_filter(QList<power_supply> list, int needed_cpu_power_cable)
+{
+    QList<power_supply> ret;
+    for(power_supply PS : list)
+    {
+        if(PS.ATX_4_power_cable >= needed_cpu_power_cable)
         {
             ret.append(PS);
         }
@@ -1775,12 +1837,14 @@ void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name
     QMetaObject::invokeMethod(obj, "create_storage_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter, int needed_sata)
+void main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter,
+                                       int needed_sata, int needed_gpu_power_cable, int power_needed, int needed_cpu_power_cable)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<power_supply> power_supply_list = apply_power_supply_list_filters(global_power_supply_list, name_filter, standard_filter, power_filter, needed_sata);
+    QList<power_supply> power_supply_list = apply_power_supply_list_filters(global_power_supply_list, name_filter, standard_filter,
+                                                                            power_filter, needed_sata, needed_gpu_power_cable, power_needed, needed_cpu_power_cable);
 
     for(power_supply ccpowersupply : power_supply_list)
     {
