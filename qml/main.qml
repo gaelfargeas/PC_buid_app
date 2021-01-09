@@ -1162,14 +1162,11 @@ ApplicationWindow {
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
-pcie slot a refaire (dans add component)
-power supply filter motherboard power cable needed
-powersupply needed power system ( tdp (cpu) + gpu  + marge < power supply)
-motherboard power cable : defois 4 pin defois 8
-test fonction pour la fonction enum_power_to_int
+pcie slot a refaire (dans add component) psk compatible backward et frontward +tests
 fait fction test pour le reste : add return val + add if obj !=null call la fonction le l'obj :
 peut test si la fction marche
-add trx chipset
+add new itel socket (+add component cbb)
+test a refair pour le pcie
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
@@ -1833,13 +1830,13 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                         switch(storages_selected_type[index_storage])
                         {
-                          case "M2":
-                              motherboard_used_M2_slot += 1
-                              break
+                        case "M2":
+                            motherboard_used_M2_slot += 1
+                            break
 
-                          case "SATA":
-                              motherboard_used_sata_slot += 1
-                              break
+                        case "SATA":
+                            motherboard_used_sata_slot += 1
+                            break
                         }
 
 
@@ -2144,67 +2141,107 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             {
                 return "AMD_A68H, "
 
-            }else if (int_value === 1)
+            }
+            else if (int_value === 1)
             {
                 return "AMD_760G, "
 
-            }else if (int_value === 2)
+            }
+            else if (int_value === 2)
+            {
+                return "AMD_A520, "
+
+            }
+            else if (int_value === 3)
             {
                 return "AMD_B350, "
-            }else if (int_value === 3)
-            {
-                return "AMD_B450, "
             }
             else if (int_value === 4)
             {
+                return "AMD_B450, "
+            }
+            else if (int_value === 5)
+            {
+                return "AMD_B550, "
+            }
+            else if (int_value === 6)
+            {
+                return "AMD_X370, "
+            }
+            else if (int_value === 7)
+            {
                 return "AMD_X399, "
-            }else if (int_value === 5)
-            {
-                return "Intel_H110, "
-
-            }else if (int_value === 6)
-            {
-                return "Intel_H270, "
-            }else if (int_value === 7)
-            {
-                return "Intel_H310, "
             }
             else if (int_value === 8)
             {
-                return "Intel_H370, "
-            }else if (int_value === 9)
-            {
-                return "Intel_B150, "
+                return "AMD_X470, "
 
-            }else if (int_value === 10)
+            }
+            else if (int_value === 9)
             {
-                return "Intel_B250, "
-            }else if (int_value === 11)
+                return "AMD_X570, "
+
+            }
+            else if (int_value === 10)
             {
-                return "Intel_B360, "
+                return "AMD_TRX40, "
+
+            }
+            else if (int_value === 11)
+            {
+                return "Intel_H110, "
+
             }
             else if (int_value === 12)
             {
-                return "Intel_B365, "
-            }else if (int_value === 13)
+                return "Intel_H270, "
+            }
+            else if (int_value === 13)
             {
-                return "Intel_Z170, "
+                return "Intel_H310, "
+            }
+            else if (int_value === 14)
+            {
+                return "Intel_H370, "
+            }
+            else if (int_value === 15)
+            {
+                return "Intel_B150, "
 
-            }else if (int_value === 14)
+            }
+            else if (int_value === 10)
             {
-                return "Intel_Z270, "
-            }else if (int_value === 15)
-            {
-                return "Intel_Z370, "
+                return "Intel_B250, "
             }
             else if (int_value === 16)
             {
+                return "Intel_B360, "
+            }
+            else if (int_value === 17)
+            {
+                return "Intel_B365, "
+            }
+            else if (int_value === 18)
+            {
+                return "Intel_Z170, "
+            }
+            else if (int_value === 19)
+            {
+                return "Intel_Z270, "
+            }
+            else if (int_value === 20)
+            {
+                return "Intel_Z370, "
+            }
+            else if (int_value === 21)
+            {
                 return "Intel_Z390, "
-            }else if (int_value === 17)
+            }
+            else if (int_value === 22)
             {
                 return "Intel_X99, "
             }
-            else if (int_value === 18)
+            else if (int_value === 23)
             {
                 return "Intel_X299, "
             }
@@ -2891,13 +2928,13 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             }else
             {
 
-                    if (gpu_selected_image_border !== null)
-                    {
-                        gpu_selected_image_border.visible = false
-                    }
+                if (gpu_selected_image_border !== null)
+                {
+                    gpu_selected_image_border.visible = false
+                }
 
-                    gpu_selected_image_border = image_selected
-                    image_selected.visible = true
+                gpu_selected_image_border = image_selected
+                image_selected.visible = true
 
             }
         }
@@ -2915,7 +2952,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 }
                 else
                 {
-                   storages_selected_type.push("SATA")
+                    storages_selected_type.push("SATA")
                 }
 
                 reload_current_build_grid()

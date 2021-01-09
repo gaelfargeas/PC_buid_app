@@ -1,0 +1,318 @@
+/****************************************************************************
+** Meta object code from reading C++ file 'tst_pc_build_app_tests.cpp'
+**
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.1)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include <memory>
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'tst_pc_build_app_tests.cpp' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.15.1. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_pc_build_app_tests_t {
+    QByteArrayData data[43];
+    char stringdata0[1282];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_pc_build_app_tests_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_pc_build_app_tests_t qt_meta_stringdata_pc_build_app_tests = {
+    {
+QT_MOC_LITERAL(0, 0, 18), // "pc_build_app_tests"
+QT_MOC_LITERAL(1, 19, 22), // "test_socket_str_to_int"
+QT_MOC_LITERAL(2, 42, 0), // ""
+QT_MOC_LITERAL(3, 43, 23), // "test_chipset_str_to_int"
+QT_MOC_LITERAL(4, 67, 24), // "test_ram_type_str_to_int"
+QT_MOC_LITERAL(5, 92, 25), // "test_ram_speed_str_to_int"
+QT_MOC_LITERAL(6, 118, 31), // "test_enum_power_supply_w_to_int"
+QT_MOC_LITERAL(7, 150, 37), // "test_apply_computer_case_list..."
+QT_MOC_LITERAL(8, 188, 35), // "test_computer_case_list_name_..."
+QT_MOC_LITERAL(9, 224, 42), // "test_computer_case_motherboar..."
+QT_MOC_LITERAL(10, 267, 35), // "test_apply_motherboard_list_f..."
+QT_MOC_LITERAL(11, 303, 33), // "test_motherboard_list_type_fi..."
+QT_MOC_LITERAL(12, 337, 33), // "test_motherboard_list_name_fi..."
+QT_MOC_LITERAL(13, 371, 36), // "test_motherboard_list_chipset..."
+QT_MOC_LITERAL(14, 408, 35), // "test_motherboard_list_socket_..."
+QT_MOC_LITERAL(15, 444, 32), // "test_motherboard_list_ram_filter"
+QT_MOC_LITERAL(16, 477, 27), // "test_apply_cpu_list_filters"
+QT_MOC_LITERAL(17, 505, 25), // "test_cpu_list_name_filter"
+QT_MOC_LITERAL(18, 531, 28), // "test_cpu_list_chipset_filter"
+QT_MOC_LITERAL(19, 560, 27), // "test_cpu_list_socket_filter"
+QT_MOC_LITERAL(20, 588, 24), // "test_cpu_list_ram_filter"
+QT_MOC_LITERAL(21, 613, 31), // "test_apply_cooling_list_filters"
+QT_MOC_LITERAL(22, 645, 29), // "test_cooling_list_name_filter"
+QT_MOC_LITERAL(23, 675, 33), // "test_cooling_list_fan_size_fi..."
+QT_MOC_LITERAL(24, 709, 27), // "test_apply_ram_list_filters"
+QT_MOC_LITERAL(25, 737, 25), // "test_ram_list_name_filter"
+QT_MOC_LITERAL(26, 763, 25), // "test_ram_list_type_filter"
+QT_MOC_LITERAL(27, 789, 30), // "test_ram_list_size_slot_filter"
+QT_MOC_LITERAL(28, 820, 26), // "test_ram_list_speed_filter"
+QT_MOC_LITERAL(29, 847, 25), // "test_ram_list_size_filter"
+QT_MOC_LITERAL(30, 873, 27), // "test_apply_gpu_list_filters"
+QT_MOC_LITERAL(31, 901, 25), // "test_gpu_list_name_filter"
+QT_MOC_LITERAL(32, 927, 24), // "test_gpu_list_bus_filter"
+QT_MOC_LITERAL(33, 952, 29), // "test_gpu_list_ram_type_filter"
+QT_MOC_LITERAL(34, 982, 32), // "test_gpu_list_power_cable_filter"
+QT_MOC_LITERAL(35, 1015, 31), // "test_apply_storage_list_filters"
+QT_MOC_LITERAL(36, 1047, 29), // "test_storage_list_name_filter"
+QT_MOC_LITERAL(37, 1077, 27), // "test_storage_list_m2_filter"
+QT_MOC_LITERAL(38, 1105, 29), // "test_storage_list_type_filter"
+QT_MOC_LITERAL(39, 1135, 36), // "test_apply_power_supply_list_..."
+QT_MOC_LITERAL(40, 1172, 34), // "test_power_supply_list_name_f..."
+QT_MOC_LITERAL(41, 1207, 38), // "test_power_supply_list_standa..."
+QT_MOC_LITERAL(42, 1246, 35) // "test_power_supply_list_power_..."
+
+    },
+    "pc_build_app_tests\0test_socket_str_to_int\0"
+    "\0test_chipset_str_to_int\0"
+    "test_ram_type_str_to_int\0"
+    "test_ram_speed_str_to_int\0"
+    "test_enum_power_supply_w_to_int\0"
+    "test_apply_computer_case_list_filters\0"
+    "test_computer_case_list_name_filter\0"
+    "test_computer_case_motherboard_type_filter\0"
+    "test_apply_motherboard_list_filters\0"
+    "test_motherboard_list_type_filter\0"
+    "test_motherboard_list_name_filter\0"
+    "test_motherboard_list_chipset_filter\0"
+    "test_motherboard_list_socket_filter\0"
+    "test_motherboard_list_ram_filter\0"
+    "test_apply_cpu_list_filters\0"
+    "test_cpu_list_name_filter\0"
+    "test_cpu_list_chipset_filter\0"
+    "test_cpu_list_socket_filter\0"
+    "test_cpu_list_ram_filter\0"
+    "test_apply_cooling_list_filters\0"
+    "test_cooling_list_name_filter\0"
+    "test_cooling_list_fan_size_filter\0"
+    "test_apply_ram_list_filters\0"
+    "test_ram_list_name_filter\0"
+    "test_ram_list_type_filter\0"
+    "test_ram_list_size_slot_filter\0"
+    "test_ram_list_speed_filter\0"
+    "test_ram_list_size_filter\0"
+    "test_apply_gpu_list_filters\0"
+    "test_gpu_list_name_filter\0"
+    "test_gpu_list_bus_filter\0"
+    "test_gpu_list_ram_type_filter\0"
+    "test_gpu_list_power_cable_filter\0"
+    "test_apply_storage_list_filters\0"
+    "test_storage_list_name_filter\0"
+    "test_storage_list_m2_filter\0"
+    "test_storage_list_type_filter\0"
+    "test_apply_power_supply_list_filters\0"
+    "test_power_supply_list_name_filter\0"
+    "test_power_supply_list_standard_filter\0"
+    "test_power_supply_list_power_filter"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_pc_build_app_tests[] = {
+
+ // content:
+       8,       // revision
+       0,       // classname
+       0,    0, // classinfo
+      41,   14, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+ // slots: name, argc, parameters, tag, flags
+       1,    0,  219,    2, 0x08 /* Private */,
+       3,    0,  220,    2, 0x08 /* Private */,
+       4,    0,  221,    2, 0x08 /* Private */,
+       5,    0,  222,    2, 0x08 /* Private */,
+       6,    0,  223,    2, 0x08 /* Private */,
+       7,    0,  224,    2, 0x08 /* Private */,
+       8,    0,  225,    2, 0x08 /* Private */,
+       9,    0,  226,    2, 0x08 /* Private */,
+      10,    0,  227,    2, 0x08 /* Private */,
+      11,    0,  228,    2, 0x08 /* Private */,
+      12,    0,  229,    2, 0x08 /* Private */,
+      13,    0,  230,    2, 0x08 /* Private */,
+      14,    0,  231,    2, 0x08 /* Private */,
+      15,    0,  232,    2, 0x08 /* Private */,
+      16,    0,  233,    2, 0x08 /* Private */,
+      17,    0,  234,    2, 0x08 /* Private */,
+      18,    0,  235,    2, 0x08 /* Private */,
+      19,    0,  236,    2, 0x08 /* Private */,
+      20,    0,  237,    2, 0x08 /* Private */,
+      21,    0,  238,    2, 0x08 /* Private */,
+      22,    0,  239,    2, 0x08 /* Private */,
+      23,    0,  240,    2, 0x08 /* Private */,
+      24,    0,  241,    2, 0x08 /* Private */,
+      25,    0,  242,    2, 0x08 /* Private */,
+      26,    0,  243,    2, 0x08 /* Private */,
+      27,    0,  244,    2, 0x08 /* Private */,
+      28,    0,  245,    2, 0x08 /* Private */,
+      29,    0,  246,    2, 0x08 /* Private */,
+      30,    0,  247,    2, 0x08 /* Private */,
+      31,    0,  248,    2, 0x08 /* Private */,
+      32,    0,  249,    2, 0x08 /* Private */,
+      33,    0,  250,    2, 0x08 /* Private */,
+      34,    0,  251,    2, 0x08 /* Private */,
+      35,    0,  252,    2, 0x08 /* Private */,
+      36,    0,  253,    2, 0x08 /* Private */,
+      37,    0,  254,    2, 0x08 /* Private */,
+      38,    0,  255,    2, 0x08 /* Private */,
+      39,    0,  256,    2, 0x08 /* Private */,
+      40,    0,  257,    2, 0x08 /* Private */,
+      41,    0,  258,    2, 0x08 /* Private */,
+      42,    0,  259,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+
+       0        // eod
+};
+
+void pc_build_app_tests::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<pc_build_app_tests *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->test_socket_str_to_int(); break;
+        case 1: _t->test_chipset_str_to_int(); break;
+        case 2: _t->test_ram_type_str_to_int(); break;
+        case 3: _t->test_ram_speed_str_to_int(); break;
+        case 4: _t->test_enum_power_supply_w_to_int(); break;
+        case 5: _t->test_apply_computer_case_list_filters(); break;
+        case 6: _t->test_computer_case_list_name_filter(); break;
+        case 7: _t->test_computer_case_motherboard_type_filter(); break;
+        case 8: _t->test_apply_motherboard_list_filters(); break;
+        case 9: _t->test_motherboard_list_type_filter(); break;
+        case 10: _t->test_motherboard_list_name_filter(); break;
+        case 11: _t->test_motherboard_list_chipset_filter(); break;
+        case 12: _t->test_motherboard_list_socket_filter(); break;
+        case 13: _t->test_motherboard_list_ram_filter(); break;
+        case 14: _t->test_apply_cpu_list_filters(); break;
+        case 15: _t->test_cpu_list_name_filter(); break;
+        case 16: _t->test_cpu_list_chipset_filter(); break;
+        case 17: _t->test_cpu_list_socket_filter(); break;
+        case 18: _t->test_cpu_list_ram_filter(); break;
+        case 19: _t->test_apply_cooling_list_filters(); break;
+        case 20: _t->test_cooling_list_name_filter(); break;
+        case 21: _t->test_cooling_list_fan_size_filter(); break;
+        case 22: _t->test_apply_ram_list_filters(); break;
+        case 23: _t->test_ram_list_name_filter(); break;
+        case 24: _t->test_ram_list_type_filter(); break;
+        case 25: _t->test_ram_list_size_slot_filter(); break;
+        case 26: _t->test_ram_list_speed_filter(); break;
+        case 27: _t->test_ram_list_size_filter(); break;
+        case 28: _t->test_apply_gpu_list_filters(); break;
+        case 29: _t->test_gpu_list_name_filter(); break;
+        case 30: _t->test_gpu_list_bus_filter(); break;
+        case 31: _t->test_gpu_list_ram_type_filter(); break;
+        case 32: _t->test_gpu_list_power_cable_filter(); break;
+        case 33: _t->test_apply_storage_list_filters(); break;
+        case 34: _t->test_storage_list_name_filter(); break;
+        case 35: _t->test_storage_list_m2_filter(); break;
+        case 36: _t->test_storage_list_type_filter(); break;
+        case 37: _t->test_apply_power_supply_list_filters(); break;
+        case 38: _t->test_power_supply_list_name_filter(); break;
+        case 39: _t->test_power_supply_list_standard_filter(); break;
+        case 40: _t->test_power_supply_list_power_filter(); break;
+        default: ;
+        }
+    }
+    Q_UNUSED(_a);
+}
+
+QT_INIT_METAOBJECT const QMetaObject pc_build_app_tests::staticMetaObject = { {
+    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    qt_meta_stringdata_pc_build_app_tests.data,
+    qt_meta_data_pc_build_app_tests,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
+
+
+const QMetaObject *pc_build_app_tests::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *pc_build_app_tests::qt_metacast(const char *_clname)
+{
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_pc_build_app_tests.stringdata0))
+        return static_cast<void*>(this);
+    return QObject::qt_metacast(_clname);
+}
+
+int pc_build_app_tests::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QObject::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 41)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 41;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 41)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 41;
+    }
+    return _id;
+}
+QT_WARNING_POP
+QT_END_MOC_NAMESPACE

@@ -1787,7 +1787,11 @@ Item {
                 anchors.bottom: ram_speed_supported_text_rectangle.top
                 anchors.bottomMargin: 10
 
-                model: ["AMD_A68H", "AMD_760G", "AMD_B350", "AMD_B450", "AMD_X399", "Intel_H110", "Intel_H270", "Intel_H310", "Intel_H370", "Intel_B150", "Intel_B250", "Intel_B360", "Intel_B365", "Intel_Z170", "Intel_Z270", "Intel_Z370", "Intel_Z390", "Intel_X99", "Intel_X299"]
+                model: ["AMD_A68H", "AMD_760G", "AMD_A520", "AMD_B350", "AMD_B450",
+                    "AMD_B550", "AMD_X370", "AMD_X399", "AMD_X470", "AMD_X570", "Intel_H110",
+                    "Intel_H270", "Intel_H310", "Intel_H370", "Intel_B150", "Intel_B250",
+                    "Intel_B360", "Intel_B365", "Intel_Z170", "Intel_Z270", "Intel_Z370",
+                    "Intel_Z390", "Intel_X99", "Intel_X299"]
             }
 
             Text {

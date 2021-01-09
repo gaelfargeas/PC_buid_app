@@ -16,6 +16,7 @@ private slots:
     void test_chipset_str_to_int();
     void test_ram_type_str_to_int();
     void test_ram_speed_str_to_int();
+    void test_enum_power_supply_w_to_int();
 
 
     void test_apply_computer_case_list_filters();
@@ -183,7 +184,17 @@ void pc_build_app_tests::test_ram_speed_str_to_int()
     QVERIFY(class_to_test.ram_speed_str_to_int("AMD AMD INTEL INTEL") == 31);
 }
 
-
+void pc_build_app_tests::test_enum_power_supply_w_to_int()
+{
+    main_class class_to_test;
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 0) == 300);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 13) == 950);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 14) == 1000);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 20) == 1600);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 21) == 300);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) -1) == 300);
+    QVERIFY(class_to_test.enum_power_supply_w_to_int((POWER_SUPPLY_W) 64) == 300);
+}
 // COMPUTER CASE
 void pc_build_app_tests::test_apply_computer_case_list_filters()
 {
@@ -790,17 +801,19 @@ void pc_build_app_tests::test_apply_ram_list_filters()
 
     ram_list.append(ram);
 
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"", 0, "", 0) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"test", 0, "", 0) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"no", 0, "", 0) == empty_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz, _2666Mhz},"test", 0, "", 0) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2666Mhz, _2133Mhz},"test", 0, "", 0) == empty_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "", 0) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 6, "", 0) == empty_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 0) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR3", 0) == empty_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 16) == ram_list);
-    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 4) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"", 0, "", 0, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"test", 0, "", 0, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{},"no", 0, "", 0, 2) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz, _2666Mhz},"test", 0, "", 0, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2666Mhz, _2133Mhz},"test", 0, "", 0, 2) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "", 0, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 6, "", 0, 2) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 0, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR3", 0, 2) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 16, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 4, 2) == empty_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 16, 2) == ram_list);
+    QVERIFY(class_to_test.apply_ram_list_filters(ram_list,{_2800Mhz},"test", 5, "DDR4", 16, 0) == empty_list);
 
 }
 
@@ -930,7 +943,7 @@ void pc_build_app_tests::test_ram_list_size_filter()
     QVERIFY(class_to_test.ram_list_size_filter(ram_list, 6) == empty_list);
 }
 
-QTEST_MAIN(pc_build_app_tests)
+
 
 // GPU
 void pc_build_app_tests::test_apply_gpu_list_filters()
@@ -957,22 +970,48 @@ void pc_build_app_tests::test_apply_gpu_list_filters()
 
     gpu_list.append(gpu);
 
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5 + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, DDR4 + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "test", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "te", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "no", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 1, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 1, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 1, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 1, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 1, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 1, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 1, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1 ) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5 + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DDR4 + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "test", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "te", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 1, "no", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
+
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, GDDR5X + 1, PCIE_8 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_gpu_list_filters(gpu_list, 0, "test", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, GDDR5X + 1, PCIE_8 + 1) == gpu_list);
 }
 
 void pc_build_app_tests::test_gpu_list_name_filter()
@@ -1029,14 +1068,18 @@ void pc_build_app_tests::test_gpu_list_bus_filter()
 
     gpu_list.append(gpu);
 
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0) == gpu_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 1, 0, 0, 0, 0, 0, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 1, 0, 0, 0, 0, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 1, 0, 0, 0, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 1, 0, 0, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 1, 0, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 1, 0) == empty_list);
-    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 0, 1) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0) == gpu_list);
+    QVERIFY(class_to_test.gpu_list_bus_filter(gpu_list, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2) == gpu_list);
 }
 
 void pc_build_app_tests::test_gpu_list_ram_type_filter()
@@ -1107,7 +1150,7 @@ void pc_build_app_tests::test_apply_storage_list_filters()
     storage st;
     st.RPM = 120;
     st.buy_link = "buy";
-    st.capacity_GO = 1024;
+    st.capacity = _1TB;
     st.image_link = "image";
     st.name = "test";
     st.price = 100.1;
@@ -1118,14 +1161,17 @@ void pc_build_app_tests::test_apply_storage_list_filters()
     storage_list.append(st);
 
     // storage type come from an qml combobox : 0 = "" ; 1 = HDD ; ...
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, 0) == storage_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, HDD + 1) == empty_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, SSD + 1) == empty_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, M_2 + 1) == storage_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "no", 0, M_2 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, M_2 + 1) == storage_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", 1, M_2 + 1) == storage_list);
-    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", 0, M_2 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", 0, 0, 1, 1 ) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", HDD + 1, 0, 1, 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", SSD + 1, 0, 1, 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "test", M_2 + 1, 0, 1, 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 1, "no", M_2 + 1, 0, 1, 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 3 + 1, 1, 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 1, 1, 1) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 3 + 1, 1, 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 3 + 1, 1, 0) == empty_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 3 + 1, 0, 1) == storage_list);
+    QVERIFY(class_to_test.apply_storage_list_filters(storage_list, 0, "test", M_2 + 1, 3 + 1, 1, 1) == storage_list);
 }
 
 void pc_build_app_tests::test_storage_list_name_filter()
@@ -1137,7 +1183,7 @@ void pc_build_app_tests::test_storage_list_name_filter()
     storage st;
     st.RPM = 120;
     st.buy_link = "buy";
-    st.capacity_GO = 1024;
+    st.capacity = _1TB;
     st.image_link = "image";
     st.name = "test";
     st.price = 100.1;
@@ -1163,7 +1209,7 @@ void pc_build_app_tests::test_storage_list_m2_filter()
     storage st;
     st.RPM = 120;
     st.buy_link = "buy";
-    st.capacity_GO = 1024;
+    st.capacity = _1TB;
     st.image_link = "image";
     st.name = "test";
     st.price = 100.1;
@@ -1177,8 +1223,11 @@ void pc_build_app_tests::test_storage_list_m2_filter()
 
     storage_list_m2.append(st);
 
-    QVERIFY(class_to_test.storage_list_m2_filter(storage_list) == storage_list);
-    QVERIFY(class_to_test.storage_list_m2_filter(storage_list_m2) == empty_list);
+    QVERIFY(class_to_test.storage_list_remaining_M2_filter(storage_list, 1) == storage_list);
+    QVERIFY(class_to_test.storage_list_remaining_M2_filter(storage_list, 0) == storage_list);
+
+    QVERIFY(class_to_test.storage_list_remaining_M2_filter(storage_list_m2, 1) == storage_list_m2);
+    QVERIFY(class_to_test.storage_list_remaining_M2_filter(storage_list_m2, 0) == empty_list);
 }
 
 void pc_build_app_tests::test_storage_list_type_filter()
@@ -1190,7 +1239,7 @@ void pc_build_app_tests::test_storage_list_type_filter()
     storage st;
     st.RPM = 120;
     st.buy_link = "buy";
-    st.capacity_GO = 1024;
+    st.capacity = _1TB;
     st.image_link = "image";
     st.name = "test";
     st.price = 100.1;
@@ -1230,12 +1279,15 @@ void pc_build_app_tests::test_apply_power_supply_list_filters()
 
     // standard type come from an qml combobox : 0 = "" ; 1 = plus_80 ; ...
     // power_W type come from an qml combobox : 0 = "" ; 1 = W300 ; ...
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "", plus_80 + 1, W300 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80 + 1, W300 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1) == power_supply_list);
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "no", plus_80_gold + 1, W600 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W300 + 1) == empty_list);
-    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_platinium + 1, W600 + 1) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "", plus_80 + 1, W300 + 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80 + 1, W300 + 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 0, 0, 0, 0) == power_supply_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "no", plus_80_gold + 1, W600 + 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W300 + 1, 0, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 7, 0, 0, 0) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 5, 1, 550, 1) == power_supply_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 5, 1, 550, 3) == empty_list);
+    QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 5, 4, 550, 1) == empty_list);
 }
 
 void pc_build_app_tests::test_power_supply_list_name_filter()
@@ -1319,6 +1371,7 @@ void pc_build_app_tests::test_power_supply_list_power_filter()
     QVERIFY(class_to_test.power_supply_list_power_filter(power_supply_list, W650) == empty_list);
 }
 
+QTEST_MAIN(pc_build_app_tests)
 
 #include "tst_pc_build_app_tests.moc"
 

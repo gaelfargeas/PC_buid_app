@@ -517,66 +517,110 @@ int main_class::socket_str_to_int(QString socket)
 
 int main_class::chipset_str_to_int(QString chipset)
 {
+
     if(chipset == "AMD_A68H")
     {
         return  0;
-    }else if(chipset == "AMD_760G")
+    }
+    else if(chipset == "AMD_760G")
     {
         return  1;
-    }else if(chipset == "AMD_B350")
+    }
+    else if(chipset == "AMD_A520")
     {
         return  2;
-    }else if(chipset == "AMD_B450")
+    }
+    else if(chipset == "AMD_B350")
     {
         return  3;
-    }else if(chipset == "AMD_X399")
+    }
+    else if(chipset == "AMD_B450")
     {
         return  4;
-    }else if(chipset == "Intel_H110")
+    }
+    else if(chipset == "AMD_B550")
     {
         return  5;
-    }else if(chipset == "Intel_H270")
+    }
+    else if(chipset == "AMD_X370")
     {
         return  6;
-    }else if(chipset == "Intel_H310")
+    }
+    else if(chipset == "AMD_X399")
     {
         return  7;
-    }else if(chipset == "Intel_H370")
+    }
+    else if(chipset == "AMD_X470")
     {
         return  8;
-    }else if(chipset == "Intel_B150")
+    }
+    else if(chipset == "AMD_X570")
     {
         return  9;
-    }else if(chipset == "Intel_B250")
+    }
+    else if(chipset == "AMD_TRX40")
     {
         return  10;
-    }else if(chipset == "Intel_B360")
+    }
+    else if(chipset == "Intel_H110")
     {
         return  11;
-    }else if(chipset == "Intel_B365")
+    }
+    else if(chipset == "Intel_H270")
     {
         return  12;
-    }else if(chipset == "Intel_Z170")
+    }
+    else if(chipset == "Intel_H310")
     {
         return  13;
-    }else if(chipset == "Intel_Z270")
+    }
+    else if(chipset == "Intel_H370")
     {
         return  14;
-    }else if(chipset == "Intel_Z370")
+    }
+    else if(chipset == "Intel_B150")
     {
         return  15;
-    }else if(chipset == "Intel_Z390")
+    }
+    else if(chipset == "Intel_B250")
     {
         return  16;
-    }else if(chipset == "Intel_X99")
+    }
+    else if(chipset == "Intel_B360")
     {
         return  17;
-    }else if(chipset == "Intel_X299")
+    }
+    else if(chipset == "Intel_B365")
     {
         return  18;
-    }else
+    }
+    else if(chipset == "Intel_Z170")
     {
-        return 19;
+        return  19;
+    }
+    else if(chipset == "Intel_Z270")
+    {
+        return  20;
+    }
+    else if(chipset == "Intel_Z370")
+    {
+        return  21;
+    }
+    else if(chipset == "Intel_Z390")
+    {
+        return  22;
+    }
+    else if(chipset == "Intel_X99")
+    {
+        return  23;
+    }
+    else if(chipset == "Intel_X299")
+    {
+        return  24;
+    }
+    else
+    {
+        return 0;
     }
 
 
