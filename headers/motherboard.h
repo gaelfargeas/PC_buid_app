@@ -19,14 +19,10 @@ public:
     int RAM_slot_number;
     int RAM_max_capacity;
     int RAM_max_per_slot;
-    int GPU_PCIE20_16x_number;
-    int GPU_PCIE20_8x_number;
-    int GPU_PCIE20_4x_number;
-    int GPU_PCIE20_1x_number;
-    int GPU_PCIE30_16x_number;
-    int GPU_PCIE30_8x_number;
-    int GPU_PCIE30_4x_number;
-    int GPU_PCIE30_1x_number;
+    int GPU_PCIE_16x_number;
+    int GPU_PCIE_8x_number;
+    int GPU_PCIE_4x_number;
+    int GPU_PCIE_1x_number;
     int SATA_slot_number;
     int M_2_slot_number;
     QString image_link;

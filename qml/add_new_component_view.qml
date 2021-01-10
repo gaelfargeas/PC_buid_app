@@ -278,7 +278,7 @@ Item {
                     motherboard_pcie20_1x_slot_value.color = "black"
 
                     motherboard_pcie30_16x_slot_value_rectangle.color = "#757575"
-                    motherboard_pcie30_16x_slot_value.color = "black"
+                    motherboard_pcie_16x_slot_value.color = "black"
 
                     motherboard_pcie30_8x_slot_value_rectangle.color = "#757575"
                     motherboard_pcie30_8x_slot_value.color = "black"
@@ -566,7 +566,7 @@ Item {
                     motherboard_pcie20_1x_slot_value.color = "#BDBDBD"
 
                     motherboard_pcie30_16x_slot_value_rectangle.color = "#424242"
-                    motherboard_pcie30_16x_slot_value.color = "#BDBDBD"
+                    motherboard_pcie_16x_slot_value.color = "#BDBDBD"
 
                     motherboard_pcie30_8x_slot_value_rectangle.color = "#424242"
                     motherboard_pcie30_8x_slot_value.color = "#BDBDBD"
@@ -880,14 +880,10 @@ Item {
                             && motherboard_RAM_slot_number_value.text !== ""
                             && motherboard_RAM_max_capacity_value.text !== ""
                             && motherboard_RAM_max_per_slot_value.text !== ""
-                            && motherboard_pcie20_16x_slot_value.text !== ""
-                            && motherboard_pcie20_8x_slot_value.text !== ""
-                            && motherboard_pcie20_4x_slot_value.text !== ""
-                            && motherboard_pcie20_1x_slot_value.text !== ""
-                            && motherboard_pcie30_16x_slot_value.text != ""
-                            && motherboard_pcie30_8x_slot_value.text != ""
-                            && motherboard_pcie30_4x_slot_value.text != ""
-                            && motherboard_pcie30_1x_slot_value.text != ""
+                            && motherboard_pcie_16x_slot_value.text !== ""
+                            && motherboard_pcie_8x_slot_value.text !== ""
+                            && motherboard_pcie_4x_slot_value.text !== ""
+                            && motherboard_pcie_1x_slot_value.text !== ""
                             && motherboard_sata_slot_value.text !== ""
                             && motherboard_m2_slot_value.text !== ""
                             && motherboard_price_value.text !== ""
@@ -916,11 +912,9 @@ Item {
                                         motherboard_CPU_socket_cbb.currentIndex, motherboard_CPU_chipset_cbb.currentIndex,
                                         motherboard_RAM_type_cbb.currentIndex, motherboard_ram_speed_supported,
                                         motherboard_RAM_slot_number_value.text, motherboard_RAM_max_capacity_value.text,
-                                        motherboard_RAM_max_per_slot_value.text, motherboard_pcie20_16x_slot_value.text,
-                                        motherboard_pcie20_8x_slot_value.text, motherboard_pcie20_4x_slot_value.text,
-                                        motherboard_pcie20_1x_slot_value.text, motherboard_pcie30_16x_slot_value.text,
-                                        motherboard_pcie30_8x_slot_value.text, motherboard_pcie30_4x_slot_value.text,
-                                        motherboard_pcie30_1x_slot_value.text, motherboard_sata_slot_value.text,
+                                        motherboard_RAM_max_per_slot_value.text, motherboard_pcie_16x_slot_value.text,
+                                        motherboard_pcie_8x_slot_value.text, motherboard_pcie_4x_slot_value.text,
+                                        motherboard_pcie_1x_slot_value.text, motherboard_sata_slot_value.text,
                                         motherboard_m2_slot_value.text, motherboard_power_pin_cbb.currentIndex,
                                         motherboard_image_link_value.text,
                                         motherboard_price_value.text, motherboard_buy_link_value.text)
@@ -934,7 +928,7 @@ Item {
                             motherboard_pcie20_8x_slot_value.text = ""
                             motherboard_pcie20_4x_slot_value.text = ""
                             motherboard_pcie20_1x_slot_value.text = ""
-                            motherboard_pcie30_16x_slot_value.text = ""
+                            motherboard_pcie_16x_slot_value.text = ""
                             motherboard_pcie30_8x_slot_value.text = ""
                             motherboard_pcie30_4x_slot_value.text = ""
                             motherboard_pcie30_1x_slot_value.text = ""
@@ -1680,7 +1674,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        visible: false
+        visible: true
 
         Rectangle {
             id: motherboard_background
@@ -1934,7 +1928,7 @@ Item {
 
                 anchors.left: parent.left
                 anchors.leftMargin: 40
-                anchors.bottom: motherboard_pcie20_slot_text.top
+                anchors.bottom: motherboard_RAM_max_capacity_text.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
@@ -1944,7 +1938,7 @@ Item {
 
                 anchors.left: motherboard_RAM_slot_number_text.right
                 anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie20_16x_slot_value_rectangle.top
+                anchors.bottom: motherboard_pcie_16x_slot_value_rectangle.top
                 anchors.bottomMargin: 10
                 radius: 5
 
@@ -1979,9 +1973,9 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_RAM_slot_number_value_rectangle.right
-                anchors.leftMargin: 20
-                anchors.bottom: motherboard_pcie20_16x_slot_text.top
+                anchors.left: parent.left
+                anchors.leftMargin: 40
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
@@ -1991,7 +1985,7 @@ Item {
 
                 anchors.left: motherboard_RAM_max_capacity_text.right
                 anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie20_4x_slot_value_rectangle.top
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
                 radius: 5
 
@@ -2027,7 +2021,7 @@ Item {
 
                 anchors.left: motherboard_RAM_max_capacity_value_rectangle.right
                 anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie20_4x_slot_text.top
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
             }
 
@@ -2042,7 +2036,7 @@ Item {
 
                 anchors.left: motherboard_RAM_max_capacity_Go_text.right
                 anchors.leftMargin: 20
-                anchors.bottom: motherboard_pcie20_1x_slot_text.top
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
@@ -2052,7 +2046,7 @@ Item {
 
                 anchors.left: motherboard_RAM_max_per_slot_text.right
                 anchors.leftMargin: 10
-                anchors.bottom: motherboard_sata_slot_value_rectangle.top
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
                 radius: 5
 
@@ -2088,215 +2082,7 @@ Item {
 
                 anchors.left: motherboard_RAM_max_per_slot_value_rectangle.right
                 anchors.leftMargin: 10
-                anchors.bottom: motherboard_m2_slot_text.top
-                anchors.bottomMargin: 10
-            }
-
-            Text {
-                id: motherboard_pcie20_slot_text
-                height: 20
-
-                text: qsTr("PCIE 2.0 :")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: parent.left
-                anchors.leftMargin: 40
-                anchors.bottom: motherboard_pcie30_slot_text.top
-                anchors.bottomMargin: 10
-
-            }
-            Rectangle {
-                id: motherboard_pcie20_16x_slot_value_rectangle
-                height: 20
-                width: 30
-
-                anchors.left: motherboard_pcie20_slot_text.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_16x_slot_value_rectangle.top
-                anchors.bottomMargin: 10
-
-                radius: 5
-
-                color: "#757575"
-
-                TextInput {
-                    id: motherboard_pcie20_16x_slot_value
-                    color: "black"
-                    text: qsTr("")
-                    font.pixelSize: 18
-
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-
-                    maximumLength: 1
-                    layer.enabled: true
-                    validator: RegExpValidator {
-                        regExp: /[1-9]+[0-9]+/
-                    }
-
-                    anchors.fill: parent
-
-                }
-            }
-            Text {
-                id: motherboard_pcie20_16x_slot_text
-                height: 20
-                text: qsTr("16x ")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: motherboard_pcie20_16x_slot_value_rectangle.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_16x_slot_text.top
-                anchors.bottomMargin: 10
-            }
-            Rectangle {
-                id: motherboard_pcie20_8x_slot_value_rectangle
-
-                height: 20
-                width: 30
-
-                anchors.left: motherboard_pcie20_16x_slot_text.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_8x_slot_value_rectangle.top
-                anchors.bottomMargin: 10
-
-                radius: 5
-
-                color: "#757575"
-
-                TextInput {
-                    id: motherboard_pcie20_8x_slot_value
-                    color: "black"
-                    text: qsTr("")
-                    font.pixelSize: 18
-
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-
-                    maximumLength: 1
-                    layer.enabled: true
-                    validator: RegExpValidator {
-                        regExp: /[1-9]+[0-9]+/
-                    }
-
-                    anchors.fill: parent
-
-                }
-            }
-            Text {
-                id: motherboard_pcie20_8x_slot_text
-                height: 20
-                text: qsTr("8x")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: motherboard_pcie20_8x_slot_value_rectangle.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_8x_slot_text.top
-                anchors.bottomMargin: 10
-            }
-            Rectangle {
-                id: motherboard_pcie20_4x_slot_value_rectangle
-
-                height: 20
-                width: 30
-
-                anchors.left: motherboard_pcie20_8x_slot_text.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_4x_slot_value_rectangle.top
-                anchors.bottomMargin: 10
-
-                radius: 5
-
-                color: "#757575"
-
-                TextInput {
-                    id: motherboard_pcie20_4x_slot_value
-                    color: "black"
-                    text: qsTr("")
-                    font.pixelSize: 18
-
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-
-                    maximumLength: 1
-                    layer.enabled: true
-                    validator: RegExpValidator {
-                        regExp: /[1-9]+[0-9]+/
-                    }
-
-                    anchors.fill: parent
-
-                }
-            }
-            Text {
-                id: motherboard_pcie20_4x_slot_text
-                height: 20
-                text: qsTr("4x")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: motherboard_pcie20_4x_slot_value_rectangle.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_4x_slot_text.top
-                anchors.bottomMargin: 10
-            }
-            Rectangle {
-                id: motherboard_pcie20_1x_slot_value_rectangle
-
-                height: 20
-                width: 30
-
-                anchors.left: motherboard_pcie20_4x_slot_text.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_1x_slot_value_rectangle.top
-                anchors.bottomMargin: 10
-
-                radius: 5
-
-                color: "#757575"
-
-                TextInput {
-                    id: motherboard_pcie20_1x_slot_value
-                    color: "black"
-                    text: qsTr("")
-                    font.pixelSize: 18
-
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-
-                    maximumLength: 1
-                    layer.enabled: true
-                    validator: RegExpValidator {
-                        regExp: /[1-9]+[0-9]+/
-                    }
-
-                    anchors.fill: parent
-
-                }
-            }
-            Text {
-                id: motherboard_pcie20_1x_slot_text
-                height: 20
-                text: qsTr("1x")
-                font.pixelSize: 18
-
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                anchors.left: motherboard_pcie20_1x_slot_value_rectangle.right
-                anchors.leftMargin: 10
-                anchors.bottom: motherboard_pcie30_1x_slot_text.top
+                anchors.bottom: motherboard_pcie_slot_text.top
                 anchors.bottomMargin: 10
             }
 
@@ -2309,7 +2095,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie20_1x_slot_text.right
+                anchors.left: motherboard_pcie_1x_slot_text.right
                 anchors.leftMargin: 20
                 anchors.bottom: motherboard_price_text.top
                 anchors.bottomMargin: 10
@@ -2397,9 +2183,9 @@ Item {
             }
 
             Text {
-                id: motherboard_pcie30_slot_text
+                id: motherboard_pcie_slot_text
                 height: 20
-                text: qsTr("PCIE 3.0 :")
+                text: qsTr("PCIE:")
                 font.pixelSize: 18
 
                 verticalAlignment: Text.AlignVCenter
@@ -2412,11 +2198,11 @@ Item {
 
             }
             Rectangle {
-                id: motherboard_pcie30_16x_slot_value_rectangle
+                id: motherboard_pcie_16x_slot_value_rectangle
                 height: 20
                 width: 30
 
-                anchors.left: motherboard_pcie30_slot_text.right
+                anchors.left: motherboard_pcie_slot_text.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
@@ -2426,7 +2212,7 @@ Item {
                 color: "#757575"
 
                 TextInput {
-                    id: motherboard_pcie30_16x_slot_value
+                    id: motherboard_pcie_16x_slot_value
                     color: "black"
                     text: qsTr("")
                     font.pixelSize: 18
@@ -2445,7 +2231,7 @@ Item {
                 }
             }
             Text {
-                id: motherboard_pcie30_16x_slot_text
+                id: motherboard_pcie_16x_slot_text
                 height: 20
                 text: qsTr("16x ")
                 font.pixelSize: 18
@@ -2453,17 +2239,17 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie30_16x_slot_value_rectangle.right
+                anchors.left: motherboard_pcie_16x_slot_value_rectangle.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
-                id: motherboard_pcie30_8x_slot_value_rectangle
+                id: motherboard_pcie_8x_slot_value_rectangle
                 height: 20
                 width: 30
 
-                anchors.left: motherboard_pcie30_16x_slot_text.right
+                anchors.left: motherboard_pcie_16x_slot_text.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
@@ -2473,7 +2259,7 @@ Item {
                 color: "#757575"
 
                 TextInput {
-                    id: motherboard_pcie30_8x_slot_value
+                    id: motherboard_pcie_8x_slot_value
                     color: "black"
                     text: qsTr("")
                     font.pixelSize: 18
@@ -2492,7 +2278,7 @@ Item {
                 }
             }
             Text {
-                id: motherboard_pcie30_8x_slot_text
+                id: motherboard_pcie_8x_slot_text
                 height: 20
                 text: qsTr("8x")
                 font.pixelSize: 18
@@ -2500,17 +2286,17 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie30_8x_slot_value_rectangle.right
+                anchors.left: motherboard_pcie_8x_slot_value_rectangle.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
-                id: motherboard_pcie30_4x_slot_value_rectangle
+                id: motherboard_pcie_4x_slot_value_rectangle
                 height: 20
                 width: 30
 
-                anchors.left: motherboard_pcie30_8x_slot_text.right
+                anchors.left: motherboard_pcie_8x_slot_text.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
@@ -2539,7 +2325,7 @@ Item {
                 }
             }
             Text {
-                id: motherboard_pcie30_4x_slot_text
+                id: motherboard_pcie_4x_slot_text
                 height: 20
                 text: qsTr("4x")
                 font.pixelSize: 18
@@ -2547,17 +2333,17 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie30_4x_slot_value_rectangle.right
+                anchors.left: motherboard_pcie_4x_slot_value_rectangle.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
             }
             Rectangle {
-                id: motherboard_pcie30_1x_slot_value_rectangle
+                id: motherboard_pcie_1x_slot_value_rectangle
                 height: 20
                 width: 30
 
-                anchors.left: motherboard_pcie30_4x_slot_text.right
+                anchors.left: motherboard_pcie_4x_slot_text.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
@@ -2567,7 +2353,7 @@ Item {
                 color: "#757575"
 
                 TextInput {
-                    id: motherboard_pcie30_1x_slot_value
+                    id: motherboard_pcie_1x_slot_value
                     color: "black"
                     text: qsTr("")
                     font.pixelSize: 18
@@ -2586,7 +2372,7 @@ Item {
                 }
             }
             Text {
-                id: motherboard_pcie30_1x_slot_text
+                id: motherboard_pcie_1x_slot_text
                 height: 20
                 text: qsTr("1x")
                 font.pixelSize: 18
@@ -2594,7 +2380,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie30_1x_slot_value_rectangle.right
+                anchors.left: motherboard_pcie_1x_slot_value_rectangle.right
                 anchors.leftMargin: 10
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10
@@ -2609,7 +2395,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                anchors.left: motherboard_pcie30_1x_slot_text.right
+                anchors.left: motherboard_pcie_1x_slot_text.right
                 anchors.leftMargin: 30
                 anchors.bottom: motherboard_buy_link_value_rectangle.top
                 anchors.bottomMargin: 10

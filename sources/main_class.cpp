@@ -97,14 +97,10 @@ void main_class::init_list()
                 new_motherboard.RAM_slot_number = objetJSON["RAM slot number"].toInt();
                 new_motherboard.RAM_max_capacity = objetJSON["RAM max capacity"].toInt();
                 new_motherboard.RAM_max_per_slot = objetJSON["RAM max slot"].toInt();
-                new_motherboard.GPU_PCIE20_16x_number = objetJSON["GPU pcie 2.0 16x number"].toInt();
-                new_motherboard.GPU_PCIE20_8x_number = objetJSON["GPU pcie 2.0 8x number"].toInt();
-                new_motherboard.GPU_PCIE20_4x_number = objetJSON["GPU pcie 2.0 4x number"].toInt();
-                new_motherboard.GPU_PCIE20_1x_number = objetJSON["GPU pcie 2.0 1x number"].toInt();
-                new_motherboard.GPU_PCIE30_16x_number = objetJSON["GPU pcie 3.0 16x number"].toInt();
-                new_motherboard.GPU_PCIE30_8x_number = objetJSON["GPU pcie 3.0 8x number"].toInt();
-                new_motherboard.GPU_PCIE30_4x_number = objetJSON["GPU pcie 3.0 4x number"].toInt();
-                new_motherboard.GPU_PCIE30_1x_number = objetJSON["GPU pcie 3.0 1x number"].toInt();
+                new_motherboard.GPU_PCIE_16x_number = objetJSON["GPU pcie 16x number"].toInt();
+                new_motherboard.GPU_PCIE_8x_number = objetJSON["GPU pcie 8x number"].toInt();
+                new_motherboard.GPU_PCIE_4x_number = objetJSON["GPU pcie 4x number"].toInt();
+                new_motherboard.GPU_PCIE_1x_number = objetJSON["GPU pcie 1x number"].toInt();
                 new_motherboard.SATA_slot_number = objetJSON["SATA slot number"].toInt();
                 new_motherboard.M_2_slot_number = objetJSON["M2 slot number"].toInt();
                 new_motherboard.CPU_socket = (CPU_SOCKET) objetJSON["CPU socket"].toInt();
@@ -1172,9 +1168,8 @@ QList<RAM> main_class::ram_list_module_filter(QList<RAM> list, int remaining_mod
 
 
 
-QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboard, QString name_filter, int pcie20_16x_slot, int pcie20_8x_slot,
-                                              int pcie20_4x_slot, int pcie20_1x_slot, int pcie30_16x_slot,
-                                              int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot,
+QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboard, QString name_filter, int pcie_16x_slot, int pcie_8x_slot,
+                                              int pcie_4x_slot, int pcie_1x_slot,
                                               int used_pcie_16x, int used_pcie_8x, int used_pcie_4x, int used_pcie_1x,
                                               int gpu_ram_type, int gpu_power_cable)
 {
@@ -1196,8 +1191,8 @@ QList<GPU> main_class::apply_gpu_list_filters(QList<GPU> list, int no_motherboar
     }
     if(no_motherboard == 0)
     {
-        gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie20_16x_slot, pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot, pcie30_16x_slot,
-                                               pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot, used_pcie_16x, used_pcie_8x, used_pcie_4x, used_pcie_1x);
+        gpu_list_filtred = gpu_list_bus_filter(gpu_list_filtred, pcie_16x_slot, pcie_8x_slot, pcie_4x_slot, pcie_1x_slot,
+                                               used_pcie_16x, used_pcie_8x, used_pcie_4x, used_pcie_1x);
     }
 
     return gpu_list_filtred;
@@ -1217,9 +1212,8 @@ QList<GPU> main_class::gpu_list_name_filter(QList<GPU> list, QString name_filter
     return ret;
 }
 
-QList<GPU> main_class::gpu_list_bus_filter(QList<GPU> list, int pcie20_16x_slot, int pcie20_8x_slot,
-                                           int pcie20_4x_slot, int pcie20_1x_slot, int pcie30_16x_slot,
-                                           int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot,
+QList<GPU> main_class::gpu_list_bus_filter(QList<GPU> list, int pcie_16x_slot, int pcie_8x_slot,
+                                           int pcie_4x_slot, int pcie_1x_slot,
                                            int used_pcie_16x, int used_pcie_8x, int used_pcie_4x, int used_pcie_1x)
 {
     QList<GPU> ret;
@@ -1229,57 +1223,29 @@ QList<GPU> main_class::gpu_list_bus_filter(QList<GPU> list, int pcie20_16x_slot,
 
         switch (gpu.GPU_bus)
         {
-        case PCIE_2_0_16x:
-            if((pcie30_16x_slot + pcie20_16x_slot - used_pcie_16x) > 0)
+        case PCIE_16x:
+            if((pcie_16x_slot - used_pcie_16x) > 0)
             {
                 ret.append(gpu);
             }
             break;
 
-        case PCIE_3_0_16x:
-            if((pcie30_16x_slot + pcie20_16x_slot - used_pcie_16x) > 0)
+        case PCIE_8x:
+            if((pcie_8x_slot - used_pcie_8x) > 0)
             {
                 ret.append(gpu);
             }
             break;
 
-        case PCIE_2_0_8x:
-            if((pcie30_8x_slot + pcie20_8x_slot - used_pcie_8x) > 0)
+        case PCIE_4x:
+            if((pcie_4x_slot - used_pcie_4x) > 0)
             {
                 ret.append(gpu);
             }
             break;
 
-        case PCIE_3_0_8x:
-            if((pcie30_8x_slot + pcie20_8x_slot - used_pcie_8x) > 0)
-            {
-                ret.append(gpu);
-            }
-            break;
-
-        case PCIE_2_0_4x:
-            if((pcie30_4x_slot + pcie20_4x_slot - used_pcie_4x) > 0)
-            {
-                ret.append(gpu);
-            }
-            break;
-
-        case PCIE_3_0_4x:
-            if((pcie30_4x_slot + pcie20_4x_slot - used_pcie_4x) > 0)
-            {
-                ret.append(gpu);
-            }
-            break;
-
-        case PCIE_2_0_1x:
-            if((pcie30_1x_slot + pcie20_1x_slot - used_pcie_1x) > 0)
-            {
-                ret.append(gpu);
-            }
-            break;
-
-        case PCIE_3_0_1x:
-            if((pcie30_1x_slot + pcie20_1x_slot - used_pcie_1x) > 0)
+        case PCIE_1x:
+            if((pcie_1x_slot - used_pcie_1x) > 0)
             {
                 ret.append(gpu);
             }
@@ -1668,14 +1634,10 @@ void main_class::get_motherboard_list(QObject *obj, QString name_filter, QString
         motherboard_map.insert("RAM slot number", motherboard.RAM_slot_number);
         motherboard_map.insert("RAM max capacity", motherboard.RAM_max_capacity);
         motherboard_map.insert("RAM max slot", motherboard.RAM_max_per_slot);
-        motherboard_map.insert("GPU pcie 2.0 16x number", motherboard.GPU_PCIE20_16x_number);
-        motherboard_map.insert("GPU pcie 2.0 8x number", motherboard.GPU_PCIE20_8x_number);
-        motherboard_map.insert("GPU pcie 2.0 4x number", motherboard.GPU_PCIE20_4x_number);
-        motherboard_map.insert("GPU pcie 2.0 1x number", motherboard.GPU_PCIE20_1x_number);
-        motherboard_map.insert("GPU pcie 3.0 16x number", motherboard.GPU_PCIE30_16x_number);
-        motherboard_map.insert("GPU pcie 3.0 8x number", motherboard.GPU_PCIE30_8x_number);
-        motherboard_map.insert("GPU pcie 3.0 4x number", motherboard.GPU_PCIE30_4x_number);
-        motherboard_map.insert("GPU pcie 3.0 1x number", motherboard.GPU_PCIE30_1x_number);
+        motherboard_map.insert("GPU pcie 16x number", motherboard.GPU_PCIE_16x_number);
+        motherboard_map.insert("GPU pcie 8x number", motherboard.GPU_PCIE_8x_number);
+        motherboard_map.insert("GPU pcie 4x number", motherboard.GPU_PCIE_4x_number);
+        motherboard_map.insert("GPU pcie 1x number", motherboard.GPU_PCIE_1x_number);
         motherboard_map.insert("SATA slot number", motherboard.SATA_slot_number);
         motherboard_map.insert("M2 slot number", motherboard.M_2_slot_number);
         motherboard_map.insert("CPU socket", motherboard.CPU_socket);
@@ -1810,17 +1772,14 @@ void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filt
     QMetaObject::invokeMethod(obj, "create_ram_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
 }
 
-void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_filter, int pcie20_16x_slot, int pcie20_8x_slot,
-                              int pcie20_4x_slot, int pcie20_1x_slot, int pcie30_16x_slot,
-                              int pcie30_8x_slot, int pcie30_4x_slot, int pcie30_1x_slot,
-                              int used_pcie_16x, int used_pcie_8x, int used_pcie_4x, int used_pcie_1x,
-                              int gpu_ram_type, int gpu_power_cable)
+void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_filter, int pcie_16x_slot, int pcie_8x_slot,
+                              int pcie_4x_slot, int pcie_1x_slot, int used_pcie_16x, int used_pcie_8x, int used_pcie_4x,
+                              int used_pcie_1x, int gpu_ram_type, int gpu_power_cable)
 {
     QVariantMap main_map;
     int i = 0 ;
-    QList<GPU> cpu_list = apply_gpu_list_filters(global_GPU_list, no_motherboard, name_filter, pcie20_16x_slot,
-                                                 pcie20_8x_slot, pcie20_4x_slot, pcie20_1x_slot,
-                                                 pcie30_16x_slot, pcie30_8x_slot, pcie30_4x_slot, pcie30_1x_slot,
+    QList<GPU> cpu_list = apply_gpu_list_filters(global_GPU_list, no_motherboard, name_filter, pcie_16x_slot,
+                                                 pcie_8x_slot, pcie_4x_slot, pcie_1x_slot,
                                                  used_pcie_16x, used_pcie_8x, used_pcie_4x, used_pcie_1x,
                                                  gpu_ram_type, gpu_power_cable);
     for(GPU ggpu : cpu_list)

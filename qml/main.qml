@@ -35,14 +35,10 @@ ApplicationWindow {
     property int motherboard_selected_ram_slot : 0
     property int motherboard_selected_cpu_power_cable_needed : 0
     property int motherboard_selected_ram_size_per_slot: 0
-    property int motherboard_selected_pcie20_16x : 0
-    property int motherboard_selected_pcie20_8x : 0
-    property int motherboard_selected_pcie20_4x : 0
-    property int motherboard_selected_pcie20_1x : 0
-    property int motherboard_selected_pcie30_16x : 0
-    property int motherboard_selected_pcie30_8x : 0
-    property int motherboard_selected_pcie30_4x : 0
-    property int motherboard_selected_pcie30_1x : 0
+    property int motherboard_selected_pcie_16x : 0
+    property int motherboard_selected_pcie_8x : 0
+    property int motherboard_selected_pcie_4x : 0
+    property int motherboard_selected_pcie_1x : 0
     property int motherboard_selected_M2_slot : 0
     property int motherboard_selected_sata_slot : 0
     property int motherboard_used_ram_slot: 0
@@ -1165,7 +1161,8 @@ if pas de item a load : passe au suivant (probleme : doit etre que si tous les s
 pcie slot a refaire (dans add component) psk compatible backward et frontward +tests
 fait fction test pour le reste : add return val + add if obj !=null call la fonction le l'obj :
 peut test si la fction marche
-add new itel socket (+add component cbb)
+add new intel socket (+add component cbb) quand les 11xxx seront sortie
+gpu core filter ? (plus de x core)
 test a refair pour le pcie
 pdf wiewer qml
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
@@ -1432,10 +1429,9 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 else
                 {
-                    main_class.get_gpu_list(function_object, 0, name_filter, motherboard_selected_pcie20_16x, motherboard_selected_pcie20_8x,
-                                            motherboard_selected_pcie20_4x, motherboard_selected_pcie20_1x, motherboard_selected_pcie30_16x,
-                                            motherboard_selected_pcie30_8x, motherboard_selected_pcie30_4x, motherboard_selected_pcie30_1x,
-                                            motherboard_used_pcie_16x, motherboard_used_pcie_8x, motherboard_used_pcie_4x, motherboard_used_pcie_1x,
+                    main_class.get_gpu_list(function_object, 0, name_filter, motherboard_selected_pcie_16x, motherboard_selected_pcie_8x,
+                                            motherboard_selected_pcie_4x, motherboard_selected_pcie_1x, motherboard_used_pcie_16x,
+                                            motherboard_used_pcie_8x, motherboard_used_pcie_4x, motherboard_used_pcie_1x,
                                             gpu_ram_filter_cbb.currentIndex, gpu_power_cable_filter_cbb.currentIndex)
                 }
 
@@ -1551,14 +1547,10 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_ram_type = ""
                 motherboard_selected_ram_supported_speed = ""
                 motherboard_selected_ram_size_per_slot = 0
-                motherboard_selected_pcie20_16x = 0
-                motherboard_selected_pcie20_8x = 0
-                motherboard_selected_pcie20_4x = 0
-                motherboard_selected_pcie20_1x = 0
-                motherboard_selected_pcie30_16x = 0
-                motherboard_selected_pcie30_8x = 0
-                motherboard_selected_pcie30_4x = 0
-                motherboard_selected_pcie30_1x = 0
+                motherboard_selected_pcie_16x = 0
+                motherboard_selected_pcie_8x = 0
+                motherboard_selected_pcie_4x = 0
+                motherboard_selected_pcie_1x = 0
                 motherboard_selected_M2_slot = 0
                 motherboard_selected_cpu_power_needed = 0
 
@@ -2552,11 +2544,9 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                                                     component_RAM_type : ram_type_str(map[prop]["RAM type"]),
                                                     component_RAM_speed_supported : tmp, component_power_pin : motherboard_power_pin_str(map[prop]["POWER pin"]),
                                                     component_RAM_slot : map[prop]["RAM slot number"], component_RAM_max : map[prop]["RAM max capacity"],
-                                                    component_RAM_max_slot : map[prop]["RAM max slot"], component_pcie20_16x : map[prop]["GPU pcie 2.0 16x number"],
-                                                    component_pcie20_8x : map[prop]["GPU pcie 2.0 8x number"], component_pcie20_4x : map[prop]["GPU pcie 2.0 4x number"],
-                                                    component_pcie20_1x : map[prop]["GPU pcie 2.0 1x number"], component_pcie30_16x : map[prop]["GPU pcie 3.0 16x number"],
-                                                    component_pcie30_8x : map[prop]["GPU pcie 3.0 8x number"], component_pcie30_4x : map[prop]["GPU pcie 3.0 4x number"],
-                                                    component_pcie30_1x : map[prop]["GPU pcie 3.0 1x number"], component_sata_slot : map[prop]["SATA slot number"],
+                                                    component_RAM_max_slot : map[prop]["RAM max slot"], component_pcie_16x : map[prop]["GPU pcie 16x number"],
+                                                    component_pcie_8x : map[prop]["GPU pcie 8x number"], component_pcie_4x : map[prop]["GPU pcie 4x number"],
+                                                    component_pcie_1x : map[prop]["GPU pcie 1x number"], component_sata_slot : map[prop]["SATA slot number"],
                                                     component_M2_slot : map[prop]["M2 slot number"], component_price : map[prop]["price"],
                                                     component_image_link : map[prop]["image link"], component_buy_link : qsTr(map[prop]["buy link"]),
                                                     main_script_object : function_object
@@ -2787,14 +2777,10 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_ram_type = item["component_RAM_type"]
                 motherboard_selected_ram_supported_speed = item["component_RAM_speed_supported"]
                 motherboard_selected_ram_size_per_slot = item["component_RAM_max_slot"]
-                motherboard_selected_pcie20_16x = item["component_pcie20_16x"]
-                motherboard_selected_pcie20_8x = item["component_pcie20_8x"]
-                motherboard_selected_pcie20_4x = item["component_pcie20_4x"]
-                motherboard_selected_pcie20_1x = item["component_pcie20_1x"]
-                motherboard_selected_pcie30_16x = item["component_pcie30_16x"]
-                motherboard_selected_pcie30_8x = item["component_pcie30_8x"]
-                motherboard_selected_pcie30_4x = item["component_pcie30_4x"]
-                motherboard_selected_pcie30_1x = item["component_pcie30_1x"]
+                motherboard_selected_pcie_16x = item["component_pcie_16x"]
+                motherboard_selected_pcie_8x = item["component_pcie_8x"]
+                motherboard_selected_pcie_4x = item["component_pcie_4x"]
+                motherboard_selected_pcie_1x = item["component_pcie_1x"]
                 motherboard_selected_M2_slot = item["component_M2_slot"]
                 motherboard_selected_sata_slot = item["component_sata_slot"]
                 motherboard_selected_ram_slot = item["component_RAM_slot"]
