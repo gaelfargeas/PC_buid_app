@@ -1158,13 +1158,13 @@ ApplicationWindow {
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
-pcie slot a refaire (dans add component) psk compatible backward et frontward +tests
 fait fction test pour le reste : add return val + add if obj !=null call la fonction le l'obj :
 peut test si la fction marche
 add new intel socket (+add component cbb) quand les 11xxx seront sortie
-gpu core filter ? (plus de x core)
+cpu core filter ? (plus de x core)
 test a refair pour le pcie
 pdf wiewer qml
+power supply filter (W, cable ect)
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
 ")

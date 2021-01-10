@@ -1550,13 +1550,18 @@ void main_class::createPDF(QString case_name, QString motherboard, QString CPU, 
 
 
 
-void main_class::get_case_list(QObject* obj, QString name_filter, int mb_size_filter)
+QVariantMap main_class::get_case_list(QObject* obj, QString name_filter, int mb_size_filter, QList<computer_case> list)
 {
 
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<computer_case> computer_case_list = apply_computer_case_list_filters(global_case_list, name_filter, mb_size_filter);
+    if(list.isEmpty())
+    {
+        list = global_case_list;
+    }
+
+    QList<computer_case> computer_case_list = apply_computer_case_list_filters(list, name_filter, mb_size_filter);
 
     for(computer_case ccase : computer_case_list)
     {
@@ -1582,15 +1587,24 @@ void main_class::get_case_list(QObject* obj, QString name_filter, int mb_size_fi
     }
 
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_case_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_case_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
 
 }
 
-void main_class::get_motherboard_list(QObject *obj, QString name_filter, QString types, int chipset, int socket, int ram)
+QVariantMap main_class::get_motherboard_list(QObject *obj, QString name_filter, QString types, int chipset, int socket, int ram, QList<motherboard> list)
 {
     QVariantMap main_map;
     int i = 0 ;
+
+    if(list.isEmpty())
+    {
+        list = global_motherboard_list;
+    }
 
     QList<int> supported_type_qlist;
     if (types != ""){
@@ -1616,7 +1630,7 @@ void main_class::get_motherboard_list(QObject *obj, QString name_filter, QString
         }
     }
 
-    QList<motherboard> motherboard_list = apply_motherboard_list_filters(global_motherboard_list, supported_type_qlist, name_filter, chipset, socket, ram);
+    QList<motherboard> motherboard_list = apply_motherboard_list_filters(list, supported_type_qlist, name_filter, chipset, socket, ram);
 
     for(motherboard motherboard : motherboard_list)
     {
@@ -1654,17 +1668,27 @@ void main_class::get_motherboard_list(QObject *obj, QString name_filter, QString
         i++;
     }
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_motherboard_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_motherboard_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
+
 }
 
-void main_class::get_cpu_list(QObject *obj, QString name_filter, QString socket, QString chipset, QString ram_type)
+QVariantMap main_class::get_cpu_list(QObject *obj, QString name_filter, QString socket, QString chipset, QString ram_type, QList<CPU> list)
 {
 
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<CPU> cpu_list = apply_cpu_list_filters(global_CPU_list, name_filter, socket.remove(", "), chipset.remove(", "), ram_type.remove(", ") );
+    if(list.isEmpty())
+    {
+        list = global_CPU_list;
+    }
+
+    QList<CPU> cpu_list = apply_cpu_list_filters(list, name_filter, socket.remove(", "), chipset.remove(", "), ram_type.remove(", ") );
 
     for(CPU ccpu : cpu_list)
     {
@@ -1695,16 +1719,26 @@ void main_class::get_cpu_list(QObject *obj, QString name_filter, QString socket,
         i++;
     }
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_cpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_cpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
+
 }
 
-void main_class::get_cooling_list(QObject *obj, QString name_filter, int fan_size)
+QVariantMap main_class::get_cooling_list(QObject *obj, QString name_filter, int fan_size, QList<cooling> list)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<cooling> cooling_list = apply_cooling_list_filters(global_cooling_list, name_filter, fan_size);
+    if(list.isEmpty())
+    {
+        list = global_cooling_list;
+    }
+
+    QList<cooling> cooling_list = apply_cooling_list_filters(list, name_filter, fan_size);
 
     for(cooling ccooling : cooling_list)
     {
@@ -1732,14 +1766,24 @@ void main_class::get_cooling_list(QObject *obj, QString name_filter, int fan_siz
         i++;
     }
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_cooling_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_cooling_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
+
 }
 
-void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filter, int ram_size_filter, QString ram_type , int size, int max_module)
+QVariantMap main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filter, int ram_size_filter, QString ram_type , int size, int max_module, QList<RAM> list)
 {
     QVariantMap main_map;
     int i = 0 ;
+
+    if(list.isEmpty())
+    {
+        list = global_RAM_list;
+    }
 
     QList<int> supported_ram_speed_qlist;
     for(QString rram_speed : ram_speed.split(", " , Qt::SkipEmptyParts) )
@@ -1748,7 +1792,7 @@ void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filt
         supported_ram_speed_qlist.append(ram_speed_str_to_int(rram_speed));
     }
 
-    QList<RAM> ram_list = apply_ram_list_filters(global_RAM_list, supported_ram_speed_qlist ,
+    QList<RAM> ram_list = apply_ram_list_filters(list, supported_ram_speed_qlist ,
                                                  name_filter, ram_size_filter, ram_type.remove(", "), size, max_module);
     for(RAM rram : ram_list)
     {
@@ -1768,17 +1812,28 @@ void main_class::get_ram_list(QObject *obj, QString ram_speed, QString name_filt
 
     }
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_ram_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_ram_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
+
 }
 
-void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_filter, int pcie_16x_slot, int pcie_8x_slot,
-                              int pcie_4x_slot, int pcie_1x_slot, int used_pcie_16x, int used_pcie_8x, int used_pcie_4x,
-                              int used_pcie_1x, int gpu_ram_type, int gpu_power_cable)
+QVariantMap main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_filter, int pcie_16x_slot, int pcie_8x_slot,
+                                     int pcie_4x_slot, int pcie_1x_slot, int used_pcie_16x, int used_pcie_8x, int used_pcie_4x,
+                                     int used_pcie_1x, int gpu_ram_type, int gpu_power_cable, QList<GPU> list)
 {
     QVariantMap main_map;
     int i = 0 ;
-    QList<GPU> cpu_list = apply_gpu_list_filters(global_GPU_list, no_motherboard, name_filter, pcie_16x_slot,
+
+    if(list.isEmpty())
+    {
+        list = global_GPU_list;
+    }
+
+    QList<GPU> cpu_list = apply_gpu_list_filters(list, no_motherboard, name_filter, pcie_16x_slot,
                                                  pcie_8x_slot, pcie_4x_slot, pcie_1x_slot,
                                                  used_pcie_16x, used_pcie_8x, used_pcie_4x, used_pcie_1x,
                                                  gpu_ram_type, gpu_power_cable);
@@ -1806,16 +1861,27 @@ void main_class::get_gpu_list(QObject *obj, int no_motherboard, QString name_fil
         i++;
     }
 
-    QMetaObject::invokeMethod(obj, "create_gpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_gpu_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
+
+    return main_map;
+
 }
 
-void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter, int storage_type,
-                                  int storage_capacity, int max_sata, int max_M2)
+QVariantMap main_class::get_storage_list(QObject *obj, int no_motherboard, QString name_filter, int storage_type,
+                                         int storage_capacity, int max_sata, int max_M2, QList<storage> list)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<storage> storage_list = apply_storage_list_filters(global_storage_list, no_motherboard,
+    if(list.isEmpty())
+    {
+        list = global_storage_list;
+    }
+
+    QList<storage> storage_list = apply_storage_list_filters(list, no_motherboard,
                                                              name_filter, storage_type, storage_capacity,
                                                              max_sata, max_M2);
     for(storage sstorage : storage_list)
@@ -1837,16 +1903,27 @@ void main_class::get_storage_list(QObject *obj, int no_motherboard, QString name
         i++;
     }
 
-    QMetaObject::invokeMethod(obj, "create_storage_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_storage_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
+
+    return main_map;
+
 }
 
-void main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter,
-                                       int needed_sata, int needed_gpu_power_cable, int power_needed, int needed_cpu_power_cable)
+QVariantMap main_class::get_power_supply_list(QObject *obj, QString name_filter, int standard_filter, int power_filter,
+                                              int needed_sata, int needed_gpu_power_cable, int power_needed, int needed_cpu_power_cable, QList<power_supply> list)
 {
     QVariantMap main_map;
     int i = 0 ;
 
-    QList<power_supply> power_supply_list = apply_power_supply_list_filters(global_power_supply_list, name_filter, standard_filter,
+    if(list.isEmpty())
+    {
+        list = global_power_supply_list;
+    }
+
+    QList<power_supply> power_supply_list = apply_power_supply_list_filters(list, name_filter, standard_filter,
                                                                             power_filter, needed_sata, needed_gpu_power_cable, power_needed, needed_cpu_power_cable);
 
     for(power_supply ccpowersupply : power_supply_list)
@@ -1870,8 +1947,13 @@ void main_class::get_power_supply_list(QObject *obj, QString name_filter, int st
         i++;
     }
 
+    if (obj != NULL)
+    {
+        QMetaObject::invokeMethod(obj, "create_power_supply_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    }
 
-    QMetaObject::invokeMethod(obj, "create_power_supply_object", Q_ARG(QVariant, QVariant::fromValue(main_map)));
+    return main_map;
+
 }
 
 void main_class::import_component(QString file_path)

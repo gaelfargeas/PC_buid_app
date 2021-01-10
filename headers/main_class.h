@@ -140,28 +140,29 @@ public:
 
     Q_INVOKABLE void createPDF(QString case_name, QString motherboard, QString CPU, QString cooling, QVariant RAM, QVariant GPU, QVariant DD, QString power_supply);
 
-    Q_INVOKABLE void get_case_list(QObject* obj, QString name_filter = "", int mb_size_filter = 0);
 
-    Q_INVOKABLE void get_motherboard_list(QObject* obj, QString types, QString name_filter = "", int chipset = 0, int socket = 0, int ram = 0);
+    Q_INVOKABLE QVariantMap get_case_list(QObject* obj, QString name_filter = "", int mb_size_filter = 0, QList<computer_case> list = {});
 
-    Q_INVOKABLE void get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "", QString ram_type = "");
+    Q_INVOKABLE QVariantMap get_motherboard_list(QObject* obj, QString types, QString name_filter = "", int chipset = 0, int socket = 0, int ram = 0, QList<motherboard> list = {});
 
-    Q_INVOKABLE void get_cooling_list(QObject* obj, QString name_filter = "", int fan_size = 0);
+    Q_INVOKABLE QVariantMap get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "", QString ram_type = "", QList<CPU> list = {});
 
-    Q_INVOKABLE void get_ram_list(QObject* obj, QString ram_speed = "", QString name_filter = "",
+    Q_INVOKABLE QVariantMap get_cooling_list(QObject* obj, QString name_filter = "", int fan_size = 0, QList<cooling> list = {});
+
+    Q_INVOKABLE QVariantMap get_ram_list(QObject* obj, QString ram_speed = "", QString name_filter = "",
                                   int ram_size_filter = 0, QString ram_type = "", int size = 0,
-                                  int max_module = -1);
+                                  int max_module = -1, QList<RAM> list = {});
 
-    Q_INVOKABLE void get_gpu_list(QObject* obj, int no_motherboard,QString name_filter = "", int pcie20_16x_slot = 0, int pcie_8x_slot = 0,
+    Q_INVOKABLE QVariantMap get_gpu_list(QObject* obj, int no_motherboard,QString name_filter = "", int pcie20_16x_slot = 0, int pcie_8x_slot = 0,
                                   int pcie_4x_slot = 0, int pcie_1x_slot = 0,
                                   int used_pcie_16x = -1, int used_pcie_8x = -1, int used_pcie_4x = -1, int used_pcie_1x = -1,
-                                  int gpu_ram_type = 0, int gpu_power_cable = 0);
+                                  int gpu_ram_type = 0, int gpu_power_cable = 0, QList<GPU> list = {});
 
-    Q_INVOKABLE void get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",
-                                      int storage_type = 0, int storage_capacity = 0, int max_sata = -1, int max_M2 = -1);
+    Q_INVOKABLE QVariantMap get_storage_list(QObject* obj, int no_motherboard,QString name_filter = "",
+                                      int storage_type = 0, int storage_capacity = 0, int max_sata = -1, int max_M2 = -1, QList<storage> list = {});
 
-    Q_INVOKABLE void get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0,
-                                           int needed_sata = 0, int needed_gpu_power_cable = 0, int power_needed = 0, int needed_cpu_power_cable = 0);
+    Q_INVOKABLE QVariantMap get_power_supply_list(QObject* obj, QString name_filter = "", int standard_filter = 0, int power_filter = 0,
+                                           int needed_sata = 0, int needed_gpu_power_cable = 0, int power_needed = 0, int needed_cpu_power_cable = 0, QList<power_supply> list = {});
 
     Q_INVOKABLE void import_component(QString file_path);
     Q_INVOKABLE void export_component(QString file_path);
