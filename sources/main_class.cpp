@@ -916,11 +916,11 @@ QList<motherboard> main_class::motherboard_list_ram_filter(QList<motherboard> li
 
 
 
-QList<CPU> main_class::apply_cpu_list_filters(QList<CPU> list, QString name_filter, QString socket, QString chipset, QString ram_type)
+QList<CPU> main_class::apply_cpu_list_filters(QList<CPU> list, QString name_filter, QString socket, QString chipset, QString ram_type, int min_core)
 {
     QList<CPU> cpu_list_filtred = list;
 
-    if (name_filter != "" )
+    if(name_filter != "" )
     {
         cpu_list_filtred = cpu_list_name_filter(cpu_list_filtred, name_filter);
     }
@@ -939,6 +939,7 @@ QList<CPU> main_class::apply_cpu_list_filters(QList<CPU> list, QString name_filt
 
         cpu_list_filtred = cpu_list_ram_filter(cpu_list_filtred, ram_type_str_to_int(ram_type) );
     }
+    cpu_list_filtred = cpu_list_min_core_filter(cpu_list_filtred, min_core);
 
     return cpu_list_filtred;
 }
@@ -992,6 +993,20 @@ QList<CPU> main_class::cpu_list_ram_filter(QList<CPU> list, int ram_type)
     for(CPU cpu : list)
     {
         if(cpu.supported_RAM_type == (RAM_TYPE) ram_type)
+        {
+            ret.append(cpu);
+        }
+    }
+    return ret;
+}
+
+QList<CPU> main_class::cpu_list_min_core_filter(QList<CPU> list, int min_core)
+{
+    QList<CPU> ret;
+
+    for(CPU cpu : list)
+    {
+        if(cpu.core_number >= min_core)
         {
             ret.append(cpu);
         }
@@ -1677,7 +1692,7 @@ QVariantMap main_class::get_motherboard_list(QObject *obj, QString name_filter, 
 
 }
 
-QVariantMap main_class::get_cpu_list(QObject *obj, QString name_filter, QString socket, QString chipset, QString ram_type, QList<CPU> list)
+QVariantMap main_class::get_cpu_list(QObject *obj, QString name_filter, QString socket, QString chipset, QString ram_type,int min_core, QList<CPU> list)
 {
 
     QVariantMap main_map;
@@ -1688,7 +1703,7 @@ QVariantMap main_class::get_cpu_list(QObject *obj, QString name_filter, QString 
         list = global_CPU_list;
     }
 
-    QList<CPU> cpu_list = apply_cpu_list_filters(list, name_filter, socket.remove(", "), chipset.remove(", "), ram_type.remove(", ") );
+    QList<CPU> cpu_list = apply_cpu_list_filters(list, name_filter, socket.remove(", "), chipset.remove(", "), ram_type.remove(", "), min_core );
 
     for(CPU ccpu : cpu_list)
     {

@@ -40,6 +40,7 @@ private slots:
     void test_cpu_list_chipset_filter();
     void test_cpu_list_socket_filter();
     void test_cpu_list_ram_filter();
+    void test_cpu_list_min_core_filter();
 
 
     void test_get_cooling_list();
@@ -633,27 +634,27 @@ void pc_build_app_tests::test_get_cpu_list()
 
     cpu_list.append(cpu);
 
-    QVERIFY(class_to_test.get_cpu_list(NULL,"none", "", "", 0, cpu_list).isEmpty());
-    QVERIFY(!class_to_test.get_cpu_list(NULL,"", "", "", 0, cpu_list).isEmpty());
-    QVERIFY(!class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).isEmpty());
+    QVERIFY(class_to_test.get_cpu_list(NULL,"none", "", "", 0, 0, cpu_list).isEmpty());
+    QVERIFY(!class_to_test.get_cpu_list(NULL,"", "", "", 0, 0, cpu_list).isEmpty());
+    QVERIFY(!class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).isEmpty());
 
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("name").toString() == cpu.name) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("price").toDouble() == cpu.price) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("buy link").toString() == cpu.buy_link) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("image link").toString() == cpu.image_link) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("name").toString() == cpu.name) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("price").toDouble() == cpu.price) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("buy link").toString() == cpu.buy_link) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("image link").toString() == cpu.image_link) );
 
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("CPU socket").toInt() == cpu.socket) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("clock speed").toInt() == cpu.clock_speed) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("boosted clock speed").toInt() == cpu.boosted_speed) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("cache L3").toInt() == cpu.cache_L3_Mo) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("core number").toInt() == cpu.core_number) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("thread number").toInt() == cpu.thread_number) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("TDP").toInt() == cpu.TDP) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("supported RAM type").toInt() == cpu.supported_RAM_type) );
-    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("max RAM speed").toInt() == cpu.max_RAM_speed_MHZ) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("CPU socket").toInt() == cpu.socket) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("clock speed").toInt() == cpu.clock_speed) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("boosted clock speed").toInt() == cpu.boosted_speed) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("cache L3").toInt() == cpu.cache_L3_Mo) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("core number").toInt() == cpu.core_number) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("thread number").toInt() == cpu.thread_number) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("TDP").toInt() == cpu.TDP) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("supported RAM type").toInt() == cpu.supported_RAM_type) );
+    QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("max RAM speed").toInt() == cpu.max_RAM_speed_MHZ) );
     for(int i = 0; i < cpu.supported_chipset.length(); i++)
     {
-        QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, cpu_list).values()[0].toMap().value("CPU chipset").toList()[i].toInt() == cpu.supported_chipset[i]) );
+        QVERIFY( (class_to_test.get_cpu_list(NULL,"CPU", "", "", 0, 0, cpu_list).values()[0].toMap().value("CPU chipset").toList()[i].toInt() == cpu.supported_chipset[i]) );
     }
 
 
@@ -813,6 +814,37 @@ void pc_build_app_tests::test_cpu_list_ram_filter()
     QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, DDR4) == cpu_list);
     QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, GDDR5) == empty_list);
     QVERIFY(class_to_test.cpu_list_ram_filter(cpu_list, 7) == empty_list);
+}
+void pc_build_app_tests::test_cpu_list_min_core_filter()
+{
+    main_class class_to_test;
+    QList<CPU> cpu_list;
+    QList<CPU> empty_list;
+
+    CPU cpu;
+    cpu.TDP = 100;
+    cpu.boosted_speed = 4500;
+    cpu.buy_link = "buy";
+    cpu.cache_L3_Mo = 12;
+    cpu.clock_speed = 4000;
+    cpu.core_number = 6;
+    cpu.image_link = "image";
+    cpu.max_RAM_speed_MHZ = _2800Mhz;
+    cpu.name = "test";
+    cpu.price = 100.1;
+    cpu.socket = LGA_1150;
+    cpu.supported_RAM_type = DDR4;
+    cpu.supported_chipset.append(Intel_H110);
+    cpu.supported_chipset.append(Intel_H270);
+    cpu.thread_number = 12;
+
+    cpu_list.append(cpu);
+
+    QVERIFY(class_to_test.cpu_list_min_core_filter(cpu_list, 9) == empty_list);
+    QVERIFY(class_to_test.cpu_list_min_core_filter(cpu_list, 0) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_min_core_filter(cpu_list, 5) == cpu_list);
+    QVERIFY(class_to_test.cpu_list_min_core_filter(cpu_list, 7) == empty_list);
+    QVERIFY(class_to_test.cpu_list_min_core_filter(cpu_list, 6) == cpu_list);
 }
 
 
@@ -1580,7 +1612,6 @@ void pc_build_app_tests::test_apply_power_supply_list_filters()
     QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 5, 1, 550, 3) == empty_list);
     QVERIFY(class_to_test.apply_power_supply_list_filters(power_supply_list, "test", plus_80_gold + 1, W600 + 1, 5, 4, 550, 1) == empty_list);
 }
-
 void pc_build_app_tests::test_power_supply_list_name_filter()
 {
     main_class class_to_test;
@@ -1607,7 +1638,6 @@ void pc_build_app_tests::test_power_supply_list_name_filter()
     QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "te") == power_supply_list);
     QVERIFY(class_to_test.power_supply_list_name_filter(power_supply_list, "no") == empty_list);
 }
-
 void pc_build_app_tests::test_power_supply_list_standard_filter()
 {
     main_class class_to_test;
@@ -1634,7 +1664,6 @@ void pc_build_app_tests::test_power_supply_list_standard_filter()
     QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80_gold) == power_supply_list);
     QVERIFY(class_to_test.power_supply_list_standard_filter(power_supply_list, plus_80_platinium) == empty_list);
 }
-
 void pc_build_app_tests::test_power_supply_list_power_filter()
 {
     main_class class_to_test;

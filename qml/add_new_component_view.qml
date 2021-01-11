@@ -1674,7 +1674,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        visible: true
+        visible: false
 
         Rectangle {
             id: motherboard_background

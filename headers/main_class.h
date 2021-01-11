@@ -85,11 +85,12 @@ public:
     QList<motherboard> motherboard_list_ram_filter(QList<motherboard> list, int ram);
 
 
-    QList<CPU> apply_cpu_list_filters(QList<CPU> list, QString name_filter, QString socket, QString chipset, QString ram_type);
+    QList<CPU> apply_cpu_list_filters(QList<CPU> list, QString name_filter, QString socket, QString chipset, QString ram_type, int min_core = 0);
     QList<CPU> cpu_list_name_filter(QList<CPU> list, QString name_filter);
     QList<CPU> cpu_list_chipset_filter(QList<CPU> list, int chipset);
     QList<CPU> cpu_list_socket_filter(QList<CPU> list, int socket);
     QList<CPU> cpu_list_ram_filter(QList<CPU> list, int ram_type);
+    QList<CPU> cpu_list_min_core_filter(QList<CPU> list, int min_core);
 
 
     QList<cooling> apply_cooling_list_filters(QList<cooling> list, QString name_filter, int fan_size);
@@ -145,7 +146,7 @@ public:
 
     Q_INVOKABLE QVariantMap get_motherboard_list(QObject* obj, QString types, QString name_filter = "", int chipset = 0, int socket = 0, int ram = 0, QList<motherboard> list = {});
 
-    Q_INVOKABLE QVariantMap get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "", QString ram_type = "", QList<CPU> list = {});
+    Q_INVOKABLE QVariantMap get_cpu_list(QObject* obj, QString name_filter = "", QString socket = "", QString chipset = "", QString ram_type = "", int min_core = 0, QList<CPU> list = {});
 
     Q_INVOKABLE QVariantMap get_cooling_list(QObject* obj, QString name_filter = "", int fan_size = 0, QList<cooling> list = {});
 

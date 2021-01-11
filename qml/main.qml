@@ -698,6 +698,58 @@ ApplicationWindow {
 
             color: "transparent"
 
+            Text {
+                id: cpu_min_core_filter_text
+                text: qsTr("Minimal core : ")
+
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+
+                anchors.left: parent.left
+                anchors.leftMargin: ( (parent.width / 2) - (width / 2) )
+                anchors.top: parent.top
+                anchors.topMargin: 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 2
+
+                font.pixelSize: 18
+                layer.enabled: true
+                color: "#E0E0E0"
+
+            }
+            TextInput
+            {
+                id: cpu_min_core_filter_data
+                width: 60
+
+                anchors.left: cpu_min_core_filter_text.right
+                anchors.leftMargin: 2
+                anchors.top: parent.top
+                anchors.topMargin: 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 2
+
+                text: qsTr("0")
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+
+                font.pixelSize: 24
+                clip: true
+                color: "#E0E0E0"
+
+                maximumLength: 3
+                layer.enabled: true
+                validator: RegExpValidator {
+                    regExp: /[0-9]+[0-9]+/
+                }
+
+                onTextEdited:
+                {
+                    function_object.load_component_grid(component_index)
+                }
+
+            }
+
         }
 
         Rectangle{
@@ -1158,13 +1210,10 @@ ApplicationWindow {
         enabled: false
         text: qsTr("cpu: chipset graphique ?.
 if pas de item a load : passe au suivant (probleme : doit etre que si tous les slot son use)
-fait fction test pour le reste : add return val + add if obj !=null call la fonction le l'obj :
-peut test si la fction marche
 add new intel socket (+add component cbb) quand les 11xxx seront sortie
-cpu core filter ? (plus de x core)
-test a refair pour le pcie
+cpu core filter ? (plus de x core) + test
 pdf wiewer qml
-power supply filter (W, cable ect)
+generer de la doc
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
 ")
@@ -1345,7 +1394,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
 
                 if(motherboard_selected_socket != "" && motherboard_selected_chipset != "" && motherboard_selected_ram_type != "")
                 {
-                    main_class.get_cpu_list(function_object, name_filter, motherboard_selected_socket, motherboard_selected_chipset, motherboard_selected_ram_type )
+                    main_class.get_cpu_list(function_object, name_filter, motherboard_selected_socket, motherboard_selected_chipset, motherboard_selected_ram_type, cpu_min_core_filter_data.text )
                 }else
                 {
                     main_class.get_cpu_list(function_object, name_filter)
@@ -1552,7 +1601,7 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
                 motherboard_selected_pcie_4x = 0
                 motherboard_selected_pcie_1x = 0
                 motherboard_selected_M2_slot = 0
-                motherboard_selected_cpu_power_needed = 0
+                motherboard_selected_cpu_power_cable_needed = 0
 
             }else if(int_value === 2)
             {
@@ -1639,16 +1688,12 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
             motherboard_selected_ram_type = ""
             motherboard_selected_ram_supported_speed = ""
             motherboard_selected_ram_size_per_slot = 0
-            motherboard_selected_pcie20_16x = 0
-            motherboard_selected_pcie20_8x = 0
-            motherboard_selected_pcie20_4x = 0
-            motherboard_selected_pcie20_1x = 0
-            motherboard_selected_pcie30_16x = 0
-            motherboard_selected_pcie30_8x = 0
-            motherboard_selected_pcie30_4x = 0
-            motherboard_selected_pcie30_1x = 0
+            motherboard_selected_pcie_16x = 0
+            motherboard_selected_pcie_8x = 0
+            motherboard_selected_pcie_4x = 0
+            motherboard_selected_pcie_1x = 0
             motherboard_selected_M2_slot = 0
-            motherboard_selected_cpu_power_needed = 0
+            motherboard_selected_cpu_power_cable_needed = 0
 
 
 
