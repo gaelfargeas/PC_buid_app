@@ -1159,7 +1159,7 @@ QList<RAM> main_class::ram_list_size_filter(QList<RAM> list, int size_total)
 
     for(RAM ram : list)
     {
-        if(ram.memory_size == int( std::pow(2.0, size_total-1) ) )
+        if(ram.memory_size == int( pow(2.0, size_total-1) ) )
         {
             ret.append(ram);
         }

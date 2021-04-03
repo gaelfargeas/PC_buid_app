@@ -1,5 +1,4 @@
 QT += quick printsupport
-QT += webview
 
 CONFIG += c++11
 
@@ -15,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += sources/main.cpp \
+    headers/compare_componant.cpp \
     sources/computer_case.cpp \
     sources/cooling.cpp \
     sources/cpu.cpp \
@@ -45,6 +45,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    headers/compare_componant.h \
     headers/computer_case.h \
     headers/cooling.h \
     headers/cpu.h \

@@ -15,5 +15,6 @@
         <file>images/image_listDelegate.png</file>
         <file>qml/pdf_viewer.qml</file>
         <file>qml/build_finish.qml</file>
+        <file>qml/compare.qml</file>
     </qresource>
 </RCC>

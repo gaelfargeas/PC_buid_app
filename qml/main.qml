@@ -175,8 +175,8 @@ ApplicationWindow {
             }
             MenuSeparator { }
             Action {
-                text: qsTr("test")
-                onTriggered : test_window.visible = true
+                text: qsTr("compare component")
+                onTriggered : compare_windows.visible = true
             }
         }
         Menu {
@@ -1215,7 +1215,12 @@ cpu core filter ? (plus de x core) + test
 pdf wiewer qml
 generer de la doc
 image_buy web link (met internet link : si arrive pas a avoir : cherche image dans dossier image)
+fenetre qui compare deux componant +doc
 fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/cpu (3 colone 1mb, 2, cpu , 3 compatible ou pas) .
+compare:
+cooling supp trop socket == depasse : add to all center + clip + wrapeverywhere : taille de la case suivant la taille du test
+hauteur 1ligne * nbr de ligne : nbr ligne =1+ ( longeur case / longueur du text )
+pour le result metre des couleurs peut etre bien jor vert(c1) et rouge(c2)
 ")
         wrapMode: Text.WordWrap
         font.pixelSize: 28
@@ -1260,20 +1265,20 @@ fenetre qui permet de verif la compatibilite entre 2 composant jor motherboard/c
     }
 
     Window{
-        id: test_window
-        width: 740
-        height: 520
+        id: compare_windows
+        width: 720
+        height: 570
         visible: false
 
-        minimumHeight: 520
-        maximumHeight: 520
-        minimumWidth: 740
-        maximumWidth: 740
+        /*minimumHeight: 570
+        maximumHeight: 570
+        minimumWidth: 900
+        maximumWidth: 900*/
 
         Loader {
             id: loader_test;
             anchors.fill: parent
-            source:  "pdf_viewer.qml"
+            source:  "compare.qml"
 
         }
     }

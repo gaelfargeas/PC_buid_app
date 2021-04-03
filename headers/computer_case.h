@@ -4,6 +4,14 @@
 #include <QObject>
 #include <headers/enum_headers.h>
 
+/*!
+    \class computer_case
+    \brief The computer case class.
+
+    Computer case
+
+*/
+
 // disclaimer : need to verify for watercooling
 class computer_case
 {
